@@ -25,7 +25,6 @@ services:
     depends_on:
       - mysqldb     
     build: ./server
-    restart: unless-stopped
     env_file: ./.env
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
