@@ -4,26 +4,27 @@ const { Sequelize } = require('sequelize');
 module.exports = {
   async up({ context: queryInterface }) {
     await queryInterface.addColumn(
-      'Users',
+      'users',
       'confirmation_code', 
       {
         type: Sequelize.STRING,
         unique: true,
-        after: 'status'
+        after: 'token'
       }
     );
 
     await queryInterface.addColumn(
-      'Users',
+      'users',
       'role', 
       {
         type: Sequelize.ENUM("admin", "user"),
         defaultValue: "user",
+        after: 'confirmation_code'
       }
     );
   },
   
   async down({ context: queryInterface }) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('users');
   }
 };

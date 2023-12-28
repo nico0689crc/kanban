@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up({ context: queryInterface }) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,15 +21,17 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
+        defaultValue: Sequelize.fn('NOW'),
         type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
+        defaultValue: Sequelize.fn('NOW'),
         type: Sequelize.DATE
       }
     });
   },
   async down({ context: queryInterface }) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('users');
   }
 };

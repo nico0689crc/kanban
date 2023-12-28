@@ -18,9 +18,10 @@ module.exports = (sequelize) => {
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
     token: DataTypes.STRING,
-    status: DataTypes.STRING,
     confirmation_code: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    password: DataTypes.STRING,
+    avatar: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
