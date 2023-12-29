@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
     }
   }
   User.init({
+    uuid: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -25,6 +26,7 @@ module.exports = (sequelize) => {
   }, {
     sequelize,
     modelName: 'User',
+    tableName: 'users'
   });
   return User;
 };

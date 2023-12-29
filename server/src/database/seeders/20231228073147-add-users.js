@@ -7,6 +7,7 @@ module.exports = {
   async up ({ context: queryInterface }) {
      await queryInterface.bulkInsert('users', [
       {
+        uuid: faker.string.uuid(),
         first_name: faker.person.firstName(),
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
@@ -18,8 +19,9 @@ module.exports = {
           user: 'user', 
           admin: 'admin'
         }),
-       },
-       {
+      },
+      {
+        uuid: faker.string.uuid(),
         first_name: faker.person.firstName(),
         last_name: faker.person.lastName(),
         email: faker.internet.email(),
@@ -31,7 +33,7 @@ module.exports = {
           user: 'user', 
           admin: 'admin'
         }),
-       }
+      }
      ], {});
   },
 
