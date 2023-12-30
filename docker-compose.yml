@@ -35,6 +35,10 @@ services:
       - DB_NAME=$MYSQLDB_DATABASE
       - DB_PORT=$MYSQLDB_DOCKER_PORT
       - NODE_ENV=$NODE_ENV
+      - JWT_KEY=$JWT_KEY
+      - JWT_EXPIRATION_TIME=$JWT_EXPIRATION_TIME
+      - CLIENT_API_BASE_URL=$CLIENT_API_BASE_URL
+      - CLIENT_BASE_URL=$CLIENT_BASE_URL
     networks:
       - backend
       - frontend
