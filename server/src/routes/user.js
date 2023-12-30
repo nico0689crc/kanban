@@ -19,8 +19,18 @@ userRoutes.post(
   userServices.registerUser
 );
 userRoutes.post(
-  "/verify_email/:user_uuid",
+  "/verify-email/:user_uuid",
   userServices.verifyUserEmail
+);
+userRoutes.post(
+  "/request-reset-password",
+  userValidations(body, ["email"]), 
+  userServices.requestResetPassword
+);
+userRoutes.post(
+  "/reset-password",
+  userValidations(body, ["password"]), 
+  userServices.resetPassword
 );
 userRoutes.post(
   "/login",

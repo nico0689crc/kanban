@@ -37,7 +37,8 @@ services:
       - NODE_ENV=$NODE_ENV
       - JWT_KEY=$JWT_KEY
       - JWT_EXPIRATION_TIME=$JWT_EXPIRATION_TIME
-      - CLIENT_API_BASE_URL=$CLIENT_API_BASE_URL
+      - SERVER_API_BASE_URL=$SERVER_API_BASE_URL
+      - SERVER_BASE_URL=$SERVER_BASE_URL
       - CLIENT_BASE_URL=$CLIENT_BASE_URL
     networks:
       - backend
@@ -54,7 +55,7 @@ services:
     build:
       context: ./client
       args:
-        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+        - REACT_APP_API_BASE_URL=$SERVER_API_BASE_URL
     ports:
       - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
     networks:

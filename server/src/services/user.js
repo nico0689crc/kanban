@@ -74,59 +74,6 @@ const deleteUserByUUID = async (req, res, next) => {
   }, next);
 };
 
-const verifyUserEmail = async (req, res, next) => {
-  ErrorHandler(async () => {
-    const { confirmation_code } = req.body;
-    const { user_uuid } = req.params;
-    
-    const user = await User.findOne({ where: { uuid: user_uuid }});
-
-    if(!user){
-      throw new ResponseParserError(
-        ResponsesTypes.errors.errors_400.error_resource_not_found,
-        {
-          title: "User not found.",
-          detail: "User not found."
-        }
-      );
-    }
-
-    if(user.dataValues.email_verified){
-      throw new ResponseParserError(
-        ResponsesTypes.errors.errors_400.error_email_verificated,
-        {
-          title: "User email verified already.",
-          detail: "User email verified already."
-        }
-      );
-    }
-
-    const isValid = await bcryptjs.compare(confirmation_code, user.confirmation_code);
-
-    if(!isValid){
-      throw new ResponseParserError(
-        ResponsesTypes.errors.errors_400.error_email_verificated,
-        {
-          title: "Confimation code not valid.",
-          detail: "Confimation code not valid."
-        }
-      );
-    }
-
-    await User.update(
-      { 
-        confirmation_code: null, 
-        email_verified: true, 
-        email_verified_at: Sequelize.fn('NOW'), 
-      },
-      { where: { uuid: user_uuid } }
-    );
-    
-    const response = new ResponseParser({});
-    response.sendResponseResetPasswordSuccess(res);
-  }, next);
-};
-
 const updateUserByUUID = async (req, res, next) => {
   ErrorHandler(async () => {
     await expressValidatorResult(req);
@@ -192,16 +139,173 @@ const registerUser = (req, res, next) => {
       documents: {
         ...user.dataValues,
         token: token,
-        confirmationCode
+        confirmationCode,
+        redirectionUrl: `${process.env.CLIENT_BASE_URL}/verify-email?userUUID=${user.dataValues.uuid}&confirmationCode=${confirmationCode}`
       },
       request: req,
     });
 
     response.fieldsToSelect.push("token");
     response.fieldsToSelect.push("confirmationCode");
+    response.fieldsToSelect.push("redirectionUrl");
     response.parseDataIndividual();
     response.sendResponseGetSuccess(res);
   },next);
+};
+
+const verifyUserEmail = async (req, res, next) => {
+  ErrorHandler(async () => {
+    const { confirmation_code } = req.body;
+    const { user_uuid } = req.params;
+    
+    const user = await User.findOne({ where: { uuid: user_uuid }});
+
+    if(!user){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "User not found.",
+          detail: "User not found."
+        }
+      );
+    }
+
+    if(user.dataValues.email_verified){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_email_verificated,
+        {
+          title: "User email verified already.",
+          detail: "User email verified already."
+        }
+      );
+    }
+
+    const isValid = await bcryptjs.compare(confirmation_code, user.confirmation_code);
+
+    if(!isValid){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_email_verificated,
+        {
+          title: "Confimation code not valid.",
+          detail: "Confimation code not valid."
+        }
+      );
+    }
+
+    await User.update(
+      { 
+        confirmation_code: null, 
+        email_verified: true, 
+        email_verified_at: Sequelize.fn('NOW'), 
+      },
+      { where: { uuid: user_uuid } }
+    );
+    
+    const response = new ResponseParser({});
+    response.sendResponseResetPasswordSuccess(res);
+  }, next);
+};
+
+const requestResetPassword = async (req, res, next) => {
+  ErrorHandler(async () => {
+    await expressValidatorResult(req);
+    const { email } = req.body;
+    
+    const user = await User.findOne({ where: { email: email }});
+
+    if(!user){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "User not found.",
+          detail: "User not found."
+        }
+      );
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const tokenHashed = await bcryptjs.hash(resetToken, 12);
+
+    await User.update({ 
+      reset_password_token: tokenHashed, 
+      reset_password_token_req_at: Sequelize.fn('NOW'), 
+    },{ 
+      where: { uuid: user.dataValues.uuid 
+    }});
+    
+    const response = new ResponseParser({
+      model: User,
+      documents: {
+        ...user.dataValues,
+        redirectionUrl: `${process.env.CLIENT_BASE_URL}/reset-password?userUUID=${user.dataValues.uuid}&resetToken=${resetToken}`
+      },
+      request: req,
+    });
+    
+    response.fieldsToSelect = [];
+    response.fieldsToSelect.push("uuid");
+    response.fieldsToSelect.push("redirectionUrl");
+    response.parseDataIndividual();
+    response.sendResponseRequestResetPasswordSuccess(res);
+  }, next);
+};
+
+const resetPassword = async (req, res, next) => {
+  ErrorHandler(async () => {
+    await expressValidatorResult(req);
+    const { password, uuid, token } = req.body;
+    
+    const user = await User.findOne({ 
+      where: {
+        uuid: uuid 
+      }
+    });
+
+    if(!user){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "User not found.",
+          detail: "User not found."
+        }
+      );
+    }
+
+    if(!user.dataValues.reset_password_token){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "User not found with token to reset password.",
+          detail: "User not found with token to reset password."
+        }
+      );
+    }
+
+    const isValid = await bcryptjs.compare(token, user.dataValues.reset_password_token);
+
+    if(!isValid){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_password_token_incorrect,
+        {
+          title: "Token not valid.",
+          detail: "Token not valid."
+        }
+      );
+    }
+
+    const passwordHashed = await bcryptjs.hash(password, 12);
+
+    await User.update({ 
+      reset_password_token: null, 
+      reset_password_token_req_at: null, 
+      password: passwordHashed
+    },{ 
+      where: { uuid: user.dataValues.uuid }
+    });
+
+    const response = new ResponseParser({});
+    response.sendResponseResetPasswordSuccess(res);
+  }, next);
 };
 
 module.exports = {
@@ -210,5 +314,7 @@ module.exports = {
   deleteUserByUUID,
   updateUserByUUID,
   verifyUserEmail,
-  registerUser
+  registerUser,
+  requestResetPassword,
+  resetPassword
 };

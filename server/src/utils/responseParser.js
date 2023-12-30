@@ -39,8 +39,8 @@ class ResponseParser {
 
       const result =
         urlQueryFiltered.length > 0
-          ? `${process.env.CLIENT_BASE_URL}${urlBase}?${urlQueryFiltered}&`
-          : `${process.env.CLIENT_BASE_URL}${urlBase}?${urlQueryFiltered}`;
+          ? `${process.env.SERVER_BASE_URL}${urlBase}?${urlQueryFiltered}&`
+          : `${process.env.SERVER_BASE_URL}${urlBase}?${urlQueryFiltered}`;
 
       return result;
     };
@@ -48,7 +48,7 @@ class ResponseParser {
     const getLinks = () => {
       if (!this.pageSize && !this.pageNumber) {
         return {
-          self: `${process.env.CLIENT_BASE_URL}${this.request.originalUrl}`,
+          self: `${process.env.SERVER_BASE_URL}${this.request.originalUrl}`,
         };
       }
 
@@ -101,7 +101,7 @@ class ResponseParser {
         uuid: document.uuid,
         attributes: this.getSelectedAttributes(document),
         links: {
-          self: `${process.env.CLIENT_API_BASE_URL}/${this.entityName}/${document.uuid}`,
+          self: `${process.env.SERVER_API_BASE_URL}/${this.entityName}/${document.uuid}`,
         },
       });
     });
@@ -110,7 +110,7 @@ class ResponseParser {
   parseDataIndividual() {
     this.response = {
       links: {
-        self: `${process.env.CLIENT_API_BASE_URL}/${this.entityName}/${this.documents.uuid}`,
+        self: `${process.env.SERVER_API_BASE_URL}/${this.entityName}/${this.documents.uuid}`,
       },
       data: {
         type: this.entityName,
@@ -155,10 +155,19 @@ class ResponseParser {
 
   sendResponseResetPasswordSuccess(res) {
     return res
-      .status(
-        ResponsesTypes.success.success_200.success_reset_password_success
-          .httpStatusCode
-      )
+      .status(ResponsesTypes.success.success_200.success_reset_password_success.httpStatusCode)
+      .json();
+  }
+
+  sendResponseRequestResetPasswordSuccess(res) {
+    return res
+      .status(ResponsesTypes.success.success_200.success_request_reset_password_success.httpStatusCode)
+      .json(this.response);
+  }
+
+  sendResponseVerifyEmail(res) {
+    return res
+      .status(ResponsesTypes.success.success_200.success_verify_email_success.httpStatusCode)
       .json();
   }
 

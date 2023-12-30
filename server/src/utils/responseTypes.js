@@ -64,7 +64,13 @@ const ResponsesTypes = {
       success_reset_password_success: {
         httpStatusCode: 204,
       },
+      success_request_reset_password_success: {
+        httpStatusCode: 200,
+      },
       success_user_register_success: {
+        httpStatusCode: 204,
+      },
+      success_verify_email_success: {
         httpStatusCode: 204,
       },
       success_user_authentication_success: {
