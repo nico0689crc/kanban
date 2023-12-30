@@ -1,4 +1,4 @@
-const { User }  = require('../models');
+const { User, Sequelize }  = require('../models');
 const { faker } = require("@faker-js/faker");
 const crypto = require('crypto');
 const bcryptjs = require('bcryptjs');
@@ -74,6 +74,59 @@ const deleteUserByUUID = async (req, res, next) => {
   }, next);
 };
 
+const verifyUserEmail = async (req, res, next) => {
+  ErrorHandler(async () => {
+    const { confirmation_code } = req.body;
+    const { user_uuid } = req.params;
+    
+    const user = await User.findOne({ where: { uuid: user_uuid }});
+
+    if(!user){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "User not found.",
+          detail: "User not found."
+        }
+      );
+    }
+
+    if(user.dataValues.email_verified){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_email_verificated,
+        {
+          title: "User email verified already.",
+          detail: "User email verified already."
+        }
+      );
+    }
+
+    const isValid = await bcryptjs.compare(confirmation_code, user.confirmation_code);
+
+    if(!isValid){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_email_verificated,
+        {
+          title: "Confimation code not valid.",
+          detail: "Confimation code not valid."
+        }
+      );
+    }
+
+    await User.update(
+      { 
+        confirmation_code: null, 
+        email_verified: true, 
+        email_verified_at: Sequelize.fn('NOW'), 
+      },
+      { where: { uuid: user_uuid } }
+    );
+    
+    const response = new ResponseParser({});
+    response.sendResponseResetPasswordSuccess(res);
+  }, next);
+};
+
 const updateUserByUUID = async (req, res, next) => {
   ErrorHandler(async () => {
     await expressValidatorResult(req);
@@ -138,12 +191,14 @@ const registerUser = (req, res, next) => {
       model: User,
       documents: {
         ...user.dataValues,
-        token: token
+        token: token,
+        confirmationCode
       },
       request: req,
     });
 
     response.fieldsToSelect.push("token");
+    response.fieldsToSelect.push("confirmationCode");
     response.parseDataIndividual();
     response.sendResponseGetSuccess(res);
   },next);
@@ -154,5 +209,6 @@ module.exports = {
   getUserByUUID,
   deleteUserByUUID,
   updateUserByUUID,
+  verifyUserEmail,
   registerUser
 };

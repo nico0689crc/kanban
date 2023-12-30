@@ -19,6 +19,10 @@ userRoutes.post(
   userServices.registerUser
 );
 userRoutes.post(
+  "/verify_email/:user_uuid",
+  userServices.verifyUserEmail
+);
+userRoutes.post(
   "/login",
   userValidations(body, ["email", "password_not_empty"]), 
   userServices.registerUser
