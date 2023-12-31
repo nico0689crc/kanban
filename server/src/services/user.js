@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const bcryptjs = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const expressValidatorResult = require('../utils/expressValidatorResult');
+const { sendEmail } = require('../utils/emailSender');
 const ErrorHandler = require("../utils/errorHandler");
 const ResponseParser = require("../utils/responseParser");
 const ResponseParserError = require('../utils/responseParserError');
@@ -129,6 +130,8 @@ const registerUser = (req, res, next) => {
     }, {
       fields: ['uuid', 'first_name', 'last_name', 'email', 'role', 'avatar', 'password', 'confirmation_code']
     });
+
+    await sendEmail('nico.06.89crc@gmail.com', 'Nicolas');
 
     const response = new ResponseParser({
       model: User,
