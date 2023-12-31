@@ -129,16 +129,11 @@ const registerUser = (req, res, next) => {
     }, {
       fields: ['uuid', 'first_name', 'last_name', 'email', 'role', 'avatar', 'password', 'confirmation_code']
     });
-  
-    const credentials = { userUUID: user.uuid, email: user.email };
-    const jwtKey = process.env.JWT_KEY;
-    const token = await jwt.sign(credentials, jwtKey, { expiresIn: process.env.JWT_EXPIRATION_TIME });
 
     const response = new ResponseParser({
       model: User,
       documents: {
         ...user.dataValues,
-        token: token,
         confirmationCode,
         redirectionUrl: `${process.env.CLIENT_BASE_URL}/verify-email?userUUID=${user.dataValues.uuid}&confirmationCode=${confirmationCode}`
       },
@@ -253,13 +248,10 @@ const requestResetPassword = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   ErrorHandler(async () => {
     await expressValidatorResult(req);
+
     const { password, uuid, token } = req.body;
     
-    const user = await User.findOne({ 
-      where: {
-        uuid: uuid 
-      }
-    });
+    const user = await User.findOne({ where: { uuid: uuid }});
 
     if(!user){
       throw new ResponseParserError(
@@ -308,6 +300,53 @@ const resetPassword = async (req, res, next) => {
   }, next);
 };
 
+const authenticate = (req, res, next) => {
+  ErrorHandler(async () => {
+    await expressValidatorResult(req);
+
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ where: { email: email }});
+
+    if(!user){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        { title: "User not found.", detail: "User not found." }
+      );
+    }
+
+    if(!user.dataValues.email_verified){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        { title: "Email not verified.", detail: "Email not verified." }
+      );
+    }
+
+    const passwordCheck = await bcryptjs.compare(password, user.dataValues.password);
+
+    if(!passwordCheck){
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        { title: "Password not valid.", detail: "Password not valid." }
+      );
+    }
+
+    const credentials = { userUUID: user.dataValues.uuid, email: user.dataValues.email };
+    const jwtKey = process.env.JWT_KEY;
+    const token = await jwt.sign(credentials, jwtKey, { expiresIn: process.env.JWT_EXPIRATION_TIME });
+
+    const response = new ResponseParser({
+      model: User,
+      documents: { ...user.dataValues, token: token },
+      request: req,
+    });
+
+    response.fieldsToSelect.push("token");
+    response.parseDataIndividual();
+    response.sendResponseGetSuccess(res);
+  },next);
+};
+
 module.exports = {
   getUsers,
   getUserByUUID,
@@ -316,5 +355,6 @@ module.exports = {
   verifyUserEmail,
   registerUser,
   requestResetPassword,
-  resetPassword
+  resetPassword,
+  authenticate
 };

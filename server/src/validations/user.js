@@ -54,14 +54,40 @@ module.exports = (body, fieldsToValidate = []) => {
   if(fieldsToValidate.includes('password')) {
     fieldValidated.push(
       body("password")
-      .custom(async (value, { req }) => {
-        const passwordPattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
+        .custom(async (value, { req }) => {
+          const passwordPattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
 
-        if (!passwordPattern.test(req.body.password)) {
-          return Promise.reject("");
-        }
-      })
-      .withMessage(() => "Enter a password 6 to 16 characters long (1 number, 1 special character, 1 uppercase, and 1 lowercase)"),
+          if (!passwordPattern.test(req.body.password)) {
+            return Promise.reject("");
+          }
+        })
+        .withMessage(() => "Enter a password 6 to 16 characters long (1 number, 1 special character, 1 uppercase, and 1 lowercase)")
+        .custom(async (value, { req }) => {
+          if (req.body.confirm_password !== value) {
+            return Promise.reject("");
+          }
+        })
+        .withMessage('Passwords must match.')
+    );
+  }
+
+  if(fieldsToValidate.includes('confirm_password')) {
+    fieldValidated.push(
+      body('confirm_password')
+        .custom(async (value, { req }) => {
+          const passwordPattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
+
+          if (!passwordPattern.test(req.body.confirm_password)) {
+            return Promise.reject("");
+          }
+        })
+        .withMessage(() => "Enter a password 6 to 16 characters long (1 number, 1 special character, 1 uppercase, and 1 lowercase)")
+        .custom(async (value, { req }) => {
+          if (req.body.password !== value) {
+            return Promise.reject("");
+          }
+        })
+        .withMessage('Passwords must match.')
     );
   }
 

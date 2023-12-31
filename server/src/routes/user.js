@@ -6,36 +6,44 @@ const { userValidations } = require('../validations');
 const userRoutes = express.Router();
 
 userRoutes.get("/", userServices.getUsers);
+
 userRoutes.get("/:user_uuid", userServices.getUserByUUID);
+
 userRoutes.delete("/:user_uuid", userServices.deleteUserByUUID);
+
 userRoutes.patch(
   "/:user_uuid", 
   userValidations(body, ["first_name", "last_name", "password"]),
   userServices.updateUserByUUID
 );
+
 userRoutes.post(
   "/register",
-  userValidations(body, ["first_name", "last_name", "email_unique", "password"]),
+  userValidations(body, ["first_name", "last_name", "email_unique", "password", "confirm_password"]),
   userServices.registerUser
 );
+
 userRoutes.post(
   "/verify-email/:user_uuid",
   userServices.verifyUserEmail
 );
+
 userRoutes.post(
   "/request-reset-password",
   userValidations(body, ["email"]), 
   userServices.requestResetPassword
 );
+
 userRoutes.post(
   "/reset-password",
-  userValidations(body, ["password"]), 
+  userValidations(body, ["password", "confirm_password"]), 
   userServices.resetPassword
 );
+
 userRoutes.post(
-  "/login",
+  "/authenticate",
   userValidations(body, ["email", "password_not_empty"]), 
-  userServices.registerUser
+  userServices.authenticate
 );
 
 module.exports = userRoutes;

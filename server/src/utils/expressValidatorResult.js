@@ -13,6 +13,7 @@ module.exports = async (req) => {
         source: {
           location: error.location,
           pointer: error.param,
+          path: error.path,
         },
         title: "Field not valid",
         detail: error.msg,
