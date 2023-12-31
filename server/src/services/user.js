@@ -117,7 +117,7 @@ const registerUser = (req, res, next) => {
 
     const passwordHashed = await bcryptjs.hash(attributes.password, 12);
     
-    const confirmationCode = crypto.randomBytes(32).toString("hex");
+    const confirmationCode = faker.string.numeric(6);
     const confirmationCodeHashed = await bcryptjs.hash(confirmationCode, 12);
   
     const user = await User.create({
