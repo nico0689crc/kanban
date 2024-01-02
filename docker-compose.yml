@@ -63,6 +63,7 @@ services:
       context: ./client
       args:
         - REACT_APP_API_BASE_URL=$SERVER_API_BASE_URL
+        - REACT_DOCKER_PORT=$REACT_DOCKER_PORT
     ports:
       - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
     networks:
