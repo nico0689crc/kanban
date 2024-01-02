@@ -34,8 +34,8 @@ module.exports = (sequelize) => {
     confirmation_code: DataTypes.STRING,
     email_verified: DataTypes.STRING,
     email_verified_at: DataTypes.DATE,
-    reset_password_token: DataTypes.STRING,
-    reset_password_token_req_at: DataTypes.DATE,
+    password_reset_token: DataTypes.STRING,
+    password_reset_token_req_at: DataTypes.DATE,
     role: DataTypes.STRING,
     password: DataTypes.STRING,
     avatar: DataTypes.STRING

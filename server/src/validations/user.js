@@ -32,12 +32,13 @@ module.exports = (body, fieldsToValidate = []) => {
       body("email")
         .isEmail()
         .withMessage(() => "Please use a valid email address.")
-        .custom(async (value, { req }) => {
-          const user = await User.findOne({ where: { email: req.body.email }});
+        .custom(async (value) => {
 
-          if (user) {
-            return Promise.reject("This email address is used already.");
-          }
+          await User.findOne({ where: { email: value }}).then(user => {
+            if (user) {
+              return Promise.reject("This email address is used already.");
+            }
+          });
         })
         .withMessage(() => "This email address is used already."),
     );
@@ -54,10 +55,10 @@ module.exports = (body, fieldsToValidate = []) => {
   if(fieldsToValidate.includes('password')) {
     fieldValidated.push(
       body("password")
-        .custom(async (value, { req }) => {
+        .custom(async (value) => {
           const passwordPattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
 
-          if (!passwordPattern.test(req.body.password)) {
+          if (!passwordPattern.test(value)) {
             return Promise.reject("");
           }
         })
@@ -74,10 +75,10 @@ module.exports = (body, fieldsToValidate = []) => {
   if(fieldsToValidate.includes('confirm_password')) {
     fieldValidated.push(
       body('confirm_password')
-        .custom(async (value, { req }) => {
+        .custom(async (value) => {
           const passwordPattern = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
 
-          if (!passwordPattern.test(req.body.confirm_password)) {
+          if (!passwordPattern.test(value)) {
             return Promise.reject("");
           }
         })
