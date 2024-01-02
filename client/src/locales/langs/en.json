@@ -1,0 +1,92 @@
+{
+  "demo": "English",
+  "login_view": {
+    "validation": {
+      "email_required": "Email is required.",
+      "email_format": "Email must be a valid format.",
+      "password_required": "Password is required."
+    }, 
+    "labels": {
+      "title": "Sign in to Kanban MVP",
+      "new_user": "New user?",
+      "create_account": "Create an account",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot password?",
+      "login": "Login",
+      "login_loading": "Authentication..."
+    }
+  },
+  "register_view": {
+    "validation": {
+      "email_required": "Email is required.",
+      "email_format": "Email must be a valid format.",
+      "password_required": "Password is required.",
+      "first_name_required": "First name required.",
+      "family_name_required": "Last name required."
+    },
+    "labels": {
+      "title": "Get started absolutely free",
+      "have_account": "Already have an account?",
+      "sign_in": "Sign in",
+      "first_name": "First name",
+      "family_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "create_account": "Create account"
+    }
+  },
+  "verify_view": {
+    "validation": {
+      "email_required": "Email is required.",
+      "email_format": "Email must be a valid format.",
+      "code_required": "The code is required.",
+      "code_format": "The code must be at least 6 characters."
+    },
+    "labels": {
+      "title": "Please check your email!",
+      "sub_title": "We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below box to verify your email.",
+      "email": "Email",
+      "verify": "Verify",
+      "resend_title": "Don’t have a code?",
+      "resend": "Resend code",
+      "return": "Return to sign in"
+    }
+  },
+  "new_password_view": {
+    "validation": {
+      "email_required": "The email is required.",
+      "email_format": "The email must be a valid format.",
+      "code_required": "The code is required.",
+      "code_format": "The code must be at least 6 characters.",
+      "password_required": "The password is required.",
+      "confirm_password_required": "Confirm the password is required.",
+      "password_length": "The password must be at least 6 characters.",
+      "password_match": "The passwords must match."
+    },
+    "labels": {
+      "title": "The request was sent successfully!",
+      "sub_title": "We have sent a 6-digit confirmation email to your email. Please enter the code in the below box to New Password your email.",
+      "email": "Email",
+      "password": "New password",
+      "confirm_password": "Confirm new password",
+      "submit": "Update password",
+      "resend_title": "Don’t have a code?",
+      "resend": "Resend code",
+      "return": "Return to sign in"
+    }
+  },
+  "forgot_password_view": {
+    "validation": {
+      "email_required": "Email is required.",
+      "email_format": "Email must be a valid format."
+    },
+    "labels": {
+      "title": "Forgot your password?",
+      "sub_title": "Please enter the email address associated with your account and We will email you a link to reset your password.",
+      "email": "Email",
+      "send": "Send Request",
+      "return": "Return to sign in"
+    }
+  } 
+}

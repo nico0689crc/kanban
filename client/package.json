@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "kanban-v2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.0.4"
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@hookform/resolvers": "^3.3.1",
+    "@iconify/react": "^4.1.1",
+    "@mui/lab": "^5.0.0-alpha.143",
+    "@mui/material": "^5.14.8",
+    "@mui/x-date-pickers": "^6.13.0",
+    "@types/node": "20.5.9",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "aws-amplify": "^5.3.10",
+    "date-fns": "^2.30.0",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
+    "framer-motion": "^10.16.4",
+    "i18next-browser-languagedetector": "^7.1.0",
+    "lodash": "^4.17.21",
+    "mui-one-time-password-input": "^2.0.0",
+    "next": "13.4.19",
+    "next-i18next": "^14.0.3",
+    "nprogress": "^0.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.46.1",
+    "react-i18next": "^13.2.2",
+    "typescript": "5.2.2",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.4"
+    "@types/lodash": "^4.14.198",
+    "@types/nprogress": "^0.2.0"
   }
 }

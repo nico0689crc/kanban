@@ -1,0 +1,92 @@
+{
+  "demo": "Español",
+  "login_view": {
+    "validation": {
+      "email_required": "Correo electrónico obligatorio.",
+      "email_format": "El correo electrónico debe ser válido.",
+      "password_required": "Contraseña obligatoria."
+    }, 
+    "labels": {
+      "title": "Iniciar sesión en Kanban MVP",
+      "new_user": "¿Usuario nuevo?",
+      "create_account": "Crea una cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgot_password": "¿Has olvidado tu contraseña?",
+      "login": "Iniciar sesión",
+      "login_loading": "Iniciando..."
+    }
+  },
+  "register_view": {
+    "validation": {
+      "email_required": "Correo electrónico obligatorio.",
+      "email_format": "El correo electrónico debe ser válido.",
+      "password_required": "Contraseña obligatoria.",
+      "first_name_required": "Nombre obligatorio.",
+      "family_name_required": "Apellido obligatorio."
+    },
+    "labels": {
+      "title": "Comience absolutamente gratis",
+      "have_account": "¿Ya tienes una cuenta?",
+      "sign_in": "Iniciar sesión",
+      "first_name": "Nombre",
+      "family_name": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "create_account": "Crear una cuenta"
+    }
+  },
+  "verify_view": {
+    "validation": {
+      "email_required": "Correo electrónico obligatorio.",
+      "email_format": "El correo electrónico debe ser válido.",
+      "code_required": "Se requiere el código.",
+      "code_format": "El código debe tener al menos 6 caracteres."
+    },
+    "labels": {
+      "title": "¡Por favor revise su correo electrónico!",
+      "sub_title": "Hemos enviado por correo electrónico un código de confirmación de 6 dígitos a acb@domain. Ingrese el código en el cuadro a continuación para verificar su correo electrónico.",
+      "email": "Correo electrónico",
+      "verify": "Verify",
+      "resend_title": "¿No tienes un código?",
+      "resend": "Reenviar codigo",
+      "return": "Volver para iniciar sesión"
+    }
+  },
+  "new_password_view": {
+    "validation": {
+      "email_required": "Correo electrónico obligatorio.",
+      "email_format": "El correo electrónico debe ser válido.",
+      "code_required": "Se requiere el código.",
+      "code_format": "El código debe tener al menos 6 caracteres.",
+      "password_required": "La contraseña obligatoria.",
+      "confirm_password_required": "La confirmacion obligatoria.",
+      "password_length": "La contraseña debe tener al menos 6 caracteres.",
+      "password_match": "Las contraseñas deben coincidir."
+    },
+    "labels": {
+      "title": "¡La solicitud fue enviada exitosamente!",
+      "sub_title": "Hemos enviado un correo electrónico de confirmación de 6 dígitos a su correo electrónico. Ingrese el código en el cuadro a continuación para obtener Nueva contraseña en su correo electrónico.",
+      "email": "Correo electrónico",
+      "password": "Nueva contraseña",
+      "confirm_password": "Confirmar nueva contraseña",
+      "submit": "Actualiza contraseña",
+      "resend_title": "¿No tienes un código?",
+      "resend": "Reenviar codigo",
+      "return": "Volver a iniciar sesión"
+    }
+  },
+  "forgot_password_view": {
+    "validation": {
+      "email_required": "Correo electrónico obligatorio.",
+      "email_format": "El correo electrónico debe ser válido."
+    },
+    "labels": {
+      "title": "¿Olvidaste tu contraseña?",
+      "sub_title": "Ingrese la dirección de correo electrónico asociada con su cuenta y le enviaremos un enlace por correo electrónico para restablecer su contraseña.",
+      "email": "Correo electrónico",
+      "send": "Modificar contraseña",
+      "return": "Volver a iniciar sesión"
+    }
+  }
+}
