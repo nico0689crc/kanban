@@ -1,4 +1,6 @@
 const { User, Sequelize }  = require('../models');
+const ejs = require("ejs");
+const path = require("path");
 const { faker } = require("@faker-js/faker");
 const crypto = require('crypto');
 const bcryptjs = require('bcryptjs');
@@ -114,38 +116,56 @@ const registerUser = (req, res, next) => {
   ErrorHandler(async () => {
     await expressValidatorResult(req);
 
+    let activationLink;
     const attributes = req.body;
-
     const passwordHashed = await bcryptjs.hash(attributes.password, 12);
-    
     const confirmationCode = faker.string.numeric(6);
     const confirmationCodeHashed = await bcryptjs.hash(confirmationCode, 12);
+
+    const user = await User.sequelize.transaction(async () => {
+      const user = await User.create({
+        ...attributes,
+        password: passwordHashed,
+        uuid: faker.string.uuid(),
+        confirmation_code: confirmationCodeHashed,
+        role: User.roles.user,
+      }, {
+        fields: ['uuid', 'first_name', 'last_name', 'email', 'role', 'avatar', 'password', 'confirmation_code']
+      });
   
-    const user = await User.create({
-      ...attributes,
-      password: passwordHashed,
-      uuid: faker.string.uuid(),
-      confirmation_code: confirmationCodeHashed,
-      role: User.roles.user,
-    }, {
-      fields: ['uuid', 'first_name', 'last_name', 'email', 'role', 'avatar', 'password', 'confirmation_code']
+      activationLink = `${process.env.CLIENT_BASE_URL}/verify-email?userUUID=${user.dataValues.uuid}&confirmationCode=${confirmationCode}`;
+  
+      const registrationEmailTemplate = await ejs.renderFile(
+        path.join(__dirname, "../emails/registration.ejs"), 
+        {
+          user_name: user.dataValues.first_name,
+          activation_link: activationLink,
+          confirmation_code: confirmationCode
+        }
+      );
+  
+      await sendEmail(
+        user.dataValues.email, 
+        `Welcome to Kanban ${user.dataValues.first_name}`, 
+        registrationEmailTemplate
+      );
+
+      return user;
     });
-
-    await sendEmail('nico.06.89crc@gmail.com', 'Nicolas');
-
+  
     const response = new ResponseParser({
       model: User,
       documents: {
         ...user.dataValues,
-        confirmationCode,
-        redirectionUrl: `${process.env.CLIENT_BASE_URL}/verify-email?userUUID=${user.dataValues.uuid}&confirmationCode=${confirmationCode}`
+        confirmation_code: confirmationCode,
+        activation_link: activationLink
       },
       request: req,
     });
 
     response.fieldsToSelect.push("token");
-    response.fieldsToSelect.push("confirmationCode");
-    response.fieldsToSelect.push("redirectionUrl");
+    response.fieldsToSelect.push("confirmation_code");
+    response.fieldsToSelect.push("activation_link");
     response.parseDataIndividual();
     response.sendResponseGetSuccess(res);
   },next);

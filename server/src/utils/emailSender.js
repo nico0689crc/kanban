@@ -8,7 +8,7 @@ const SES_CONFIG = {
 
 const AWS_SES = new AWS.SES(SES_CONFIG);
 
-const sendEmail = (recipientEmail, name) => {
+const sendEmail = (recipientEmail, emailSubject, emailTemaplate) => {
   let params = {
     Source: process.env.AWS_VERIFIED_EMAIL,
     Destination: {
@@ -21,18 +21,17 @@ const sendEmail = (recipientEmail, name) => {
       Body: {
         Html: {
           Charset: 'UTF-8',
-          Data: 'This is the body of my email!',
+          Data: emailTemaplate,
         },
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `Hello, ${name}!`,
+        Data: emailSubject,
       }
     },
   };
   return AWS_SES.sendEmail(params).promise();
 };
-
 
 module.exports = {
   sendEmail

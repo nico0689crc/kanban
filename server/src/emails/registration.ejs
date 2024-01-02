@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Kanban</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+
+  <div style="background-color: #f4f4f4; padding: 20px;">
+    <h1>Welcome to Kanban!</h1>
+    <p>Dear <%= user_name %>,</p>
+    <p>Thank you for joining us! Your registration is almost complete. Please use the following registration code to activate your account:</p>
+    
+    <div style="background-color: #ffffff; border: 1px solid #cccccc; padding: 15px; margin-bottom: 15px;">
+      <p style="font-size: 18px; margin: 0;">Registration Code: <strong><%= confirmation_code %></strong></p>
+    </div>
+
+    <p>Please click on the activation link below to complete the registration process:</p>
+    
+    <p><a href="<%= activation_link %>" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Activate Your Account</a></p>
+    
+    <p>If the above button doesn't work, you can also copy and paste the following URL into your web browser:</p>
+    <p><%= activation_link %></p>
+    
+    <p>We are excited to have you on board! If you have any questions or need assistance, please feel free to contact us.</p>
+    
+    <p>Best Regards,<br> The Kanban Team</p>
+  </div>
+
+</body>
+</html>
