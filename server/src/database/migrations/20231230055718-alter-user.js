@@ -25,7 +25,7 @@ module.exports = {
 
     await queryInterface.addColumn(
       'users',
-      'reset_password_token', 
+      'password_reset_token', 
       {
         type: Sequelize.STRING,
         after: 'email_verified_at'
@@ -34,10 +34,10 @@ module.exports = {
 
     await queryInterface.addColumn(
       'users',
-      'reset_password_token_req_at', 
+      'password_reset_token_req_at', 
       {
         type: Sequelize.DATE,
-        after: 'reset_password_token'
+        after: 'password_reset_token'
       }
     );
   },

@@ -227,6 +227,7 @@ const verifyUserEmail = async (req, res, next) => {
 const requestResetPassword = async (req, res, next) => {
   ErrorHandler(async () => {
     await expressValidatorResult(req);
+
     const { email } = req.body;
     
     const user = await User.findOne({ where: { email: email }});
@@ -241,28 +242,47 @@ const requestResetPassword = async (req, res, next) => {
       );
     }
 
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    const tokenHashed = await bcryptjs.hash(resetToken, 12);
+    const passwordResetToken = crypto.randomBytes(32).toString("hex");
+    const passwordResetTokenHashed = await bcryptjs.hash(passwordResetToken, 12);
+    const passwordResetLink = `${process.env.CLIENT_BASE_URL}/reset-password?userUUID=${user.dataValues.uuid}&passwordResetToken=${passwordResetToken}`
 
-    await User.update({ 
-      reset_password_token: tokenHashed, 
-      reset_password_token_req_at: Sequelize.fn('NOW'), 
-    },{ 
-      where: { uuid: user.dataValues.uuid 
-    }});
-    
+    await User.sequelize.transaction(async () => {
+      await User.update({ 
+        password_reset_token: passwordResetTokenHashed, 
+        password_reset_token_req_at: Sequelize.fn('NOW'), 
+      },{ 
+        where: { uuid: user.dataValues.uuid 
+      }});
+
+      const requestPasswordResetEmailTemplate = await ejs.renderFile(
+        path.join(__dirname, "../emails/password-reset.ejs"), 
+        {
+          user_name: user.dataValues.first_name,
+          password_reset_link: passwordResetLink
+        }
+      );
+  
+      await sendEmail(
+        user.dataValues.email, 
+        'Password Reset',
+        requestPasswordResetEmailTemplate
+      );
+
+      return true;
+    });
+
     const response = new ResponseParser({
       model: User,
       documents: {
         ...user.dataValues,
-        redirectionUrl: `${process.env.CLIENT_BASE_URL}/reset-password?userUUID=${user.dataValues.uuid}&resetToken=${resetToken}`
+        password_reset_link: passwordResetLink
       },
       request: req,
     });
     
     response.fieldsToSelect = [];
     response.fieldsToSelect.push("uuid");
-    response.fieldsToSelect.push("redirectionUrl");
+    response.fieldsToSelect.push("password_reset_link");
     response.parseDataIndividual();
     response.sendResponseRequestResetPasswordSuccess(res);
   }, next);
@@ -286,7 +306,7 @@ const resetPassword = async (req, res, next) => {
       );
     }
 
-    if(!user.dataValues.reset_password_token){
+    if(!user.dataValues.password_reset_token){
       throw new ResponseParserError(
         ResponsesTypes.errors.errors_400.error_resource_not_found,
         {
@@ -296,7 +316,7 @@ const resetPassword = async (req, res, next) => {
       );
     }
 
-    const isValid = await bcryptjs.compare(token, user.dataValues.reset_password_token);
+    const isValid = await bcryptjs.compare(token, user.dataValues.password_reset_token);
 
     if(!isValid){
       throw new ResponseParserError(
@@ -311,8 +331,8 @@ const resetPassword = async (req, res, next) => {
     const passwordHashed = await bcryptjs.hash(password, 12);
 
     await User.update({ 
-      reset_password_token: null, 
-      reset_password_token_req_at: null, 
+      password_reset_token: null, 
+      password_reset_token_req_at: null, 
       password: passwordHashed
     },{ 
       where: { uuid: user.dataValues.uuid }
