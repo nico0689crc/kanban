@@ -28,5 +28,7 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 export const endpoints = {
   auth: {
     login: '/users/authenticate',
+    register: '/users/register',
+    verify_email: '/users/verify-email',
   }
 };

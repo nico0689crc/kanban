@@ -137,13 +137,16 @@ export const AuthProvider =({ children } : Props) => {
   }, []);
 
   // REGISTER
-  const register = useCallback(async (email: string, password: string, name: string, family_name: string) => {
-
+  const register = useCallback(async (email: string, password: string, confirm_password: string, first_name: string, last_name: string) => {
+    await axios.post(
+      endpoints.auth.register, 
+      { email, password, confirm_password, first_name, last_name }
+    );
   },[]);
 
   // CONFIRM REGISTER
-  const confirmRegister = useCallback(async (email: string, code: string) => {
-
+  const verifyEmail = useCallback(async (email: string, confirmation_code: string) => {
+    await axios.post(endpoints.auth.verify_email, { email, confirmation_code });
   }, []);
 
   // RESEND CODE REGISTER
@@ -187,10 +190,10 @@ export const AuthProvider =({ children } : Props) => {
       register,
       newPassword,
       forgotPassword,
-      confirmRegister,
+      verifyEmail,
       resendCodeRegister
     }),
-    [ login, logout, register, newPassword, forgotPassword, confirmRegister, resendCodeRegister, state, status ]
+    [ login, logout, register, newPassword, forgotPassword, verifyEmail, resendCodeRegister, state, status ]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>

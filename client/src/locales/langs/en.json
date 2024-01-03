@@ -23,16 +23,17 @@
       "email_format": "Email must be a valid format.",
       "password_required": "Password is required.",
       "first_name_required": "First name required.",
-      "family_name_required": "Last name required."
+      "last_name_required": "Last name required."
     },
     "labels": {
       "title": "Get started absolutely free",
       "have_account": "Already have an account?",
       "sign_in": "Sign in",
       "first_name": "First name",
-      "family_name": "Last name",
+      "last_name": "Last name",
       "email": "Email",
       "password": "Password",
+      "confirm_password": "Confirm password",
       "create_account": "Create account"
     }
   },

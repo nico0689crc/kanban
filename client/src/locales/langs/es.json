@@ -23,16 +23,17 @@
       "email_format": "El correo electrónico debe ser válido.",
       "password_required": "Contraseña obligatoria.",
       "first_name_required": "Nombre obligatorio.",
-      "family_name_required": "Apellido obligatorio."
+      "last_name_required": "Apellido obligatorio."
     },
     "labels": {
       "title": "Comience absolutamente gratis",
       "have_account": "¿Ya tienes una cuenta?",
       "sign_in": "Iniciar sesión",
       "first_name": "Nombre",
-      "family_name": "Apellido",
+      "last_name": "Apellido",
       "email": "Correo electrónico",
       "password": "Contraseña",
+      "confirm_password": "Confirmar contraseña",
       "create_account": "Crear una cuenta"
     }
   },

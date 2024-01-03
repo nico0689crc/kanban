@@ -1,7 +1,9 @@
-import { useFormContext, Controller } from 'react-hook-form';
-import InputBase, { InputBaseProps } from '@mui/material/InputBase';
-import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 import { ReactElement } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import InputBase, { inputBaseClasses, InputBaseProps } from '@mui/material/InputBase';
+import { inputAdornmentClasses } from '@mui/material/InputAdornment';
+import { alpha, styled } from '@mui/material/styles';
+import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 
 type Props = InputBaseProps & {
   name: string;
@@ -10,6 +12,55 @@ type Props = InputBaseProps & {
     endAdornment: ReactElement
   }
 };
+
+const InputBaseStyled = styled(InputBase)<InputBaseProps>(({ theme }) => {
+  const font = {
+    label: theme.typography.body1,
+    value: theme.typography.body2,
+  };
+
+  const color = {
+    focused: theme.palette.text.primary,
+    active: theme.palette.text.secondary,
+    placeholder: theme.palette.text.disabled,
+  };
+
+  return {
+    border: '1.5px solid',
+    borderColor: alpha(theme.palette.text.secondary, 0.75),
+    borderRadius: (theme.shape.borderRadius * 0.5),
+    padding: '0.35rem 1rem',
+    transition: theme.transitions.create(['border', 'border-color', 'box-shadow'], {
+      duration: theme.transitions.duration.shorter,
+      easing: theme.transitions.easing.easeInOut
+    }),
+    [`&.${inputBaseClasses.error}`]: {
+      borderColor: theme.palette.error.main,
+      color: theme.palette.error.main,
+      [`.${inputAdornmentClasses.root} svg`]: {
+        color: theme.palette.error.main
+      },
+      [`&.${inputBaseClasses.focused}`]: {
+        borderColor: alpha(theme.palette.error.main, 0.75),
+        boxShadow: `5px 5px 2px 0px ${alpha(theme.palette.error.main, 0.15)}`,
+      },
+    },
+    [`&.${inputBaseClasses.sizeSmall}`]: {
+      padding: '0.25rem',
+    },
+    [`&.${inputBaseClasses.focused}`]: {
+
+      boxShadow: theme.customShadows.card,
+    },
+    input: {
+      ...font.value,
+      '&::placeholder': {
+        opacity: 0,
+        color: color.placeholder,
+      },
+    }
+  }
+});
 
 const RHFTextField = ({ name, type, label, InputProps, ...other }: Props) => {
   const { control } = useFormContext();
@@ -21,7 +72,7 @@ const RHFTextField = ({ name, type, label, InputProps, ...other }: Props) => {
       render={({ field, fieldState: { error } }) => (
         <FormControl error={!!error}>
           <InputLabel>{label}</InputLabel>
-          <InputBase
+          <InputBaseStyled
             {...field}
             fullWidth
             {...(InputProps && InputProps)}

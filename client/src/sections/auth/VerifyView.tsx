@@ -1,5 +1,5 @@
 'use client';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 import { paths } from '@/routes/paths';
 import { useAuthContext } from '@/auth/hooks';
@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocales } from '@/locales';
 
 
-import { Link, Stack, Typography } from '@mui/material';
+import { Alert, Link, Stack, Typography } from '@mui/material';
 import Iconify from '@/components/iconify';
 import LoadingButton from '@mui/lab/LoadingButton';
 import FormProvider from "@/components/hook-form/FormProvider";
@@ -22,57 +22,45 @@ import nProgress from 'nprogress';
 import FormWrapper from './FormWrapper';
 
 const VerifyView = () => {
+  const [errorMsg, setErrorMsg] = useState('');
   const { t } = useLocales();
-
   const router = useRouter();
-
   const searchParams = useSearchParams();
-
   const email = searchParams.get('email');
-
-  const { confirmRegister, resendCodeRegister } = useAuthContext();
-
+  const { verifyEmail, resendCodeRegister } = useAuthContext();
   const { countdown, counting, startCountdown } = useCountdownSeconds(60);
 
   const VerifySchemaSchema = Yup.object().shape({
-    code: Yup.string().min(6, t('verify_view.validation.code_format')).required(t('verify_view.validation.code_required')),
+    confirmation_code: Yup.string().min(6, t('verify_view.validation.code_format')).required(t('verify_view.validation.code_required')),
     email: Yup.string().required(t('verify_view.validation.email_required')).email(t('verify_view.validation.code_format')),
   });
 
   const defaultValues = {
-    code: '',
+    confirmation_code: '',
     email: email || '',
   };
 
-  const methods = useForm({
-    mode: 'onChange',
-    resolver: yupResolver(VerifySchemaSchema),
-    defaultValues,
-  });
-
-  const {
-    watch,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
-
+  const methods = useForm({ mode: 'onChange', resolver: yupResolver(VerifySchemaSchema), defaultValues });
+  const { watch, handleSubmit, formState: { isSubmitting }, setError } = methods;
   const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await confirmRegister(data.email, data.code);
+      await verifyEmail(data.email, data.confirmation_code);
       router.push(paths.auth.login);
-    } catch (error) {
-      console.error(error);
+    } catch ( error: any) {
+      if(Array.isArray(error?.errors)) {
+        error?.errors?.forEach((error: any) => setError(error.source.path, { message: error.detail }))
+      } else {
+        setErrorMsg(error?.errors?.title);
+      }
     }
   });
 
   const handleResendCode = useCallback(async () => {
     try {
       startCountdown();
-
       await resendCodeRegister(values.email);
-
       nProgress.start();
     } catch (error) {
       console.error(error);
@@ -85,6 +73,8 @@ const VerifyView = () => {
         <Stack rowGap={3}>
           <Typography variant="h4">{t('verify_view.labels.title')}</Typography>
 
+          {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {t('verify_view.labels.sub_title')}
           </Typography>
@@ -95,7 +85,7 @@ const VerifyView = () => {
             placeholder="example@gmail.com"
           />
 
-          <RHFCode name="code" />
+          <RHFCode name="confirmation_code" />
 
           <LoadingButton
             fullWidth

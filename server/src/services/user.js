@@ -133,7 +133,7 @@ const registerUser = (req, res, next) => {
         fields: ['uuid', 'first_name', 'last_name', 'email', 'role', 'avatar', 'password', 'confirmation_code']
       });
   
-      activationLink = `${process.env.CLIENT_BASE_URL}/verify-email?userUUID=${user.dataValues.uuid}&confirmationCode=${confirmationCode}`;
+      activationLink = `${process.env.CLIENT_BASE_URL}/auth/verify?email=${user.dataValues.email}`;
   
       const registrationEmailTemplate = await ejs.renderFile(
         path.join(__dirname, "../emails/registration.ejs"), 
@@ -156,16 +156,10 @@ const registerUser = (req, res, next) => {
     const response = new ResponseParser({
       model: User,
       documents: {
-        ...user.dataValues,
-        confirmation_code: confirmationCode,
-        activation_link: activationLink
+        ...user.dataValues
       },
       request: req,
     });
-
-    response.fieldsToSelect.push("token");
-    response.fieldsToSelect.push("confirmation_code");
-    response.fieldsToSelect.push("activation_link");
     response.parseDataIndividual();
     response.sendResponseGetSuccess(res);
   },next);
@@ -173,10 +167,9 @@ const registerUser = (req, res, next) => {
 
 const verifyUserEmail = async (req, res, next) => {
   ErrorHandler(async () => {
-    const { confirmation_code } = req.body;
-    const { user_uuid } = req.params;
+    const { confirmation_code, email } = req.body;
     
-    const user = await User.findOne({ where: { uuid: user_uuid }});
+    const user = await User.findOne({ where: { email }});
 
     if(!user){
       throw new ResponseParserError(
@@ -216,7 +209,7 @@ const verifyUserEmail = async (req, res, next) => {
         email_verified: true, 
         email_verified_at: Sequelize.fn('NOW'), 
       },
-      { where: { uuid: user_uuid } }
+      { where: { email } }
     );
     
     const response = new ResponseParser({});

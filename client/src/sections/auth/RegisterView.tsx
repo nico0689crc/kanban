@@ -28,34 +28,32 @@ const RegisterView = () => {
   const router = useRouter();
   
   const password = useBoolean();
+  const confirm_password = useBoolean();
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required(t("register_view.validation.first_name_required")),
-    familyName: Yup.string().required(t("register_view.validation.family_name_required")),
+    first_name: Yup.string().required(t("register_view.validation.first_name_required")),
+    last_name: Yup.string().required(t("register_view.validation.last_name_required")),
     email: Yup.string().required(t("register_view.validation.email_required")).email(t("register_view.validation.email_format")),
     password: Yup.string().required(t("register_view.validation.password_required")),
+    confirm_password: Yup.string().required(t("register_view.validation.password_required")),
   });
 
   const defaultValues = {
-    firstName: '',
-    familyName: '',
-    email: '',
-    password: '',
+    first_name: 'Nicolas',
+    last_name: 'Fernandez',
+    email: 'nico.06.89crc@gmail.com',
+    password: 'REgaTAS12*',
+    confirm_password: 'REgaTAS12*',
   };
 
-  const methods = useForm({
-    resolver: yupResolver(RegisterSchema),
-    defaultValues,
-  });
+  const methods = useForm({ resolver: yupResolver(RegisterSchema), defaultValues });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { handleSubmit, formState: { isSubmitting }, setError } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register(data.email, data.password, data.firstName, data.familyName);
+      await register(data.email, data.password, data.confirm_password, data.first_name, data.last_name);
+
       const searchParams = new URLSearchParams({
         email: data.email,
       }).toString();
@@ -66,7 +64,11 @@ const RegisterView = () => {
 
       nProgress.start();
     } catch (error: any) {
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      if(Array.isArray(error?.errors)) {
+        error?.errors?.forEach((error: any) => setError(error.source.path, { message: error.detail }))
+      } else {
+        setErrorMsg(error?.errors?.title);
+      }
     }
   });
 
@@ -87,8 +89,8 @@ const RegisterView = () => {
           {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
           <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" spacing={2}>
-            <RHFTextField name="firstName" label={ t("register_view.labels.first_name") } />
-            <RHFTextField name="familyName" label={ t("register_view.labels.family_name") } />
+            <RHFTextField name="first_name" label={ t("register_view.labels.first_name") } />
+            <RHFTextField name="last_name" label={ t("register_view.labels.last_name") } />
           </Stack>
 
           <RHFTextField name="email" label={ t("register_view.labels.email") } />
@@ -102,6 +104,21 @@ const RegisterView = () => {
                 <InputAdornment position="end">
                   <IconButton onClick={password.onToggle} edge="end">
                     <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <RHFTextField
+            name="confirm_password"
+            label={ t("register_view.labels.confirm_password") }
+            type={confirm_password.value ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={confirm_password.onToggle} edge="end">
+                    <Iconify icon={confirm_password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                   </IconButton>
                 </InputAdornment>
               ),

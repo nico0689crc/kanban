@@ -15,11 +15,12 @@ export type AuthContextType = {
   register: (
     email: string,
     password: string,
-    name: string,
-    family_name: string
+    confirm_password: string,
+    first_name: string,
+    last_name: string
   ) => Promise<unknown>;
   logout: () => Promise<unknown>;
-  confirmRegister: (email: string, code: string) => Promise<void>;
+  verifyEmail: (email: string, code: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   resendCodeRegister: (email: string) => Promise<void>;
   newPassword: (email: string, code: string, password: string) => Promise<void>;

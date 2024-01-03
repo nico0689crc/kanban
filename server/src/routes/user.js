@@ -24,7 +24,8 @@ userRoutes.post(
 );
 
 userRoutes.post(
-  "/verify-email/:user_uuid",
+  "/verify-email",
+  userValidations(body, ["email"]),
   userServices.verifyUserEmail
 );
 

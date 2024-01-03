@@ -32,27 +32,25 @@ const LoginView = () => {
   });
 
   const defaultValues = {
-    email: 'nico.06.89crc+1@gmail.com',
-    password: 'fGksFjFFrb!@t89',
+    email: 'nico.06.89crc@gmail.com',
+    password: 'REgaTAS12*',
   };
 
-  const methods = useForm({
-    resolver: yupResolver(LoginSchema),
-    defaultValues,
-  });
+  const methods = useForm({ resolver: yupResolver(LoginSchema), defaultValues });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { handleSubmit, formState: { isSubmitting }, setError } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       await login(data.email, data.password);
       router.push(paths.dashboard.root);
       NProgress.start();
-    } catch ({ errors }: any) {
-      setErrorMsg(errors.title);
+    } catch ( error: any) {
+      if(Array.isArray(error?.errors)) {
+        error?.errors?.forEach((error: any) => setError(error.source.path, { message: error.detail }))
+      } else {
+        setErrorMsg(error?.errors?.title);
+      }
     }
   });
 
