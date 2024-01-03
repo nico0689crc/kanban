@@ -4,7 +4,7 @@ export const metadata = {
   title: '404 Page Not Found!',
 };
 
-const NotFoundPage = () => {
+const Loading = () => {
   return (
     <Box sx={{height: '100vh', width: '100vw'}}>
       <Stack height='100%' alignItems='center' justifyContent='center'>
@@ -14,4 +14,4 @@ const NotFoundPage = () => {
   )
 }
 
-export default NotFoundPage
+export default Loading

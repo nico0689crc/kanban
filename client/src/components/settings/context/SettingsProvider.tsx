@@ -2,10 +2,9 @@
 
 import { useMemo } from "react";
 import { SettingsValueProps } from "../types";
-import { SettingsContext } from "./settings-context";
+import { SettingsContext } from "./SettingsContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-
-const STORAGE_KEY = "settings_kanban";
+import { STORAGE_KEY_SETTINGS } from '@/config-global';
 
 type SettingsProviderProps = {
   children: React.ReactNode,
@@ -13,15 +12,12 @@ type SettingsProviderProps = {
 }
 
 export const SettingsProvider = ({ children , defaultSettings } : SettingsProviderProps) => {
-  const { state, update } = useLocalStorage(STORAGE_KEY, defaultSettings);
+  const { state, update } = useLocalStorage(STORAGE_KEY_SETTINGS, defaultSettings);
   
-  const memoizedValue = useMemo(
-    () => ({
-      ...state,
-      onUpdate: update
-    }),
-    [state, update]
-  );
+  const memoizedValue = useMemo(() => ({
+    ...state,
+    onUpdate: update
+  }), [state, update]);
 
   return <SettingsContext.Provider value={memoizedValue}>{children}</SettingsContext.Provider>
 }

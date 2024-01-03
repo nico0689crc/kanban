@@ -14,17 +14,17 @@ export default function GuestGuard({ children }: Props) {
 
   const returnTo = searchParams.get('returnTo') || paths.dashboard.root;
 
-  const { authenticated } = useAuthContext();
-
-  const check = useCallback(() => {
-    if (authenticated) {
-      router.replace(returnTo);
-    }
-  }, [authenticated, returnTo, router]);
+  const { authenticated, loading } = useAuthContext();
 
   useEffect(() => {
-    check();
-  }, [check]);
+    if (!loading && authenticated) {
+      router.replace(returnTo);
+    }
+  }, [router, loading, authenticated, returnTo]);
+
+  if(authenticated) {
+    return null;
+  }
 
   return <>{children}</>;
 }

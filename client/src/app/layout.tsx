@@ -94,38 +94,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // return (
-  //   <html lang="en" className={primaryFont.className}>
-  //     <body>
-  //       <AuthProvider>
-  //         <LocalizationProvider>
-  //           <SettingsProvider defaultSettings={{ themeMode: 'light' }}>
-  //             <ThemeProvider>
-  //               <ProgressBar />
-  //               <AuthConsumer>
-  //                 {children}
-  //               </AuthConsumer>
-  //             </ThemeProvider>
-  //           </SettingsProvider>
-  //         </LocalizationProvider>
-  //       </AuthProvider>
-  //     </body>
-  //   </html>
-  // )
-
   return (
     <html lang="en" className={primaryFont.className}>
       <body>
-        <LocalizationProvider>
-          <SettingsProvider defaultSettings={{ themeMode: 'light' }}>
-            <ThemeProvider>
-              <ProgressBar />
-              <AuthConsumer>
-                {children}
-              </AuthConsumer>
-            </ThemeProvider>
-          </SettingsProvider>
-        </LocalizationProvider>
+        <AuthProvider>
+          <LocalizationProvider>
+            <SettingsProvider defaultSettings={{ themeMode: 'light' }}>
+              <ThemeProvider>
+                <ProgressBar />
+                <AuthConsumer>
+                  {children}
+                </AuthConsumer>
+              </ThemeProvider>
+            </SettingsProvider>
+          </LocalizationProvider>
+        </AuthProvider>
       </body>
     </html>
   )

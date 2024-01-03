@@ -1,3 +1,7 @@
+'use client';
+
+import { AuthGuard } from "@/auth/guard";
+import { useAuthContext } from "@/auth/hooks";
 import DashboardLayout from "@/layouts/dashboard/DashboardLayout";
 
 type Props = {
@@ -6,7 +10,9 @@ type Props = {
 
 const Layout = ({ children } : Props) => {
   return (
-    <DashboardLayout>{children}</DashboardLayout>
+    <AuthGuard>
+      <DashboardLayout>{children}</DashboardLayout>
+    </AuthGuard>
   );
 }
 

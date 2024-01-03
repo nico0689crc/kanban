@@ -51,8 +51,8 @@ const LoginView = () => {
       await login(data.email, data.password);
       router.push(paths.dashboard.root);
       NProgress.start();
-    } catch (error: any) {
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+    } catch ({ errors }: any) {
+      setErrorMsg(errors.title);
     }
   });
 

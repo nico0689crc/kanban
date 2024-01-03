@@ -12,7 +12,6 @@ const LogoutButton = () => {
   const onLogoutHandler = useCallback(
     async () => {
       await logout();
-      router.replace(paths.auth.login);
     }, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
