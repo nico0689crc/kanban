@@ -32,8 +32,8 @@ const LoginView = () => {
   });
 
   const defaultValues = {
-    email: 'nico.06.89crc@gmail.com',
-    password: 'REgaTAS12*',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({ resolver: yupResolver(LoginSchema), defaultValues });

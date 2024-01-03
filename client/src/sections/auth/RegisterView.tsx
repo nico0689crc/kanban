@@ -39,11 +39,11 @@ const RegisterView = () => {
   });
 
   const defaultValues = {
-    first_name: 'Nicolas',
-    last_name: 'Fernandez',
-    email: 'nico.06.89crc@gmail.com',
-    password: 'REgaTAS12*',
-    confirm_password: 'REgaTAS12*',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    confirm_password: '',
   };
 
   const methods = useForm({ resolver: yupResolver(RegisterSchema), defaultValues });
