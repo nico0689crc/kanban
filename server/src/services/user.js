@@ -373,18 +373,18 @@ const authenticate = (req, res, next) => {
         { title: "Password not valid.", detail: "Password not valid." }
       );
     }
-
+    
     const credentials = { userUUID: user.dataValues.uuid, email: user.dataValues.email };
     const jwtKey = process.env.JWT_KEY;
-    const token = await jwt.sign(credentials, jwtKey, { expiresIn: process.env.JWT_EXPIRATION_TIME });
+    const token = await jwt.sign(credentials, jwtKey, { expiresIn: +process.env.JWT_EXPIRATION_TIME });
 
     const response = new ResponseParser({
       model: User,
-      documents: { ...user.dataValues, token: token },
+      documents: { ...user.dataValues, accessToken: token },
       request: req,
     });
 
-    response.fieldsToSelect.push("token");
+    response.fieldsToSelect.push("accessToken");
     response.parseDataIndividual();
     response.sendResponseGetSuccess(res);
   },next);

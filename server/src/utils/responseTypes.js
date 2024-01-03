@@ -5,7 +5,7 @@ const ResponsesTypes = {
         httpStatusCode: 404,
       },
       error_resource_not_found: {
-        httpStatusCode: 404,
+        httpStatusCode: 400,
       },
       error_input_validation: {
         httpStatusCode: 400,
