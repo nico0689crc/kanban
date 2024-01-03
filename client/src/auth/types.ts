@@ -12,18 +12,12 @@ export type AuthContextType = {
   authenticated: boolean;
   unauthenticated: boolean;
   login: (email: string, password: string) => Promise<unknown>;
-  register: (
-    email: string,
-    password: string,
-    confirm_password: string,
-    first_name: string,
-    last_name: string
-  ) => Promise<unknown>;
+  register: (email: string, password: string, confirm_password: string, first_name: string, last_name: string) => Promise<unknown>;
   logout: () => Promise<unknown>;
   verifyEmail: (email: string, code: string) => Promise<void>;
-  forgotPassword: (email: string) => Promise<void>;
+  requestResetPassword: (email: string) => Promise<void>;
+  resetPassword: (uuid: string, token: string, password: string, confirm_password: string) => Promise<void>;
   resendCodeRegister: (email: string) => Promise<void>;
-  newPassword: (email: string, code: string, password: string) => Promise<void>;
 };
 
 export type ActionMapType<M extends { [index: string]: any }> = {

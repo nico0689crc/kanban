@@ -237,7 +237,7 @@ const requestResetPassword = async (req, res, next) => {
 
     const passwordResetToken = crypto.randomBytes(32).toString("hex");
     const passwordResetTokenHashed = await bcryptjs.hash(passwordResetToken, 12);
-    const passwordResetLink = `${process.env.CLIENT_BASE_URL}/reset-password?userUUID=${user.dataValues.uuid}&passwordResetToken=${passwordResetToken}`
+    const passwordResetLink = `${process.env.CLIENT_BASE_URL}/auth/reset-password?uuid=${user.dataValues.uuid}&token=${passwordResetToken}`
 
     await User.sequelize.transaction(async () => {
       await User.update({ 
@@ -267,8 +267,7 @@ const requestResetPassword = async (req, res, next) => {
     const response = new ResponseParser({
       model: User,
       documents: {
-        ...user.dataValues,
-        password_reset_link: passwordResetLink
+        ...user.dataValues
       },
       request: req,
     });

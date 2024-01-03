@@ -31,95 +31,67 @@ import { useLocales } from '@/locales';
 import nProgress from 'nprogress';
 import FormWrapper from './FormWrapper';
 
-const NewPasswordView = () => {
+const ResetPasswordView = () => {
   const { t } = useLocales();
-
-  const { newPassword, forgotPassword } = useAuthContext();
-
-  const [errorMsg, setErrorMsg] = useState('');
-
   const router = useRouter();
-
+  const { resetPassword } = useAuthContext();
+  const [errorMsg, setErrorMsg] = useState('');
   const searchParams = useSearchParams();
-
-  const email = searchParams.get('email');
-
   const password = useBoolean();
 
-  const { countdown, counting, startCountdown } = useCountdownSeconds(60);
+  const token: string = searchParams.get('token')!;
+  const uuid: string = searchParams.get('uuid')!;
 
-  const NewPasswordSchema = Yup.object().shape({
-    code: Yup.string().min(6, t('new_password_view.validation.code_format')).required(t('new_password_view.validation.code_format')),
-    email: Yup.string().required(t('new_password_view.validation.email_required')).email(t('new_password_view.validation.email_format')),
+  const ResetPasswordSchema = Yup.object().shape({
     password: Yup.string()
-      .min(6, t('new_password_view.validation.password_length'))
-      .required(t('new_password_view.validation.password_required')),
-    confirmPassword: Yup.string()
-      .required(t('new_password_view.validation.confirm_password_required'))
-      .oneOf([Yup.ref('password')], t('new_password_view.validation.password_match')),
+      .min(6, t('reset_password_view.validation.password_length'))
+      .required(t('reset_password_view.validation.password_required')),
+    confirm_password: Yup.string()
+      .required(t('reset_password_view.validation.confirm_password_required'))
+      .oneOf([Yup.ref('password')], t('reset_password_view.validation.password_match')),
   });
 
   const defaultValues = {
-    code: '',
-    email: email || '',
     password: '',
-    confirmPassword: '',
+    confirm_password: '',
   };
 
   const methods = useForm({
-    mode: 'onChange',
-    resolver: yupResolver(NewPasswordSchema),
+    resolver: yupResolver(ResetPasswordSchema),
     defaultValues,
   });
 
   const {
-    watch,
     handleSubmit,
     formState: { isSubmitting },
+    setError
   } = methods;
-
-  const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await newPassword(data.email, data.code, data.password);
-
+      await resetPassword(uuid, token, data.password, data.confirm_password);
       router.push(paths.auth.login);
-
       nProgress.start();
     } catch (error: any) {
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      if(Array.isArray(error?.errors)) {
+        error?.errors?.forEach((error: any) => setError(error.source.path, { message: error.detail }))
+      } else {
+        setErrorMsg(error?.errors?.title);
+      }
     }
   });
-
-  const handleResendCode = useCallback(async () => {
-    try {
-      startCountdown();
-      await forgotPassword?.(values.email);
-    } catch (error: any) {
-      setErrorMsg(typeof error === 'string' ? error : error.message);
-    }
-  }, [forgotPassword, startCountdown, values.email]);
 
   return (
     <FormWrapper rowGap={2}>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{t('new_password_view.labels.title')}</Typography>
+          <Typography variant="h4">{t('reset_password_view.labels.title')}</Typography>
 
           {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
           <RHFTextField
-            name="email"
-            label={t('new_password_view.labels.email')}
-            placeholder="example@gmail.com"
-          />
-
-          <RHFCode name="code" />
-
-          <RHFTextField
             name="password"
-            label={t('new_password_view.labels.password')}
+            label={t('reset_password_view.labels.password')}
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -133,8 +105,8 @@ const NewPasswordView = () => {
           />
 
           <RHFTextField
-            name="confirmPassword"
-            label={t('new_password_view.labels.confirm_password')}
+            name="confirm_password"
+            label={t('reset_password_view.labels.confirm_password')}
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -153,25 +125,8 @@ const NewPasswordView = () => {
             variant="contained"
             loading={isSubmitting}
           >
-            {t('new_password_view.labels.submit')}
+            {t('reset_password_view.labels.submit')}
           </LoadingButton>
-
-          <Typography variant="body2">
-            {t('new_password_view.labels.resend_title')}{`  `}
-            <Link
-              variant="subtitle2"
-              onClick={handleResendCode}
-              sx={{
-                cursor: 'pointer',
-                ...(counting && {
-                  color: 'text.disabled',
-                  pointerEvents: 'none',
-                }),
-              }}
-            >
-              {t('new_password_view.labels.resend')} {counting && `(${countdown}s)`}
-            </Link>
-          </Typography>
 
           <Link
             component={RouterLink}
@@ -183,7 +138,7 @@ const NewPasswordView = () => {
             }}
           >
             <Iconify icon="eva:arrow-ios-back-fill" width={16} />
-            {t('new_password_view.labels.return')}
+            {t('reset_password_view.labels.return')}
           </Link>
         </Stack>
       </FormProvider>
@@ -191,4 +146,4 @@ const NewPasswordView = () => {
   );
 }
 
-export default NewPasswordView;
+export default ResetPasswordView;

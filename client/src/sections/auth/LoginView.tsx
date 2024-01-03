@@ -86,7 +86,7 @@ const LoginView = () => {
 
           <Link
             component={RouterLink}
-            href={paths.auth.forgotPassword}
+            href={paths.auth.request_reset_password}
             variant="subtitle2"
             color="primary"
             underline="always"

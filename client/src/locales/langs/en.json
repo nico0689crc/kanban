@@ -54,30 +54,22 @@
       "return": "Return to sign in"
     }
   },
-  "new_password_view": {
+  "reset_password_view": {
     "validation": {
-      "email_required": "The email is required.",
-      "email_format": "The email must be a valid format.",
-      "code_required": "The code is required.",
-      "code_format": "The code must be at least 6 characters.",
       "password_required": "The password is required.",
       "confirm_password_required": "Confirm the password is required.",
       "password_length": "The password must be at least 6 characters.",
       "password_match": "The passwords must match."
     },
     "labels": {
-      "title": "The request was sent successfully!",
-      "sub_title": "We have sent a 6-digit confirmation email to your email. Please enter the code in the below box to New Password your email.",
-      "email": "Email",
+      "title": "Enter the new password",
       "password": "New password",
       "confirm_password": "Confirm new password",
       "submit": "Update password",
-      "resend_title": "Don’t have a code?",
-      "resend": "Resend code",
       "return": "Return to sign in"
     }
   },
-  "forgot_password_view": {
+  "request_reset_password_view": {
     "validation": {
       "email_required": "Email is required.",
       "email_format": "Email must be a valid format."
@@ -88,6 +80,9 @@
       "email": "Email",
       "send": "Send Request",
       "return": "Return to sign in"
+    },
+    "messages": {
+      "success": "We have sent you to the email address provided the instructions you must follow to reset your password."
     }
   } 
 }

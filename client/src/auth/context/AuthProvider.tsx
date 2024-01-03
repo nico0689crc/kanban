@@ -166,14 +166,14 @@ export const AuthProvider =({ children } : Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // FORGOT PASSWORD
-  const forgotPassword = useCallback(async (email: string) => {
-
+  // REQUEST RESET PASSWORD
+  const requestResetPassword = useCallback(async (email: string) => {
+    await axios.post(endpoints.auth.request_reset_password, { email });
   }, []);
 
-  // NEW PASSWORD
-  const newPassword = useCallback(async (email: string, code: string, password: string) => {
-   
+  // RESET PASSWORD
+  const resetPassword = useCallback(async (uuid: string, token: string, password: string, confirm_password: string) => {
+    await axios.post(endpoints.auth.reset_password, { uuid, token, password, confirm_password });
   }, []);
 
   const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
@@ -188,12 +188,12 @@ export const AuthProvider =({ children } : Props) => {
       login,
       logout,
       register,
-      newPassword,
-      forgotPassword,
+      resetPassword,
+      requestResetPassword,
       verifyEmail,
       resendCodeRegister
     }),
-    [ login, logout, register, newPassword, forgotPassword, verifyEmail, resendCodeRegister, state, status ]
+    [ login, logout, register, resetPassword, requestResetPassword, verifyEmail, resendCodeRegister, state, status ]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>

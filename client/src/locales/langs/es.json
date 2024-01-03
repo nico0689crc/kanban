@@ -54,30 +54,22 @@
       "return": "Volver para iniciar sesión"
     }
   },
-  "new_password_view": {
+  "reset_password_view": {
     "validation": {
-      "email_required": "Correo electrónico obligatorio.",
-      "email_format": "El correo electrónico debe ser válido.",
-      "code_required": "Se requiere el código.",
-      "code_format": "El código debe tener al menos 6 caracteres.",
       "password_required": "La contraseña obligatoria.",
       "confirm_password_required": "La confirmacion obligatoria.",
       "password_length": "La contraseña debe tener al menos 6 caracteres.",
       "password_match": "Las contraseñas deben coincidir."
     },
     "labels": {
-      "title": "¡La solicitud fue enviada exitosamente!",
-      "sub_title": "Hemos enviado un correo electrónico de confirmación de 6 dígitos a su correo electrónico. Ingrese el código en el cuadro a continuación para obtener Nueva contraseña en su correo electrónico.",
-      "email": "Correo electrónico",
+      "title": "Introduce la contraseña nueva",
       "password": "Nueva contraseña",
       "confirm_password": "Confirmar nueva contraseña",
       "submit": "Actualiza contraseña",
-      "resend_title": "¿No tienes un código?",
-      "resend": "Reenviar codigo",
       "return": "Volver a iniciar sesión"
     }
   },
-  "forgot_password_view": {
+  "request_reset_password_view": {
     "validation": {
       "email_required": "Correo electrónico obligatorio.",
       "email_format": "El correo electrónico debe ser válido."
@@ -88,6 +80,9 @@
       "email": "Correo electrónico",
       "send": "Modificar contraseña",
       "return": "Volver a iniciar sesión"
+    },
+    "messages": {
+      "success": "Te hemos enviado a la dirección de correo electrónico proporcionada las instrucciones que debes seguir para restablecer la contraseña."
     }
   }
 }

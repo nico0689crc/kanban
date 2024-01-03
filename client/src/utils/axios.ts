@@ -30,5 +30,7 @@ export const endpoints = {
     login: '/users/authenticate',
     register: '/users/register',
     verify_email: '/users/verify-email',
+    request_reset_password: '/users/request-reset-password',
+    reset_password: '/users/reset-password',
   }
 };

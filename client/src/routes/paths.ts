@@ -8,9 +8,9 @@ export const paths = {
     login: `${ROOTS.AUTH}/login`,
     logout: `${ROOTS.AUTH}/logout`,
     register: `${ROOTS.AUTH}/register`,
-    forgotPassword: `${ROOTS.AUTH}/forgot-password`,
+    request_reset_password: `${ROOTS.AUTH}/request-reset-password`,
     verify: `${ROOTS.AUTH}/verify`,
-    newPassword: `${ROOTS.AUTH}/new-password`,
+    reset_password: `${ROOTS.AUTH}/reset-password`,
   },
   dashboard: {
     root: ROOTS.DASHBOARD,

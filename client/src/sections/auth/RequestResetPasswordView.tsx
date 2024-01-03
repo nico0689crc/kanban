@@ -29,17 +29,16 @@ import FormWrapper from './FormWrapper';
 
 // ----------------------------------------------------------------------
 
-const ForgotPasswordView = () => {
+const RequestResetPasswordView = () => {
   const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   const { t } = useLocales();
 
-  const { forgotPassword } = useAuthContext();
-
-  const router = useRouter();
+  const { requestResetPassword } = useAuthContext();
 
   const ForgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().required(t("forgot_password_view.validation.email_required")).email(t("forgot_password_view.validation.email_format")),
+    email: Yup.string().required(t("request_reset_password_view.validation.email_required")).email(t("request_reset_password_view.validation.email_format")),
   });
 
   const defaultValues = {
@@ -58,40 +57,35 @@ const ForgotPasswordView = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await forgotPassword(data.email);
-
-      const searchParams = new URLSearchParams({
-        email: data.email,
-      }).toString();
-
-      const href = `${paths.auth.newPassword}?${searchParams}`;
-      router.push(href);
-      nProgress.start();
+      await requestResetPassword(data.email);
+      setSuccessMsg(t("request_reset_password_view.messages.success"));
     } catch (error: any) {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
-
+  
   return (
     <FormWrapper>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{t("forgot_password_view.labels.title")}</Typography>
+          <Typography variant="h4">{t("request_reset_password_view.labels.title")}</Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {t("forgot_password_view.labels.sub_title")}
+            {t("request_reset_password_view.labels.sub_title")}
           </Typography>
 
           {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-          <RHFTextField name="email" label={t("forgot_password_view.labels.email")} />
+          {!!successMsg && <Alert severity="success">{successMsg}</Alert>}
+
+          <RHFTextField name="email" label={t("request_reset_password_view.labels.email")} />
 
           <LoadingButton
             fullWidth
             type="submit"
             loading={isSubmitting}
           >
-            {t("forgot_password_view.labels.send")}
+            {t("request_reset_password_view.labels.send")}
           </LoadingButton>
 
           <Link
@@ -104,7 +98,7 @@ const ForgotPasswordView = () => {
             }}
           >
             <Iconify icon="eva:arrow-ios-back-fill" width={16} />
-            {t("forgot_password_view.labels.return")}
+            {t("request_reset_password_view.labels.return")}
           </Link>
         </Stack>
       </FormProvider>
@@ -112,5 +106,5 @@ const ForgotPasswordView = () => {
   );
 }
 
-export default ForgotPasswordView;
+export default RequestResetPasswordView;
 
