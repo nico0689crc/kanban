@@ -1,36 +1,16 @@
-const AWS = require('aws-sdk');
+const sendgrid = require('@sendgrid/mail');
 
-const SES_CONFIG = {
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
-};
-
-const AWS_SES = new AWS.SES(SES_CONFIG);
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendEmail = (recipientEmail, emailSubject, emailTemaplate) => {
-  let params = {
-    Source: process.env.AWS_VERIFIED_EMAIL,
-    Destination: {
-      ToAddresses: [
-        recipientEmail
-      ],
-    },
-    ReplyToAddresses: [],
-    Message: {
-      Body: {
-        Html: {
-          Charset: 'UTF-8',
-          Data: emailTemaplate,
-        },
-      },
-      Subject: {
-        Charset: 'UTF-8',
-        Data: emailSubject,
-      }
-    },
-  };
-  return AWS_SES.sendEmail(params).promise();
+  const params = {
+    to: recipientEmail, 
+    from: process.env.SENDGRID_VERIFIED_EMAIL,
+    subject: emailSubject,
+    html: emailTemaplate,
+  }
+
+  return sendgrid.send(params);
 };
 
 module.exports = {
