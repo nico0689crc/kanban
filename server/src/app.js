@@ -4,12 +4,13 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const { userRoutes } = require("./routes");
+const { userRoutes, projectRoutes } = require("./routes");
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
 app.use(globalHandleError);
 
 module.exports = app;

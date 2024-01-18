@@ -3,25 +3,39 @@ const { Sequelize } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up({ context: queryInterface }) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('sections', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      last_name: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      email: {
+      uuid: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
+      },
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      status: {
+        type: Sequelize.ENUM("active", "inactive"),
+        defaultValue: "active",
+      },
+      order: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      project_id: {
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: 'projects'
+          },
+          key: 'id'
+        },
+        allowNull: false
       },
       created_at: {
         allowNull: false,
@@ -36,6 +50,6 @@ module.exports = {
     });
   },
   async down({ context: queryInterface }) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('sections');
   }
 };

@@ -1,6 +1,7 @@
 'use strict';
 
 const { Model, DataTypes } = require('sequelize');
+const { Project } = require('./index');
 
 module.exports = (sequelize) => {
   class User extends Model {
@@ -15,6 +16,7 @@ module.exports = (sequelize) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models['Project'], { foreignKey: 'user_id', as: 'projects' });
     }
 
     static getEntity() {
@@ -42,7 +44,8 @@ module.exports = (sequelize) => {
   }, {
     sequelize,
     modelName: 'User',
-    tableName: 'users'
+    tableName: 'users',
+    underscored: true
   });
 
   return User;

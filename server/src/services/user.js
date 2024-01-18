@@ -15,7 +15,7 @@ const ResponsesTypes = require('../utils/responseTypes');
 const getUsers = async (req, res, next) => {
   ErrorHandler(async () => {
     const { count: totalUsers, rows: users } = await User.findAndCountAll({
-      ...(req.query?.page?.number ? { offset: +req.query?.page?.number } : {}),
+      ...(req.query?.page?.number ? { offset: (req.query?.page?.number > 0 ? req.query?.page?.number - 1 : 0) } : {}),
       ...(req.query?.page?.size ? { limit: +req.query?.page?.size } : {})
     });
 

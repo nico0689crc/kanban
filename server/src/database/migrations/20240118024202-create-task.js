@@ -3,25 +3,50 @@ const { Sequelize } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up({ context: queryInterface }) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('tasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      last_name: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      email: {
+      uuid: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
+      },
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      description: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      status: {
+        type: Sequelize.ENUM("active", "inactive"),
+        defaultValue: "active",
+      },
+      priority: {
+        type: Sequelize.ENUM("low", "medium", "hight")
+      },
+      labels: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      order: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      section_id: {
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: 'tasks'
+          },
+          key: 'id'
+        },
+        allowNull: false
       },
       created_at: {
         allowNull: false,
@@ -36,6 +61,6 @@ module.exports = {
     });
   },
   async down({ context: queryInterface }) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('tasks');
   }
 };

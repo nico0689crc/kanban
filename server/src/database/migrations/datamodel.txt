@@ -1,0 +1,22 @@
+// Projects (Belong to Users):
+// - title
+// - status
+// - user_id
+// - uuid
+
+// Sections (Belong to Projects):
+// - title
+// - order
+// - status
+// - uuid
+// - project_id
+
+// Task (Belong to Sections):
+// - uuid
+// - title
+// - description
+// - status
+// - priority (low, medium, hight)
+// - labels
+// - order
+// - section_id
