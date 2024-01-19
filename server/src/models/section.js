@@ -3,17 +3,11 @@
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
+  
   class Section extends Model {
-
-    /** 
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
-      this.belongsTo(models['Project']);
-      this.hasMany(models['Task']);
+      this.belongsTo(models['Project'], { as: 'project' });
+      this.hasMany(models['Task'], { as: 'tasks' });
     }
 
     static getEntity() {

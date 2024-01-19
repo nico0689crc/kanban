@@ -6,16 +6,10 @@ const { User } = require('./index');
 
 module.exports = (sequelize) => {
   class Project extends Model {
-
-    /** 
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    
     static associate(models) {
-      // define association here
-      this.belongsTo(models['User']);
-      this.hasMany(models['Section']);
+      this.belongsTo(models['User'], { as: 'user' });
+      this.hasMany(models['Section'], { as: 'sections' });
     }
 
     static getEntity() {
@@ -23,7 +17,7 @@ module.exports = (sequelize) => {
     }
 
     static getFieldsToSelect() {
-      return ['uuid', 'title', 'status'];
+      return ['uuid', 'title', 'status', 'sections'];
     }
   }
 

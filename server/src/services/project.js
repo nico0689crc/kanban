@@ -33,17 +33,29 @@ const getProjects = async (req, res, next) => {
 const getProjectByUUID = async (req, res, next) => {
   ErrorHandler(async () => { 
     const { project_uuid } = req.params;
+
     const project = await Project.findOne({ 
       include: [
-        { model: User, where: { email: req.user.email } },
-        { model: Section, include: [
-          { model: Task }
-        ] }
+        { model: User, as: 'user', where: { email: req.user.email }, attributes: User.getFieldsToSelect() },
+        { 
+          model: Section,  as: 'sections', attributes: Section.getFieldsToSelect(),  
+          include: [{ 
+            model: Task, as: 'tasks', attributes: Task.getFieldsToSelect() 
+          }] 
+        }
       ],
-      where: { uuid: project_uuid }
+      attributes: ['uuid', 'title', 'status'],
+      where: { uuid: project_uuid },
     });
 
-    return res.status(200).json(project);
+    const response = new ResponseParser({
+      model: Project,
+      documents: project.get(),
+      request: req
+    });
+    
+    response.parseDataIndividual();
+    response.sendResponseGetSuccess(res);
   }, next);
 };
 
