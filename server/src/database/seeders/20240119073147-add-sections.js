@@ -6,11 +6,16 @@ const { faker } = require("@faker-js/faker")
 module.exports = {
   async up ({ context: queryInterface }) {
     await queryInterface.bulkInsert(
-      'projects', 
-      (() => [...Array(20)].map(_ => ({
+      'sections', 
+      (() => [...Array(200)].map(_ => ({
         uuid: faker.string.uuid(),
         title: faker.lorem.sentence({min: 3, max: 6}),
-        user_id: faker.number.int({ min: 1, max: 2 }) 
+        project_id: faker.number.int({ min: 1, max: 20 }),
+        status: faker.helpers.enumValue({
+          active: 'active', 
+          inactive: 'inactive'
+        }),
+        order: faker.number.int({ min: 1, max: 50 }), 
       })))(), 
       {}
     );

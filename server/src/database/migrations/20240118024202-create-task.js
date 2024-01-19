@@ -31,7 +31,6 @@ module.exports = {
         type: Sequelize.ENUM("low", "medium", "hight")
       },
       labels: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       order: {
@@ -42,7 +41,7 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'tasks'
+            tableName: 'sections'
           },
           key: 'id'
         },

@@ -13,9 +13,5 @@ module.exports = {
         after: 'id'
       }
     );
-  },
-  
-  async down({ context: queryInterface }) {
-    await queryInterface.dropTable('projects');
   }
 };

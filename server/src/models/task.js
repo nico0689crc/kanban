@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models['Section']);
     }
 
     static getEntity() {
@@ -34,7 +35,8 @@ module.exports = (sequelize) => {
   }, {
     sequelize,
     modelName: 'Task',
-    tableName: 'tasks'
+    tableName: 'tasks',
+    underscored: true
   });
 
   return Task;

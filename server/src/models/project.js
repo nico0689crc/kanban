@@ -15,6 +15,7 @@ module.exports = (sequelize) => {
     static associate(models) {
       // define association here
       this.belongsTo(models['User']);
+      this.hasMany(models['Section']);
     }
 
     static getEntity() {
