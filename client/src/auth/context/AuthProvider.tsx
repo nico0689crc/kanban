@@ -87,6 +87,9 @@ export const AuthProvider =({ children } : Props) => {
       const currentUser = JSON.parse(localStorage.getItem(STORAGE_KEY_USER_DATA)!);
       
       if (currentUser?.accessToken && isValidToken(currentUser?.accessToken)) {
+        
+        axios.defaults.headers.common.Authorization = `Bearer ${currentUser?.accessToken}`;
+
         dispatch({
           type: Types.INITIAL,
           payload: {

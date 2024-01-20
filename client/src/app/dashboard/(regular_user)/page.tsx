@@ -5,7 +5,7 @@ export const metadata = {
 const DashboardPage = () => {
   return (
     <>
-      <div>Dashboard Page</div>
+      <div>Home Page</div>
     </>
   )
 }

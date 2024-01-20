@@ -1,7 +1,7 @@
 'use client';
 
 import Iconify from "@/components/iconify";
-import { Box, Link } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useActiveLink } from "@/routes/hooks";
 import { RouterLink } from "@/routes/components";
@@ -68,7 +68,8 @@ const NavbarItem = ({ icon, label, href } : NavbarItemProps) => {
           },
         }}
       >
-        {label}
+        <Typography variant="button" noWrap>{label}</Typography>
+        
       </Box>
     </Link>
   );

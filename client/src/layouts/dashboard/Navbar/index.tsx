@@ -14,6 +14,7 @@ const Navbar = () => {
   return (
     <Box
       sx={{
+        zIndex: 2,
         ...(!isUpToMd && {
           position: 'fixed',
           bottom: 0,
@@ -48,7 +49,8 @@ const Navbar = () => {
           alignItems='center'
           rowGap={3}
         >
-          <NavbarItem href={paths.dashboard.root} label="Kanban" icon="iconoir:kanban-board" />
+          <NavbarItem href={paths.dashboard.root} label="Home" icon="iconoir:home" />
+          <NavbarItem href={paths.dashboard.kanbanProjects} label="Kanban Projects" icon="iconoir:kanban-board" />
           <NavbarItem href={paths.dashboard.userProfile} label="Profile" icon="iconoir:user" />
         </Stack>
       </Stack>

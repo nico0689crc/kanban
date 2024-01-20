@@ -32,5 +32,6 @@ export const endpoints = {
     verify_email: '/users/verify-email',
     request_reset_password: '/users/request-reset-password',
     reset_password: '/users/reset-password',
-  }
+  },
+  projects: '/projects'
 };

@@ -10,7 +10,6 @@ type Props = {
 const Layout = ({ children } : Props) => {
   return (
     <Stack height='100%' alignItems='center' justifyContent='center'>
-      <Typography variant="h3">Dashboard</Typography>
       {children}
     </Stack>
   )
