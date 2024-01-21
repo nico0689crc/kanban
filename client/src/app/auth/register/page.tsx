@@ -1,4 +1,4 @@
-import RegisterView from "@/sections/auth/RegisterView";
+import RegisterView from '@/sections/auth/RegisterView';
 
 export const metadata = {
   title: 'Register',

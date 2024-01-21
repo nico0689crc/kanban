@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
-interface ReturnType {
+export interface ReturnType {
   value: boolean;
   onTrue: () => void;
   onFalse: () => void;

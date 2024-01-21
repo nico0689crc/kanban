@@ -13,7 +13,7 @@ import { useLocales } from '@/locales';
 import { Alert, Link, Stack, Typography } from '@mui/material';
 import Iconify from '@/components/iconify';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormProvider from "@/components/hook-form/FormProvider";
+import FormProvider from '@/components/hook-form/FormProvider';
 import { RHFTextField } from '@/components/hook-form';
 import { RouterLink } from '@/routes/components';
 import { useCountdownSeconds } from '@/hooks/useCountdown';
@@ -71,34 +71,34 @@ const VerifyView = () => {
     <FormWrapper>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{t('verify_view.labels.title')}</Typography>
+          <Typography variant='h4'>{t('verify_view.labels.title')}</Typography>
 
-          {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
           
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             {t('verify_view.labels.sub_title')}
           </Typography>
 
           <RHFTextField
-            name="email"
+            name='email'
             label={t('verify_view.labels.email')}
-            placeholder="example@gmail.com"
+            placeholder='example@gmail.com'
           />
 
-          <RHFCode name="confirmation_code" />
+          <RHFCode name='confirmation_code' />
 
           <LoadingButton
             fullWidth
-            type="submit"
+            type='submit'
             loading={isSubmitting}
           >
             {t('verify_view.labels.verify')}
           </LoadingButton>
 
-          <Typography variant="body2">
+          <Typography variant='body2'>
             {t('verify_view.labels.resend_title')}{`  `} 
             <Link
-              variant="subtitle2"
+              variant='subtitle2'
               onClick={handleResendCode}
               sx={{
                 cursor: 'pointer',
@@ -115,13 +115,13 @@ const VerifyView = () => {
           <Link
             component={RouterLink}
             href={paths.auth.login}
-            variant="subtitle2"
+            variant='subtitle2'
             sx={{
               alignItems: 'center',
               display: 'inline-flex',
             }}
           >
-            <Iconify icon="eva:arrow-ios-back-fill" width={16} />
+            <Iconify icon='eva:arrow-ios-back-fill' width={16} />
             {t('verify_view.labels.return')}
           </Link>
         </Stack>

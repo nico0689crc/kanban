@@ -1,4 +1,4 @@
-import VerifyView from "@/sections/auth/VerifyView";
+import VerifyView from '@/sections/auth/VerifyView';
 
 export const metadata = {
   title: 'Verify',

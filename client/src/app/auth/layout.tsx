@@ -1,7 +1,7 @@
 'use client';
 
-import { GuestGuard } from "@/auth/guard";
-import AuthLayout from "@/layouts/auth/AuthLayout";
+import { GuestGuard } from '@/auth/guard';
+import AuthLayout from '@/layouts/auth/AuthLayout';
 
 type Props = {
   children: React.ReactNode;

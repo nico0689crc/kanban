@@ -38,7 +38,7 @@ const RequestResetPasswordView = () => {
   const { requestResetPassword } = useAuthContext();
 
   const ForgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().required(t("request_reset_password_view.validation.email_required")).email(t("request_reset_password_view.validation.email_format")),
+    email: Yup.string().required(t('request_reset_password_view.validation.email_required')).email(t('request_reset_password_view.validation.email_format')),
   });
 
   const defaultValues = {
@@ -58,7 +58,7 @@ const RequestResetPasswordView = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await requestResetPassword(data.email);
-      setSuccessMsg(t("request_reset_password_view.messages.success"));
+      setSuccessMsg(t('request_reset_password_view.messages.success'));
     } catch (error: any) {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
@@ -68,37 +68,37 @@ const RequestResetPasswordView = () => {
     <FormWrapper>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{t("request_reset_password_view.labels.title")}</Typography>
+          <Typography variant='h4'>{t('request_reset_password_view.labels.title')}</Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {t("request_reset_password_view.labels.sub_title")}
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+            {t('request_reset_password_view.labels.sub_title')}
           </Typography>
 
-          {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
-          {!!successMsg && <Alert severity="success">{successMsg}</Alert>}
+          {!!successMsg && <Alert severity='success'>{successMsg}</Alert>}
 
-          <RHFTextField name="email" label={t("request_reset_password_view.labels.email")} />
+          <RHFTextField name='email' label={t('request_reset_password_view.labels.email')} />
 
           <LoadingButton
             fullWidth
-            type="submit"
+            type='submit'
             loading={isSubmitting}
           >
-            {t("request_reset_password_view.labels.send")}
+            {t('request_reset_password_view.labels.send')}
           </LoadingButton>
 
           <Link
             component={RouterLink}
             href={paths.auth.login}
-            variant="subtitle2"
+            variant='subtitle2'
             sx={{
               alignItems: 'center',
               display: 'inline-flex',
             }}
           >
-            <Iconify icon="eva:arrow-ios-back-fill" width={16} />
-            {t("request_reset_password_view.labels.return")}
+            <Iconify icon='eva:arrow-ios-back-fill' width={16} />
+            {t('request_reset_password_view.labels.return')}
           </Link>
         </Stack>
       </FormProvider>

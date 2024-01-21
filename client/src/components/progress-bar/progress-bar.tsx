@@ -18,11 +18,11 @@ export default function ProgressBar() {
   useEffect(() => {
     NProgress.configure({ showSpinner: false });
 
-    const handleAnchorClick = (event: MouseEvent) => {
+    const handleAnchorClick = (event: any) => {
       const targetUrl = (event.currentTarget as HTMLAnchorElement).href;
       const currentUrl = window.location.href;
 
-      if (targetUrl !== currentUrl) {
+      if (event?.target?.tagName.toLowerCase() === 'a' && targetUrl !== currentUrl) {
         NProgress.start();
       }
     };

@@ -1,10 +1,11 @@
 'use client';
 
-import { Box, Stack, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { paths } from "@/routes/paths";
-import Logo from "../Logo";
-import NavbarItem from "./NavbarItem";
+import { Box, Stack, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { paths } from '@/routes/paths';
+import Logo from '../Logo';
+import NavbarItem from './NavbarItem';
+import { t } from 'i18next';
 
 
 const Navbar = () => {
@@ -35,7 +36,6 @@ const Navbar = () => {
           }),
           ...( !isUpToMd && {
             borderTop: `1px solid ${theme.palette.primary.main}`,
-            border: `1px solid ${theme.palette.primary.main}`,
             py: 0.5
           }) 
         }}
@@ -49,9 +49,9 @@ const Navbar = () => {
           alignItems='center'
           rowGap={3}
         >
-          <NavbarItem href={paths.dashboard.root} label="Home" icon="iconoir:home" />
-          <NavbarItem href={paths.dashboard.kanbanProjects} label="Kanban Projects" icon="iconoir:kanban-board" />
-          <NavbarItem href={paths.dashboard.userProfile} label="Profile" icon="iconoir:user" />
+          <NavbarItem href={paths.dashboard.root} label={t('home_view.title_header')} icon='iconoir:home' />
+          <NavbarItem href={paths.dashboard.kanbanProjects} label={t('kanban_projects_view.title_header')} icon='iconoir:kanban-board' />
+          <NavbarItem href={paths.dashboard.userProfile} label={t('profile_view.title_header')} icon='iconoir:user' />
         </Stack>
       </Stack>
     </Box>

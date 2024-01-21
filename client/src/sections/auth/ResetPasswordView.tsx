@@ -85,18 +85,18 @@ const ResetPasswordView = () => {
     <FormWrapper rowGap={2}>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{t('reset_password_view.labels.title')}</Typography>
+          <Typography variant='h4'>{t('reset_password_view.labels.title')}</Typography>
 
-          {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
           <RHFTextField
-            name="password"
+            name='password'
             label={t('reset_password_view.labels.password')}
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={password.onToggle} edge="end">
+                <InputAdornment position='end'>
+                  <IconButton onClick={password.onToggle} edge='end'>
                     <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                   </IconButton>
                 </InputAdornment>
@@ -105,13 +105,13 @@ const ResetPasswordView = () => {
           />
 
           <RHFTextField
-            name="confirm_password"
+            name='confirm_password'
             label={t('reset_password_view.labels.confirm_password')}
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={password.onToggle} edge="end">
+                <InputAdornment position='end'>
+                  <IconButton onClick={password.onToggle} edge='end'>
                     <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                   </IconButton>
                 </InputAdornment>
@@ -121,8 +121,8 @@ const ResetPasswordView = () => {
 
           <LoadingButton
             fullWidth
-            type="submit"
-            variant="contained"
+            type='submit'
+            variant='contained'
             loading={isSubmitting}
           >
             {t('reset_password_view.labels.submit')}
@@ -131,13 +131,13 @@ const ResetPasswordView = () => {
           <Link
             component={RouterLink}
             href={paths.auth.login}
-            variant="subtitle2"
+            variant='subtitle2'
             sx={{
               alignItems: 'center',
               display: 'inline-flex',
             }}
           >
-            <Iconify icon="eva:arrow-ios-back-fill" width={16} />
+            <Iconify icon='eva:arrow-ios-back-fill' width={16} />
             {t('reset_password_view.labels.return')}
           </Link>
         </Stack>

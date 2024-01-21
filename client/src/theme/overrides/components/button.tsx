@@ -7,6 +7,7 @@ const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] a
 
 // NEW VARIANT
 declare module '@mui/material/Button' {
+  // eslint-disable-next-line no-unused-vars
   interface ButtonPropsVariantOverrides {
     soft: true;
   }

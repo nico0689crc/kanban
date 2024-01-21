@@ -11,7 +11,13 @@ const getProjects = async (req, res, next) => {
 
     const { count: totalProjects, rows: projects } = await Project.findAndCountAll({
       include: [
-        { model: User, where: { email: req.user.email } }
+        { model: User, as: 'user', where: { email: req.user.email }, attributes: User.getFieldsToSelect() },
+        { 
+          model: Section,  as: 'sections', attributes: Section.getFieldsToSelect(),  
+          include: [{ 
+            model: Task, as: 'tasks', attributes: Task.getFieldsToSelect() 
+          }] 
+        }
       ],
       ...(req.query?.page?.number ? { offset: (req.query?.page?.number > 0 ? req.query?.page?.number - 1 : 0) } : {}),
       ...(req.query?.page?.size ? { limit: +req.query?.page?.size } : {})

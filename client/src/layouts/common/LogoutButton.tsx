@@ -1,13 +1,12 @@
-import { useCallback } from "react"; 
-import { paths } from "@/routes/paths";
-import { useRouter } from "@/routes/hooks";
-import { useAuthContext } from "@/auth/hooks";
-import Iconify from "@/components/iconify";
-import { IconButton } from "@mui/material";
+import { useCallback } from 'react'; 
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
+import { useAuthContext } from '@/auth/hooks';
+import Iconify from '@/components/iconify';
+import { IconButton } from '@mui/material';
 
 const LogoutButton = () => {
   const { logout } = useAuthContext();
-  const router = useRouter();
 
   const onLogoutHandler = useCallback(
     async () => {
@@ -18,8 +17,8 @@ const LogoutButton = () => {
   );
 
   return (
-    <IconButton color="primary" onClick={onLogoutHandler}>
-      <Iconify icon="iconoir:log-out" width={25} />
+    <IconButton color='primary' onClick={onLogoutHandler}>
+      <Iconify icon='iconoir:log-out' width={25} />
     </IconButton>
   )
 }

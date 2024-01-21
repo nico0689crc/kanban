@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
     }
 
     static getFieldsToSelect() {
-      return ['uuid', 'title', 'status', 'sections'];
+      return ['uuid', 'title', 'status', 'sections', 'createdAt'];
     }
   }
 

@@ -1,0 +1,1 @@
+export { default as PageHead } from './page-head';

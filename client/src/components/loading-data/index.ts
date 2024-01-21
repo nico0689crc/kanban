@@ -1,0 +1,1 @@
+export { default as LoadingData } from './loading-data';

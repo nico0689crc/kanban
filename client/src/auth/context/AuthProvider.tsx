@@ -1,12 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useReducer } from "react";
-import { AuthContext } from "./AuthContext";
-import { paths } from "@/routes/paths";
-import { useRouter } from "@/routes/hooks";
+import { useCallback, useEffect, useMemo, useReducer } from 'react';
+import { AuthContext } from './AuthContext';
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
 import axios, { endpoints } from '@/utils/axios';
-import { AuthStateType, Action, Types, AuthUserType } from "../types";
-import { STORAGE_KEY_USER_DATA } from "@/config-global";
+import { AuthStateType, Action, Types, AuthUserType } from '../types';
+import { STORAGE_KEY_USER_DATA } from '@/config-global';
 
 const initialState: AuthStateType = {
   user: null,

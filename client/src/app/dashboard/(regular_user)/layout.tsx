@@ -1,7 +1,6 @@
 'use client';
 
-
-import { Stack, Typography } from "@mui/material";
+import { Stack } from '@mui/material';
 
 type Props = {
   children: React.ReactNode;

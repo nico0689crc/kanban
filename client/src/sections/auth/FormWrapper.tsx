@@ -1,7 +1,7 @@
 'use client';
 
-import { useTheme } from "@mui/material/styles";
-import { Card, CardContent, Container, Box, useMediaQuery, Stack } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
+import { Card, CardContent, Container, Box, useMediaQuery, Stack } from '@mui/material';
 
 type Props = {
   children: React.ReactNode,
@@ -27,8 +27,8 @@ const FormWrapper = ({ children } : Props) => {
 
   return (
     <Stack mt={8}>
-      <Container maxWidth="sm">
-        <Box sx={{mx: 4}}>
+      <Container maxWidth='sm'>
+        <Box sx={{mx: { sx: 1, md: 4 }}}>
           {content}
         </Box>
       </Container>

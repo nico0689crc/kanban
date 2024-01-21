@@ -20,7 +20,7 @@ export default function RoleBasedGuard({ hasContent, roles, children, sx }: Role
     return hasContent ? (
       <Container component={MotionContainer} sx={{ textAlign: 'center', ...sx }}>
         <m.div variants={varBounce().in}>
-          <Typography variant="h3" sx={{ mb: 2 }}>
+          <Typography variant='h3' sx={{ mb: 2 }}>
             Permission Denied
           </Typography>
         </m.div>

@@ -1,5 +1,10 @@
 {
   "demo": "English",
+  "common": {
+    "labels": {
+      "cancel": "Cancel"
+    }
+  },
   "login_view": {
     "validation": {
       "email_required": "Email is required.",
@@ -84,5 +89,26 @@
     "messages": {
       "success": "We have sent you to the email address provided the instructions you must follow to reset your password."
     }
-  } 
+  },
+  "home_view": {
+    "title_header": "Home"
+  },
+  "kanban_projects_view": {
+    "title_header": "Kanban's projects",
+    "labels": {
+      "sections": "Sections:",
+      "tasks": "Tasks:",
+      "created_at": "Created at:",
+      "project_name": "Project's name",
+      "create_project_button": "Create project",
+      "cancel_create_project_button": "Create project",
+      "create_project_button_loading": "Creating project"
+    },
+    "validation": {
+      "name_required": "Name required"
+    }
+  },
+  "profile_view": {
+    "title_header": "Profile"
+  }
 }

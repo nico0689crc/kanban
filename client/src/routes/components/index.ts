@@ -1,1 +1,1 @@
-export { default as RouterLink } from './RouterLink';
+export { default as RouterLink } from './router-link';

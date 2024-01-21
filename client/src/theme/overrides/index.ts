@@ -9,8 +9,8 @@ export function componentsOverrides(theme: Theme): any {
   const components = merge(
     defaultProps(theme),
     textField(theme),
-    card(theme),
-    button(theme)
+    button(theme),
+    card(theme)
   );
 
   return components;

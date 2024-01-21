@@ -31,9 +31,9 @@ export default function MotionContainer({ animate, action = false, children, ...
   return (
     <Box
       component={m.div}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+      initial='initial'
+      animate='animate'
+      exit='exit'
       variants={varContainer()}
       {...other}
     >

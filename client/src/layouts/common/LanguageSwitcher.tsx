@@ -1,8 +1,8 @@
-import React from "react";
-import Iconify from "@/components/iconify"
-import usePopover from "@/hooks/usePopover";
-import { useLocales } from "@/locales"
-import { IconButton, MenuItem, Popover, Stack } from "@mui/material"
+import React from 'react';
+import Iconify from '@/components/iconify'
+import usePopover from '@/hooks/usePopover';
+import { useLocales } from '@/locales'
+import { IconButton, MenuItem, Popover, Stack } from '@mui/material'
 
 const LanguageSwitcher = () => {
   const { currentLang, allLangs, onChangeLang } = useLocales();
@@ -14,7 +14,7 @@ const LanguageSwitcher = () => {
   
   return (
     <>
-      <IconButton color="primary" onClick={handleClick}>
+      <IconButton color='primary' onClick={handleClick}>
         <Iconify icon={currentLang.icon} sx={{ borderRadius: 0.65, width: 25 }} />
       </IconButton>
       <Popover
@@ -39,7 +39,7 @@ const LanguageSwitcher = () => {
             selected={option.value === currentLang.value}
             onClick={() => onChangeLang(option.value)}
           >
-            <Stack direction="row" py={1} columnGap={1} alignItems="center">
+            <Stack direction='row' py={1} columnGap={1} alignItems='center'>
               <Iconify icon={option.icon} sx={{ borderRadius: 0.65, width: 28 }} />
               {option.label}
             </Stack>

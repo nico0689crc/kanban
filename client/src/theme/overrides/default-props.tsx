@@ -1,6 +1,4 @@
-import { Theme } from '@mui/material/styles';
-
-export function defaultProps(theme: Theme) {
+export function defaultProps() {
   return {
     MuiButton: {
       defaultProps: {

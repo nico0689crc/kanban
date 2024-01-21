@@ -1,4 +1,4 @@
-import ResetPasswordView from "@/sections/auth/ResetPasswordView";
+import ResetPasswordView from '@/sections/auth/ResetPasswordView';
 
 export const metadata = {
   title: 'Reset password',

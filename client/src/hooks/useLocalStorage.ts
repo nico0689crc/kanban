@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from 'react';
 
 export const useLocalStorage = (key: string, initialState: any) => {
   const [state, setState] = useState(initialState);

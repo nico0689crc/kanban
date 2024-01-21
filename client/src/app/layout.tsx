@@ -95,7 +95,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={primaryFont.className}>
+    <html lang='en' className={primaryFont.className}>
       <body>
         <AuthProvider>
           <LocalizationProvider>

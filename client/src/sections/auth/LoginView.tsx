@@ -3,7 +3,7 @@
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormProvider from "@/components/hook-form/FormProvider";
+import FormProvider from '@/components/hook-form/FormProvider';
 import { useRouter } from '@/routes/hooks';
 import { useForm } from 'react-hook-form';
 import { useAuthContext } from '@/auth/hooks';
@@ -27,13 +27,13 @@ const LoginView = () => {
   const password = useBoolean();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().required(t("login_view.validation.email_required")).email(t("login_view.validation.email_format")),
-    password: Yup.string().required(t("login_view.validation.password_required")),
+    email: Yup.string().required(t('login_view.validation.email_required')).email(t('login_view.validation.email_format')),
+    password: Yup.string().required(t('login_view.validation.password_required')),
   });
 
   const defaultValues = {
-    email: '',
-    password: '',
+    email: 'nico.06.89crc@gmail.com',
+    password: 'Perth20!@',
   };
 
   const methods = useForm({ resolver: yupResolver(LoginSchema), defaultValues });
@@ -58,25 +58,25 @@ const LoginView = () => {
     <FormWrapper>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{ t("login_view.labels.title") }</Typography>
-          <Stack direction="row" spacing={0.5}>
-            <Typography variant="body2">{ t("login_view.labels.new_user") }</Typography>
-            <Link component={RouterLink} href={paths.auth.register} variant="subtitle2">
-              { t("login_view.labels.create_account") }
+          <Typography variant='h4'>{ t('login_view.labels.title') }</Typography>
+          <Stack direction='row' spacing={0.5}>
+            <Typography variant='body2'>{ t('login_view.labels.new_user') }</Typography>
+            <Link component={RouterLink} href={paths.auth.register} variant='subtitle2'>
+              { t('login_view.labels.create_account') }
             </Link>
           </Stack>
-          {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
-          <RHFTextField name="email" label={ t("login_view.labels.email") } />
+          <RHFTextField name='email' label={ t('login_view.labels.email') } />
 
           <RHFTextField
-            name="password"
-            label={ t("login_view.labels.password") }
+            name='password'
+            label={ t('login_view.labels.password') }
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={password.onToggle} edge="end">
+                <InputAdornment position='end'>
+                  <IconButton onClick={password.onToggle} edge='end'>
                     <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                   </IconButton>
                 </InputAdornment>
@@ -87,22 +87,22 @@ const LoginView = () => {
           <Link
             component={RouterLink}
             href={paths.auth.request_reset_password}
-            variant="subtitle2"
-            color="primary"
-            underline="always"
+            variant='subtitle2'
+            color='primary'
+            underline='always'
             sx={{ alignSelf: 'flex-end' }}
           >
-            { t("login_view.labels.forgot_password") }
+            { t('login_view.labels.forgot_password') }
           </Link>
 
           <LoadingButton
             fullWidth
-            color="primary"
-            type="submit"
+            color='primary'
+            type='submit'
             loading={isSubmitting}
-            loadingIndicator={ t("login_view.labels.login_loading") }
+            loadingIndicator={ t('login_view.labels.login_loading') }
           >
-            { t("login_view.labels.login") }
+            { t('login_view.labels.login') }
           </LoadingButton>
         </Stack>
       </FormProvider>

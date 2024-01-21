@@ -59,7 +59,7 @@ export const menuItem = (theme: Theme) => ({
     marginLeft: theme.spacing(-0.5),
     marginRight: theme.spacing(0.5),
   },
-  [`&.${autocompleteClasses.option}[aria-selected="true"]`]: {
+  [`&.${autocompleteClasses.option}[aria-selected='true']`]: {
     backgroundColor: theme.palette.action.selected,
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
@@ -94,7 +94,7 @@ export function bgBlur(props?: BgBlurProps) {
         top: 0,
         left: 0,
         zIndex: 9,
-        content: '""',
+        content: '''',
         width: '100%',
         height: '100%',
         backdropFilter: `blur(${blur}px)`,

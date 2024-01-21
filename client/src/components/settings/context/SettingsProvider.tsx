@@ -1,9 +1,9 @@
 'use client';
 
-import { useMemo } from "react";
-import { SettingsValueProps } from "../types";
-import { SettingsContext } from "./SettingsContext";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMemo } from 'react';
+import { SettingsValueProps } from '../types';
+import { SettingsContext } from './SettingsContext';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { STORAGE_KEY_SETTINGS } from '@/config-global';
 
 type SettingsProviderProps = {

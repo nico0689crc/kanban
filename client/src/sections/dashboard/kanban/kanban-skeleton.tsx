@@ -14,7 +14,7 @@ export function KanbanColumnSkeleton({ index, sx, ...other }: Props) {
   return (
     <Stack
       component={Paper}
-      variant="outlined"
+      variant='outlined'
       sx={{
         p: 2,
         borderRadius: 2,

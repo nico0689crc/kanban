@@ -1,10 +1,10 @@
 'use client';
 
-import Iconify from "@/components/iconify";
-import { Box, Link, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { useActiveLink } from "@/routes/hooks";
-import { RouterLink } from "@/routes/components";
+import Iconify from '@/components/iconify';
+import { Box, Link, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { useActiveLink } from '@/routes/hooks';
+import { RouterLink } from '@/routes/components';
 
 type NavbarItemProps = {
   icon: string,
@@ -21,9 +21,9 @@ const NavbarItem = ({ icon, label, href } : NavbarItemProps) => {
       component={RouterLink} 
       href={href}
       sx={{
-        display: "flex",
+        display: 'flex',
         flexDirection: 'column', 
-        alignItems: "center", 
+        alignItems: 'center', 
         position: 'relative',
         fontWeight: '600',
         textDecoration: 'none',
@@ -48,8 +48,8 @@ const NavbarItem = ({ icon, label, href } : NavbarItemProps) => {
     >
       <Iconify icon={icon} sx={{ zIndex: 2 }}></Iconify>
       <Box 
-        component="span"
-        className="navbar-button-label"
+        component='span'
+        className='navbar-button-label'
         sx={{
           position: 'relative',
           opacity: 1,
@@ -68,7 +68,7 @@ const NavbarItem = ({ icon, label, href } : NavbarItemProps) => {
           },
         }}
       >
-        <Typography variant="button" noWrap>{label}</Typography>
+        <Typography variant='button' noWrap>{label}</Typography>
         
       </Box>
     </Link>

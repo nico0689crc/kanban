@@ -3,7 +3,7 @@
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormProvider from "@/components/hook-form/FormProvider";
+import FormProvider from '@/components/hook-form/FormProvider';
 import { useRouter } from '@/routes/hooks';
 import { useForm } from 'react-hook-form';
 import { useAuthContext } from '@/auth/hooks';
@@ -31,11 +31,11 @@ const RegisterView = () => {
   const confirm_password = useBoolean();
 
   const RegisterSchema = Yup.object().shape({
-    first_name: Yup.string().required(t("register_view.validation.first_name_required")),
-    last_name: Yup.string().required(t("register_view.validation.last_name_required")),
-    email: Yup.string().required(t("register_view.validation.email_required")).email(t("register_view.validation.email_format")),
-    password: Yup.string().required(t("register_view.validation.password_required")),
-    confirm_password: Yup.string().required(t("register_view.validation.password_required")),
+    first_name: Yup.string().required(t('register_view.validation.first_name_required')),
+    last_name: Yup.string().required(t('register_view.validation.last_name_required')),
+    email: Yup.string().required(t('register_view.validation.email_required')).email(t('register_view.validation.email_format')),
+    password: Yup.string().required(t('register_view.validation.password_required')),
+    confirm_password: Yup.string().required(t('register_view.validation.password_required')),
   });
 
   const defaultValues = {
@@ -76,33 +76,33 @@ const RegisterView = () => {
     <FormWrapper>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant="h4">{ t("register_view.labels.title") }</Typography>
+          <Typography variant='h4'>{ t('register_view.labels.title') }</Typography>
 
-          <Stack direction="row" spacing={0.5}>
-            <Typography variant="body2">{ t("register_view.labels.have_account") }</Typography>
+          <Stack direction='row' spacing={0.5}>
+            <Typography variant='body2'>{ t('register_view.labels.have_account') }</Typography>
 
-            <Link href={paths.auth.login} component={RouterLink} variant="subtitle2">
-              { t("register_view.labels.sign_in") }
+            <Link href={paths.auth.login} component={RouterLink} variant='subtitle2'>
+              { t('register_view.labels.sign_in') }
             </Link>
           </Stack>
 
-          {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" spacing={2}>
-            <RHFTextField name="first_name" label={ t("register_view.labels.first_name") } />
-            <RHFTextField name="last_name" label={ t("register_view.labels.last_name") } />
+          <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent='space-between' spacing={2}>
+            <RHFTextField name='first_name' label={ t('register_view.labels.first_name') } />
+            <RHFTextField name='last_name' label={ t('register_view.labels.last_name') } />
           </Stack>
 
-          <RHFTextField name="email" label={ t("register_view.labels.email") } />
+          <RHFTextField name='email' label={ t('register_view.labels.email') } />
 
           <RHFTextField
-            name="password"
-            label={ t("register_view.labels.password") }
+            name='password'
+            label={ t('register_view.labels.password') }
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={password.onToggle} edge="end">
+                <InputAdornment position='end'>
+                  <IconButton onClick={password.onToggle} edge='end'>
                     <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                   </IconButton>
                 </InputAdornment>
@@ -111,13 +111,13 @@ const RegisterView = () => {
           />
 
           <RHFTextField
-            name="confirm_password"
-            label={ t("register_view.labels.confirm_password") }
+            name='confirm_password'
+            label={ t('register_view.labels.confirm_password') }
             type={confirm_password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={confirm_password.onToggle} edge="end">
+                <InputAdornment position='end'>
+                  <IconButton onClick={confirm_password.onToggle} edge='end'>
                     <Iconify icon={confirm_password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                   </IconButton>
                 </InputAdornment>
@@ -127,10 +127,10 @@ const RegisterView = () => {
 
           <LoadingButton
             fullWidth
-            type="submit"
+            type='submit'
             loading={isSubmitting}
           >
-            { t("register_view.labels.create_account") }
+            { t('register_view.labels.create_account') }
           </LoadingButton>
         </Stack>
       </FormProvider>

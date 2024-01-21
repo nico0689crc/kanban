@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <Box>
       <Link href={paths.dashboard.root}>
-        <Image src='/logos/logo-96.png' alt="app-logo" width={60} height={60}/>
+        <Image src='/logos/logo-96.png' alt='app-logo' width={60} height={60}/>
       </Link>
     </Box>
   )

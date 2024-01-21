@@ -1,22 +1,9 @@
-import { alpha, Theme } from '@mui/material/styles';
-import { inputBaseClasses, InputBaseProps } from '@mui/material/InputBase';
+import { Theme } from '@mui/material/styles';
 import { inputLabelClasses } from '@mui/material/InputLabel';
-import { inputAdornmentClasses } from '@mui/material/InputAdornment';
 
 // ----------------------------------------------------------------------
 
 export function textField(theme: Theme) {
-  const color = {
-    focused: theme.palette.text.primary,
-    active: theme.palette.text.secondary,
-    placeholder: theme.palette.text.disabled,
-  };
-
-  const font = {
-    label: theme.typography.body1,
-    value: theme.typography.body2,
-  };
-
   return {
     // HELPER
     MuiFormHelperText: {

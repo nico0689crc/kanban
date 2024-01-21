@@ -1,8 +1,7 @@
 'use client';
 
-import { AuthGuard } from "@/auth/guard";
-import { useAuthContext } from "@/auth/hooks";
-import DashboardLayout from "@/layouts/dashboard/DashboardLayout";
+import { AuthGuard } from '@/auth/guard';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 type Props = {
   children: React.ReactNode;
