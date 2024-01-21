@@ -96,7 +96,7 @@ const VerifyView = () => {
           </LoadingButton>
 
           <Typography variant='body2'>
-            {t('verify_view.labels.resend_title')}{`  `} 
+            {t('verify_view.labels.resend_title')}{' '} 
             <Link
               variant='subtitle2'
               onClick={handleResendCode}

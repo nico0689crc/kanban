@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export type SettingsValueProps = {
   themeMode: 'light' | 'dark';
 };

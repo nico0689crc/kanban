@@ -7,7 +7,7 @@ import { button } from './components/button';
 
 export function componentsOverrides(theme: Theme): any {
   const components = merge(
-    defaultProps(theme),
+    defaultProps(),
     textField(theme),
     button(theme),
     card(theme)

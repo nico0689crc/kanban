@@ -94,7 +94,7 @@ export function bgBlur(props?: BgBlurProps) {
         top: 0,
         left: 0,
         zIndex: 9,
-        content: '''',
+        content: '""',
         width: '100%',
         height: '100%',
         backdropFilter: `blur(${blur}px)`,

@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 
 // routes
 import { paths } from '@/routes/paths';
-import { useRouter } from '@/routes/hooks';
 import { RouterLink } from '@/routes/components';
 
 // auth
@@ -24,7 +23,6 @@ import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { useLocales } from '@/locales';
 import { useState } from 'react';
 import { Alert } from '@mui/material';
-import nProgress from 'nprogress';
 import FormWrapper from './FormWrapper';
 
 // ----------------------------------------------------------------------

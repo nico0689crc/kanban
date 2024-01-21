@@ -1,5 +1,5 @@
 import { KanbanProjectsResponseType } from '@/types';
-import axios, { endpoints, fetcher } from '@/utils/axios';
+import { endpoints, fetcher } from '@/utils/axios';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 

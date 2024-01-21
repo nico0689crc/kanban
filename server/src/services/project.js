@@ -1,10 +1,8 @@
-const { Project, User, Section, Task, Sequelize }  = require('../models');
-const { faker } = require("@faker-js/faker");
+const { Project, User, Section, Task }  = require('../models');
+const { faker } = require("@faker-js/faker")
 const expressValidatorResult = require('../utils/expressValidatorResult');
 const ErrorHandler = require("../utils/errorHandler");
 const ResponseParser = require("../utils/responseParser");
-const ResponseParserError = require('../utils/responseParserError');
-const ResponsesTypes = require('../utils/responseTypes');
 
 const getProjects = async (req, res, next) => {
   ErrorHandler(async () => {
@@ -20,7 +18,10 @@ const getProjects = async (req, res, next) => {
         }
       ],
       ...(req.query?.page?.number ? { offset: (req.query?.page?.number > 0 ? req.query?.page?.number - 1 : 0) } : {}),
-      ...(req.query?.page?.size ? { limit: +req.query?.page?.size } : {})
+      ...(req.query?.page?.size ? { limit: +req.query?.page?.size } : {}),
+      order: [
+        ['createdAt', 'DESC'],
+      ]
     });
 
     const response = new ResponseParser({
@@ -34,7 +35,6 @@ const getProjects = async (req, res, next) => {
     response.sendResponseGetSuccess(res);
   }, next);
 };
-
 
 const getProjectByUUID = async (req, res, next) => {
   ErrorHandler(async () => { 
@@ -65,7 +65,31 @@ const getProjectByUUID = async (req, res, next) => {
   }, next);
 };
 
+const postProject = async (req, res, next) => {
+  ErrorHandler(async () => { 
+    await expressValidatorResult(req);
+
+    const user = await User.findOne({ where: { email: req.user.email } });
+
+    const project = await Project.create({ 
+      title: req.body.title,
+      uuid: faker.string.uuid(), 
+      userId: user.get().id
+    });
+
+    const response = new ResponseParser({
+      model: Project,
+      documents: { ...project.get() },
+      request: req,
+    });
+
+    response.parseDataIndividual();
+    response.sendResponseCreateSuccess(res);
+  }, next);
+}
+
 module.exports = {
   getProjects,
-  getProjectByUUID
+  getProjectByUUID,
+  postProject
 };

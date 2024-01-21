@@ -153,7 +153,7 @@ export const AuthProvider =({ children } : Props) => {
   }, []);
 
   // RESEND CODE REGISTER
-  const resendCodeRegister = useCallback(async (email: string) => {
+  const resendCodeRegister = useCallback(async () => {
    
   }, []);
 

@@ -1,5 +1,6 @@
 import { RouterLink } from '@/routes/components';
 import { Box, Breadcrumbs, Link, Stack, Typography } from '@mui/material';
+import { BreadcrumbsLinkType } from './types';
 
 type Props = {
   pageTitle: string;

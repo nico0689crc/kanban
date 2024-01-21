@@ -9,6 +9,7 @@ import { RHFTextField } from '@/components/hook-form';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { ReturnType  } from '@/hooks/useBoolean';
 import { t } from 'i18next';
+import axios, { endpoints } from '@/utils/axios';
 
 type Props = {
   dialog: ReturnType;
@@ -17,16 +18,23 @@ type Props = {
 const KanbanCreate = ({dialog} : Props) => {
 
   const CreateProjectSchema = Yup.object().shape({
-    name: Yup.string().required(t('kanban_projects_view.validation.name_required')),
+    title: Yup.string().required(t('kanban_projects_view.validation.name_required')),
   });
 
-  const defaultValues = { name: '' };
+  const defaultValues = { title: '' };
 
   const methods = useForm({ resolver: yupResolver(CreateProjectSchema), defaultValues });
 
   const { handleSubmit, formState: { isSubmitting } } = methods;
 
-  const onSubmit = handleSubmit(async () => {});
+  const onSubmit = handleSubmit(async ({ title }) => {
+    try {
+      await axios.post(endpoints.projects, { title });
+      dialog.onFalse();
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   return (
     <Dialog fullWidth open={dialog.value} onClose={dialog.onFalse}>
@@ -34,7 +42,7 @@ const KanbanCreate = ({dialog} : Props) => {
         <DialogTitle>{ t('kanban_projects_view.labels.create_project_button') }</DialogTitle>
         <DialogContent>
           <Stack>
-            <RHFTextField name='name' label={ t('kanban_projects_view.labels.project_name') }/>
+            <RHFTextField name='title' label={ t('kanban_projects_view.labels.project_name') }/>
           </Stack>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3 }}>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Public_Sans, Barlow } from 'next/font/google';
 
 // ----------------------------------------------------------------------

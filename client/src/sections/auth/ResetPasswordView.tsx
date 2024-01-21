@@ -1,7 +1,7 @@
 'use client';
 
 import * as Yup from 'yup';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -20,12 +20,11 @@ import { useRouter, useSearchParams } from '@/routes/hooks';
 
 // hooks
 import { useBoolean } from '@/hooks/useBoolean';
-import { useCountdownSeconds } from '@/hooks/useCountdown';
 
 // auth
 import { useAuthContext } from '@/auth/hooks';
 import Iconify from '@/components/iconify';
-import FormProvider, { RHFTextField, RHFCode } from '@/components/hook-form';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { Alert } from '@mui/material';
 import { useLocales } from '@/locales';
 import nProgress from 'nprogress';

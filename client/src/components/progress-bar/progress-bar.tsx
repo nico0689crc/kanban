@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import NProgress from 'nprogress';
 import StyledProgressBar from './styles';
 import { usePathname } from '@/routes/hooks';

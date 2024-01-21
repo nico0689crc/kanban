@@ -161,7 +161,7 @@ const registerUser = (req, res, next) => {
       request: req,
     });
     response.parseDataIndividual();
-    response.sendResponseGetSuccess(res);
+    response.sendResponseCreateSuccess(res);
   },next);
 };
 
