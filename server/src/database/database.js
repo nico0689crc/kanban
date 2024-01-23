@@ -6,6 +6,7 @@ const databaseConfig = require('../config/database');
 let sequelize;
 
 const connect = () => {
+
   try {
     sequelize = new Sequelize(
       databaseConfig[process.env.NODE_ENV].database, 
