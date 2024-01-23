@@ -6,14 +6,7 @@ const databaseConfig = require('../config/database');
 let sequelize;
 
 const connect = () => {
-  console.log(databaseConfig[process.env.NODE_ENV].database, 
-    databaseConfig[process.env.NODE_ENV].username, 
-    databaseConfig[process.env.NODE_ENV].password, 
-    {
-      host: databaseConfig[process.env.NODE_ENV].host,
-      port: databaseConfig[process.env.NODE_ENV].port,
-      dialect: databaseConfig[process.env.NODE_ENV].dialect
-    });
+
   try {
     sequelize = new Sequelize(
       databaseConfig[process.env.NODE_ENV].database, 
@@ -25,17 +18,7 @@ const connect = () => {
         dialect: databaseConfig[process.env.NODE_ENV].dialect
       }
     );
-
-    sequelize
-      .authenticate()
-      .then(() => {
-        console.log('Connection has been established successfully.');
-      })
-      .catch(err => {
-        console.error('Unable to connect to the database:', err);
-      });
   } catch (error) {
-    console.log(error);
     throw new Error("***** Database connection not possible *****");
   }
 }
@@ -43,7 +26,6 @@ const connect = () => {
 const migrate = async () => {
   if (sequelize) { 
     try {
-
       const umzug = new Umzug({
         migrations: { glob: 'src/database/migrations/*.js' },
         context: sequelize.getQueryInterface(),
