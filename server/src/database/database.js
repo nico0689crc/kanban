@@ -25,6 +25,15 @@ const connect = () => {
         dialect: databaseConfig[process.env.NODE_ENV].dialect
       }
     );
+
+    sequelize
+      .authenticate()
+      .then(() => {
+        console.log('Connection has been established successfully.');
+      })
+      .catch(err => {
+        console.error('Unable to connect to the database:', err);
+      });
   } catch (error) {
     console.log(error);
     throw new Error("***** Database connection not possible *****");
@@ -34,7 +43,7 @@ const connect = () => {
 const migrate = async () => {
   if (sequelize) { 
     try {
-      console.log("migraciones");
+
       const umzug = new Umzug({
         migrations: { glob: 'src/database/migrations/*.js' },
         context: sequelize.getQueryInterface(),
