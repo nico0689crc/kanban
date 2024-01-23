@@ -6,7 +6,14 @@ const databaseConfig = require('../config/database');
 let sequelize;
 
 const connect = () => {
-  console.log(databaseConfig[process.env.NODE_ENV].database);
+  console.log(databaseConfig[process.env.NODE_ENV].database, 
+    databaseConfig[process.env.NODE_ENV].username, 
+    databaseConfig[process.env.NODE_ENV].password, 
+    {
+      host: databaseConfig[process.env.NODE_ENV].host,
+      port: databaseConfig[process.env.NODE_ENV].port,
+      dialect: databaseConfig[process.env.NODE_ENV].dialect
+    });
   try {
     sequelize = new Sequelize(
       databaseConfig[process.env.NODE_ENV].database, 
