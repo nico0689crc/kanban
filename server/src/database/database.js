@@ -34,6 +34,7 @@ const connect = () => {
 const migrate = async () => {
   if (sequelize) { 
     try {
+      console.log("migraciones");
       const umzug = new Umzug({
         migrations: { glob: 'src/database/migrations/*.js' },
         context: sequelize.getQueryInterface(),
