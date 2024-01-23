@@ -18,6 +18,7 @@ const connect = () => {
       }
     );
   } catch (error) {
+    console.log(error);
     throw new Error("***** Database connection not possible *****");
   }
 }
