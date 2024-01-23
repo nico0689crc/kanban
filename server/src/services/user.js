@@ -259,7 +259,9 @@ const requestResetPassword = async (req, res, next) => {
         user.dataValues.email, 
         'Password Reset',
         requestPasswordResetEmailTemplate
-      );
+      ).catch((error)=> {
+        console.log(error);
+      });
 
       return true;
     });
