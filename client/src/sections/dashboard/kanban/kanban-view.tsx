@@ -1,25 +1,33 @@
 'use client';
 
 import { Stack, Button } from '@mui/material';
-import { useFetchProjects } from '@/hooks/useKanban';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { useBoolean } from '@/hooks/useBoolean';
 import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
 import { useLocales } from '@/locales';
-import KanbanList from './kanban-list';
+import { RootState } from '@/store';
+import { fetchProjectsActionCreator } from '@/store/project/projectActionCreator';
+
+import KanbanList from '@/sections/dashboard/kanban/kanban-list';
+import KanbanCreate from '@/sections/dashboard/kanban/kanban-create';
+
+import Iconify from '@/components/iconify';
 import { PageHead } from '@/components/page-head';
 import { LoadingData } from '@/components/loading-data';
 import EmptyContent from '@/components/empty-content/empty-content';
-import { useBoolean } from '@/hooks/useBoolean';
-import KanbanCreate from './kanban-create';
 
 const KanbanView = () => {
   const { t } = useLocales();
   const dialog = useBoolean();
-  const { projects, projectsEmpty, projectsLoading } = useFetchProjects();
+  const dispatch = useDispatch();
+  const { projects, isLoading, isEmpty } = useSelector((state: RootState) => state.projectStore);
+
+  dispatch<any>(fetchProjectsActionCreator());
   
   return (
     <>
-      <Stack direction='column' gap={6} sx={{ height: '100%', width: '100%' }}>
+      <Stack direction='column' gap={6} sx={{ width: '100%', height: '100%' }}>
         <PageHead 
           pageTitle={t('kanban_projects_view.title_header')}
           links={[
@@ -37,9 +45,9 @@ const KanbanView = () => {
             </Button>
           }
         />
-        { projectsLoading && <LoadingData /> }
-        { projectsEmpty && <EmptyContent />}
-        { !!projects?.length && <KanbanList projects={projects}/> }
+        { isLoading && <LoadingData /> }
+        { !isLoading && isEmpty && <EmptyContent />}
+        { !isLoading && !!projects?.length && <KanbanList projects={projects}/> }
       </Stack>
 
       <KanbanCreate dialog={dialog}/>

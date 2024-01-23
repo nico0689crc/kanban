@@ -1,21 +1,28 @@
 'use client';
 
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { t } from 'i18next';
+import { ReturnType  } from '@/hooks/useBoolean';
+
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider from '@/components/hook-form/FormProvider';
-import { useForm } from 'react-hook-form';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 import { RHFTextField } from '@/components/hook-form';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { ReturnType  } from '@/hooks/useBoolean';
-import { t } from 'i18next';
 import axios, { endpoints } from '@/utils/axios';
+import { RootState } from '@/store';
+import { addProject, setCurrentPage } from '@/store/project/projectSlice';
 
 type Props = {
   dialog: ReturnType;
 }
 
 const KanbanCreate = ({dialog} : Props) => {
+  const dispatch = useDispatch();
+  const { currentPage } = useSelector((state: RootState) => state.projectStore);
 
   const CreateProjectSchema = Yup.object().shape({
     title: Yup.string().required(t('kanban_projects_view.validation.name_required')),
@@ -25,11 +32,16 @@ const KanbanCreate = ({dialog} : Props) => {
 
   const methods = useForm({ resolver: yupResolver(CreateProjectSchema), defaultValues });
 
-  const { handleSubmit, formState: { isSubmitting } } = methods;
+  const { handleSubmit, formState: { isSubmitting }, reset } = methods;
 
   const onSubmit = handleSubmit(async ({ title }) => {
     try {
-      await axios.post(endpoints.projects, { title });
+      const response = await axios.post(endpoints.projects, { title });
+
+      (currentPage === 1) && dispatch(addProject({ project: response?.data?.data?.attributes }));
+      (currentPage > 1) && dispatch(setCurrentPage({currentPage: 1}));
+      
+      reset();
       dialog.onFalse();
     } catch (error) {
       console.log(error);

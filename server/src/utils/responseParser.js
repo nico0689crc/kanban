@@ -46,7 +46,7 @@ class ResponseParser {
     };
 
     const getLinks = () => {
-      if (!this.pageSize && !this.pageNumber) {
+      if (!this.pageSize || !this.pageNumber) {
         return {
           self: `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}${this.request.originalUrl}`,
         };
@@ -91,6 +91,7 @@ class ResponseParser {
       links: getLinks(),
       api: {
         items_total: this.totalDocuments ?? 0,
+        ...(this.pageSize ? { total_pages: Math.ceil(this.totalDocuments / this.pageSize) } : {}),
       },
       data: [],
     };

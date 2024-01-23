@@ -1,11 +1,3 @@
-type KanbanObjectType  = {
-  type: string;
-  uuid: string;
-  links: {
-    self: Record<string, string>
-  }
-}
-
 type KanbanTaskType = {
   order: number;
   description: string;
@@ -25,13 +17,42 @@ type KanbanSectionType = {
 } 
 
 export type KanbanProjectType = {
-  attributes: {
-    uuid: string;
-    title: string;
-    status: 'active' | 'inactive';
-    createdAt: string;
-    sections: KanbanSectionType[]
-  }
-} 
+  uuid: string;
+  title: string;
+  createdAt: string;
+  status: 'active' | 'inactive';
+  sections: KanbanSectionType[]
+}
 
-export type KanbanProjectsResponseType = KanbanObjectType & KanbanProjectType;
+export type KanbanProjectsResponseIndividualType = {
+  links: {
+    self: string
+  },
+  data: {
+    type: string,
+    uuid: string,
+    attributes: KanbanProjectType
+  }
+}
+
+export type KanbanProjectsResponseCollectionType = {
+  links: {
+    first?: string,
+    previous?: string,
+    self: string,
+    next?: string,
+    last?: string,
+  },
+  api: {
+    items_total: number,
+    total_pages: number
+  },
+  data: {
+    type: string,
+    uuid: string,
+    attributes: KanbanProjectType,
+    links: {
+      self: string
+    }
+  }[]
+}

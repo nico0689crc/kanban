@@ -2,6 +2,8 @@
 
 import { AuthGuard } from '@/auth/guard';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 type Props = {
   children: React.ReactNode;
@@ -10,7 +12,9 @@ type Props = {
 const Layout = ({ children } : Props) => {
   return (
     <AuthGuard>
-      <DashboardLayout>{children}</DashboardLayout>
+      <Provider store={store}>
+        <DashboardLayout>{children}</DashboardLayout>
+      </Provider>
     </AuthGuard>
   );
 }

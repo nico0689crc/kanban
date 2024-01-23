@@ -2,7 +2,7 @@
 FROM node:18-alpine As build-stage
 WORKDIR /client
 COPY package.json .
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY . .
 EXPOSE $REACT_DOCKER_PORT
 

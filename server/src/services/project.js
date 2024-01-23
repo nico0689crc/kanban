@@ -7,9 +7,10 @@ const ResponseParser = require("../utils/responseParser");
 const getProjects = async (req, res, next) => {
   ErrorHandler(async () => {
 
-    const { count: totalProjects, rows: projects } = await Project.findAndCountAll({
+    const user = await User.findOne({ where: { email: req.user.email } });
+
+    const { count: totalDocuments, rows: projects } = await Project.findAndCountAll({
       include: [
-        { model: User, as: 'user', where: { email: req.user.email }, attributes: User.getFieldsToSelect() },
         { 
           model: Section,  as: 'sections', attributes: Section.getFieldsToSelect(),  
           include: [{ 
@@ -17,18 +18,27 @@ const getProjects = async (req, res, next) => {
           }] 
         }
       ],
-      ...(req.query?.page?.number ? { offset: (req.query?.page?.number > 0 ? req.query?.page?.number - 1 : 0) } : {}),
+      ...(
+        (req.query?.page?.number && req.query?.page?.size) ? 
+          { 
+            offset: (req.query?.page?.number > 0 ? ((req.query?.page?.number - 1) * req.query?.page?.size) : 0) 
+          } : {}),
       ...(req.query?.page?.size ? { limit: +req.query?.page?.size } : {}),
       order: [
         ['createdAt', 'DESC'],
-      ]
+      ],
+      where: { 
+        user_id: user.get().id,
+        status: 'active' 
+      },
+      distinct: true
     });
 
     const response = new ResponseParser({
       model: Project,
       documents: projects.map(project => project.get()),
       request: req,
-      totalDocuments: totalProjects,
+      totalDocuments,
     });
     
     response.parseDataCollection();
