@@ -3,7 +3,6 @@ import NextLink from 'next/link';
 import dateFormat from 'dateformat';
 
 import { Card, Grid, Stack, Typography, Link, IconButton } from '@mui/material';
-import { alpha } from '@mui/material/styles';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useLocales } from '@/locales';
@@ -59,14 +58,10 @@ const KanbanList = ({ projects } : Props) => {
                       </Typography>
                       <IconButton 
                           sx={{ 
-                            backgroundColor: theme => alpha(theme.palette.primary.light, 0.25),
                             transition: (theme) => theme.transitions.create(['background-color'], {
                               duration: theme.transitions.duration.standard,
                               easing: theme.transitions.easing.easeInOut,
-                            }),
-                            '&:hover': {
-                              backgroundColor: theme => alpha(theme.palette.primary.light, 0.35),
-                            }  
+                            })
                           }} 
                           color='primary' 
                           onClick={onClickActionButtonHandler}

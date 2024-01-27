@@ -18,8 +18,8 @@ const PageHead = ({ pageTitle, links, action} : Props) => {
   };
 
   return (
-    <Stack direction='row' justifyContent='space-between' alignItems='center'>
-      <Stack gap={2}>
+    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent='space-between' alignItems='center'>
+      <Stack gap={{ xs: 0, md: 2 }} width={{ xs: '100%', sm: 'inherit' }}>
         { pageTitle && <Typography variant='h4'>{pageTitle}</Typography> }
         <Breadcrumbs separator={<Separator />} aria-label='breadcrumb'>
           {!!links?.length && links.map(link => (
@@ -35,7 +35,7 @@ const PageHead = ({ pageTitle, links, action} : Props) => {
           ))}
         </Breadcrumbs>
       </Stack>
-      <Stack>
+      <Stack width={{ xs: '100%', sm: 'inherit' }} alignItems='end'>
         {action && <Box sx={{ flexShrink: 0 }}> {action} </Box>}
       </Stack>
     </Stack>

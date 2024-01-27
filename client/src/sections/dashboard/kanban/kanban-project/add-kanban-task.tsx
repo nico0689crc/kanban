@@ -67,7 +67,7 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
                 {t('common.labels.cancel')}
               </Button>
               <Button size='small' variant='contained' onClick={onAddSectionHandler} color='primary'>
-                {t('common.labels.remove')}
+                {t('common.labels.add')}
               </Button>
             </Stack>
           </Stack>

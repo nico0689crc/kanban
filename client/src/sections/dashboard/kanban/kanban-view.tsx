@@ -21,7 +21,7 @@ const KanbanView = () => {
   dispatch<any>(fetchProjectsActionCreator());
   
   return (
-    <Stack direction='column' gap={6} sx={{ width: '100%', height: '100%' }}>
+    <Stack direction='column' gap={{ xs: 3, sm: 8 }} sx={{ width: '100%', height: '100%' }}>
       <PageHead 
         pageTitle={t('kanban_projects_view.title_header')}
         links={[

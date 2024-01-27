@@ -4,7 +4,8 @@
     "labels": {
       "cancel": "Cancel",
       "add": "Add",
-      "remove": "Remove"
+      "remove": "Remove",
+      "edit": "Edit"
     }
   },
   "login_view": {
@@ -100,7 +101,7 @@
     "labels": {
       "sections": "Sections:",
       "tasks": "Tasks:",
-      "cancel_create_project_button": "Create project"
+      "create_project_button": "Create project"
     },
     "validation": {
       "name_required": "Name required"
@@ -114,7 +115,7 @@
       "cancel_create_project_button": "Create project",
       "create_project_button_loading": "Creating project",
       "add_section": "Add section",
-      "add_section_title": "New section",
+      "add_section_title": "Section's name",
       "add_task": "Add task",
       "add_task_title": "Task's name",
       "remove_section_question": "Are you sure want to delete this section?"

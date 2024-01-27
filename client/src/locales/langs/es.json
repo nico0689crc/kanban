@@ -4,7 +4,8 @@
     "labels": {
       "cancel": "Cancelar",
       "add": "Agregar",
-      "remove": "Eliminar"
+      "remove": "Eliminar",
+      "edit": "Editar"
     }
   },
   "login_view": {

@@ -13,13 +13,13 @@ type Props = InputBaseProps & {
   }
 };
 
-const InputBaseStyled = styled(InputBase)<InputBaseProps>(({ theme }) => {
+const InputBaseStyled = styled(InputBase)<InputBaseProps>(({ theme, color }) => {
   const font = {
     label: theme.typography.body1,
     value: theme.typography.body2,
   };
 
-  const color = {
+  const colorPallet = {
     focused: theme.palette.text.primary,
     active: theme.palette.text.secondary,
     placeholder: theme.palette.text.disabled,
@@ -27,7 +27,7 @@ const InputBaseStyled = styled(InputBase)<InputBaseProps>(({ theme }) => {
 
   return {
     border: '1.5px solid',
-    borderColor: alpha(theme.palette.primary.main, 0.75),
+    borderColor: alpha(theme.palette[color ?? 'primary'].main, 0.75),
     borderRadius: (theme.shape.borderRadius * 0.5),
     padding: '0.35rem 1rem',
     transition: theme.transitions.create(['border', 'border-color', 'box-shadow'], {
@@ -49,14 +49,13 @@ const InputBaseStyled = styled(InputBase)<InputBaseProps>(({ theme }) => {
       padding: '0.25rem',
     },
     [`&.${inputBaseClasses.focused}`]: {
-
-      boxShadow: theme.customShadows.card,
+      boxShadow: `5px 5px 1px 0px ${alpha(theme.palette[color ?? 'primary'].main, 0.20)}`,
     },
     input: {
       ...font.value,
       '&::placeholder': {
         opacity: 0,
-        color: color.placeholder,
+        color: colorPallet.placeholder,
       },
     }
   }
