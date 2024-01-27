@@ -19,7 +19,7 @@ import { RouterLink } from '@/routes/components';
 import { useCountdownSeconds } from '@/hooks/useCountdown';
 import RHFCode from '@/components/hook-form/RHFCode';
 import nProgress from 'nprogress';
-import FormWrapper from './FormWrapper';
+import FormWrapper from './form-wrapper';
 
 const VerifyView = () => {
   const [errorMsg, setErrorMsg] = useState('');

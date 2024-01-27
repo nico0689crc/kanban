@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 
 import { endpoints, fetcher } from '@/utils/axios';
-import { RootState } from '@/store';
 import { setProjects, setIsLoading, setError } from '@/store/project/projectSlice';
 import { KanbanProjectsResponseCollectionType } from '@/types';
 
@@ -15,11 +13,7 @@ type swrResponseType = {
 
 export const fetchProjectsActionCreator = () => {
   return async (dispatch: any) => {
-    const { currentPage, sizePage } = useSelector((state: RootState) => state.projectStore);
-
-    const queryString = new URLSearchParams({ 'page[size]': sizePage.toString(), 'page[number]': currentPage.toString() }).toString();
-    
-    const { data, isLoading, error } : swrResponseType = useSWR(`${endpoints.projects}?${queryString}`, fetcher); 
+    const { data, isLoading, error } : swrResponseType = useSWR(endpoints.projects, fetcher); 
 
     useEffect(() => {
       dispatch(setIsLoading({ isLoading }));

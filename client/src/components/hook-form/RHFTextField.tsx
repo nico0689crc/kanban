@@ -7,7 +7,7 @@ import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 
 type Props = InputBaseProps & {
   name: string;
-  label: string;
+  label?: string;
   InputProps?: {
     endAdornment: ReactElement
   }
@@ -27,7 +27,7 @@ const InputBaseStyled = styled(InputBase)<InputBaseProps>(({ theme }) => {
 
   return {
     border: '1.5px solid',
-    borderColor: alpha(theme.palette.text.secondary, 0.75),
+    borderColor: alpha(theme.palette.primary.main, 0.75),
     borderRadius: (theme.shape.borderRadius * 0.5),
     padding: '0.35rem 1rem',
     transition: theme.transitions.create(['border', 'border-color', 'box-shadow'], {
@@ -70,8 +70,8 @@ const RHFTextField = ({ name, type, label, InputProps, ...other }: Props) => {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <FormControl error={!!error}>
-          <InputLabel>{label}</InputLabel>
+        <FormControl error={!!error} sx={{ width: '100%' }}>
+          {!!label && <InputLabel>{label}</InputLabel>}
           <InputBaseStyled
             {...field}
             fullWidth

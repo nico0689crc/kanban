@@ -39,7 +39,7 @@ export default function ThemeProvider({ children }: Props) {
       shadows: shadows('light'),
       customShadows: customShadows('light'),
       typography,
-      shape: { borderRadius: 2 },
+      shape: { borderRadius: 8 },
     }),
     []
   );

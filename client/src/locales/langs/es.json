@@ -2,7 +2,9 @@
   "demo": "Español",
   "common": {
     "labels": {
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "remove": "Eliminar"
     }
   },
   "login_view": {
@@ -98,14 +100,29 @@
     "labels": {
       "sections": "Secciones:",
       "tasks": "Tareas:",
-      "created_at": "Fecha de creacion:",
-      "project_name": "Nombre del proyecto",
-      "create_project_button": "Crear proyecto",
-      "create_project_button_loading": "Creando proyecto"
+      "create_project_button": "Crear proyecto"
     },
     "validation": {
       "name_required": "Nombre obligatorio"
     }
+  },
+  "kanban_project_view": {
+    "title_header": "Nuevo projecto kanban",
+    "labels": {
+      "project_name": "Nombre del proyecto",
+      "create_project_button": "Crear proyecto",
+      "create_project_button_loading": "Creando proyecto",
+      "add_section": "Agregar sección",
+      "add_section_title": "Nombre de la sección",
+      "add_task": "Agregar tarea",
+      "add_task_title": "Nombre de la tarea",
+      "remove_section_question": "¿Estas seguro que quieres eliminar esta sección?"
+    },
+    "validation": {
+      "project_title_required": "El nombre del proyecto es obligatorio.",
+      "section_title_required": "El nombre de la sección es obligatoria.",
+      "task_title_required": "El nombre de la tarea es obligatoria."
+    } 
   },
   "profile_view": {
     "title_header": "Perfil"

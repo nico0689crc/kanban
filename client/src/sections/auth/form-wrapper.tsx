@@ -17,7 +17,14 @@ const FormWrapper = ({ children } : Props) => {
     isDownSm ? (
       children
     ) : (
-      <Card>
+      <Card
+        sx={{
+          borderRadius: 5,
+          p: 2,
+          boxShadow: theme => theme.customShadows.card,
+          border: (theme) => `1px solid ${theme.palette.primary.main}`,
+        }}
+      >
         <CardContent>
           {children}
         </CardContent>

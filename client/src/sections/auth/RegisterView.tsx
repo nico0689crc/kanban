@@ -16,7 +16,7 @@ import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/useBoolean';
 import { useLocales } from '@/locales';
 import nProgress from 'nprogress';
-import FormWrapper from './FormWrapper';
+import FormWrapper from './form-wrapper';
 
 const RegisterView = () => {
   const { t } = useLocales();

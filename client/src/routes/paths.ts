@@ -15,6 +15,7 @@ export const paths = {
   dashboard: {
     root: ROOTS.DASHBOARD,
     userProfile: `${ROOTS.DASHBOARD}/user-profile`,
-    kanbanProjects: `${ROOTS.DASHBOARD}/kanban-projects`
+    kanbanProjects: `${ROOTS.DASHBOARD}/kanban-projects`,
+    newProject: `${ROOTS.DASHBOARD}/kanban-projects/new-project`
   },
 };

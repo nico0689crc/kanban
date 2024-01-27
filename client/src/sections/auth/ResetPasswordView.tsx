@@ -28,7 +28,7 @@ import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { Alert } from '@mui/material';
 import { useLocales } from '@/locales';
 import nProgress from 'nprogress';
-import FormWrapper from './FormWrapper';
+import FormWrapper from './form-wrapper';
 
 const ResetPasswordView = () => {
   const { t } = useLocales();

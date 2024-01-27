@@ -1,22 +1,26 @@
 'use client';
 
+import { useState } from 'react';
+import NProgress from 'nprogress';
 import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoadingButton from '@mui/lab/LoadingButton';
 import FormProvider from '@/components/hook-form/FormProvider';
 import { useRouter } from '@/routes/hooks';
-import { useForm } from 'react-hook-form';
+
 import { useAuthContext } from '@/auth/hooks';
 import { paths } from '@/routes/paths';
-import { useState } from 'react';
+
 import { Alert, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material';
 import { RHFTextField } from '@/components/hook-form';
 import Iconify from '@/components/iconify';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/useBoolean';
 import { useLocales } from '@/locales';
-import NProgress from 'nprogress';
-import FormWrapper from './FormWrapper';
+
+import FormWrapper from './form-wrapper';
 
 const LoginView = () => {
   const { t } = useLocales();
@@ -32,8 +36,8 @@ const LoginView = () => {
   });
 
   const defaultValues = {
-    email: 'nico.06.89crc@gmail.com',
-    password: 'Perth20!@',
+    email: process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_USER! : '',
+    password: process.env.NODE_ENV === 'development' ?  process.env.NEXT_PUBLIC_PASSWORD! : ''
   };
 
   const methods = useForm({ resolver: yupResolver(LoginSchema), defaultValues });

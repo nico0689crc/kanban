@@ -2,7 +2,9 @@
   "demo": "English",
   "common": {
     "labels": {
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "add": "Add",
+      "remove": "Remove"
     }
   },
   "login_view": {
@@ -98,15 +100,30 @@
     "labels": {
       "sections": "Sections:",
       "tasks": "Tasks:",
-      "created_at": "Created at:",
-      "project_name": "Project's name",
-      "create_project_button": "Create project",
-      "cancel_create_project_button": "Create project",
-      "create_project_button_loading": "Creating project"
+      "cancel_create_project_button": "Create project"
     },
     "validation": {
       "name_required": "Name required"
     }
+  },
+  "kanban_project_view": {
+    "title_header": "New kanban project",
+    "labels": {
+      "project_name": "Project's name",
+      "create_project_button": "Create project",
+      "cancel_create_project_button": "Create project",
+      "create_project_button_loading": "Creating project",
+      "add_section": "Add section",
+      "add_section_title": "New section",
+      "add_task": "Add task",
+      "add_task_title": "Task's name",
+      "remove_section_question": "Are you sure want to delete this section?"
+    },
+    "validation": {
+      "project_title_required": "Project's name is required.",
+      "section_title_required": "Section's name is required.",
+      "task_title_required": "Task's name is required."
+    } 
   },
   "profile_view": {
     "title_header": "Profile"

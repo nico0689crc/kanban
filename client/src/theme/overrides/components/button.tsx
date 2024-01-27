@@ -77,13 +77,10 @@ export function button(theme: Theme) {
 
     const colorStyle = COLORS.map((color) => ({
       ...(ownerState.color === color && {
-        // CONTAINED
-        ...(containedVariant && {
-          boxShadow: theme.customShadows.card,
-          '&:hover': {
-            boxShadow: theme.customShadows.cardHover,
-          },
-        }),
+        boxShadow: `5px 5px 1px 0px ${alpha(theme.palette[color].main, 0.20)}`,
+        '&:hover': {
+          boxShadow: `5px 5px 1px 0px ${alpha(theme.palette[color].main, 0.45)}`,
+        },
         // SOFT
         ...(softVariant && {
           color: theme.palette[color][lightMode ? 'dark' : 'light'],
@@ -105,19 +102,20 @@ export function button(theme: Theme) {
     };
 
     const size = {
+      borderRadius: theme.shape.borderRadius * 2,
       ...(smallSize && {
         height: 30,
         fontSize: 13,
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingLeft: 10,
+        paddingRight: 10,
         ...(textVariant && {
           paddingLeft: 4,
           paddingRight: 4,
         }),
       }),
       ...(mediumSize && {
-        paddingLeft: 12,
-        paddingRight: 12,
+        paddingLeft: 14,
+        paddingRight: 14,
         ...(textVariant && {
           paddingLeft: 8,
           paddingRight: 8,
@@ -126,8 +124,8 @@ export function button(theme: Theme) {
       ...(largeSize && {
         height: 48,
         fontSize: 15,
-        paddingLeft: 16,
-        paddingRight: 16,
+        paddingLeft: 18,
+        paddingRight: 18,
         ...(textVariant && {
           paddingLeft: 10,
           paddingRight: 10,

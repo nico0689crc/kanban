@@ -23,7 +23,7 @@ import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { useLocales } from '@/locales';
 import { useState } from 'react';
 import { Alert } from '@mui/material';
-import FormWrapper from './FormWrapper';
+import FormWrapper from './form-wrapper';
 
 // ----------------------------------------------------------------------
 

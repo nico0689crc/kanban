@@ -1,6 +1,7 @@
 'use client'
 
-import { Container, Stack } from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
+
 import Navbar from './Navbar';
 import LanguageSwitcher from '../common/LanguageSwitcher';
 import ThemeModeButton from '../common/ThemeModeButton';
@@ -11,10 +12,11 @@ type Props = {
 }
 
 const DashboardLayout = ({children}: Props) => {
+
   return (
     <Stack direction='row' height='100vh' position='relative'>
       <Navbar />
-      <Stack direction='column' gap={3} sx={{ overflow: 'auto', width: '100%', position:'relative' }}>
+      <Stack direction='column' sx={{ overflow: 'auto', width: '100%', position:'relative' }}>
         <Stack 
           direction='row' 
           justifyContent='flex-end'
@@ -28,8 +30,10 @@ const DashboardLayout = ({children}: Props) => {
           <ThemeModeButton />
           <LogoutButton />
         </Stack>
-        <Container maxWidth='xl' sx={{ mb: { xs: 12, md: 5 }, height: '100%' }}>
-          {children}
+        <Container maxWidth='xl' sx={{ flexGrow: 1 }}>
+          <Box pt={5} pb={{ xs: 15, md: 8 }}>
+            {children}
+          </Box>
         </Container>
       </Stack>
     </Stack>
