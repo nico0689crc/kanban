@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 export type TaskType = {
   title: string,
-  uuid?: string,
+  uuid: string,
   description?: string,
   status?: 'active' | 'inactive',
   priority?: 'low' | 'medium' | 'hight',
@@ -34,9 +34,10 @@ export type Action = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 
 export enum Types {
   ADD_SECTION = 'ADD_SECTION',
-  ADD_TASK_TO_SECTION = 'ADD_TASK_TO_SECTION',
   REMOVE_SECTION = 'REMOVE_SECTION',
   EDIT_SECTION = 'EDIT_SECTION',
+  ADD_TASK_TO_SECTION = 'ADD_TASK_TO_SECTION',
+  REMOVE_TASK_FROM_SECTION = 'REMOVE_TASK_FROM_SECTION'
 }
 
 
@@ -55,11 +56,17 @@ export type Payload = {
     title: string;
     sectionUUID: string;
   };
+  [Types.REMOVE_TASK_FROM_SECTION]: {
+    taskUUID: string;
+  };
 };
 
 export type ProjectContextType = ProjectStateType & {
+  isDialogTaskOpen: boolean,
+  dialogTaskOnToggle: () => void;
   addSection: (title: string) => void;
   removeSection: (sectionUUID: string) => void;
   editSection: (sectionUUID: string, title: string) => void;
   addTaskToSection: (sectionUUID: string, title: string) => void;
+  removeTaskFromSection: (taskUUID: string) => void;
 }

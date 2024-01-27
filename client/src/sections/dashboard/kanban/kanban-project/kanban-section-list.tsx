@@ -6,8 +6,7 @@ import AddKabanSection from './add-kanban-section';
 
 const KanbanSectionList = () => {
   const { sections } = useContext(KanbanContext);
-  console.log(sections);
-  
+
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
       {sections?.map((section) => (

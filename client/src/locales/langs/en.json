@@ -118,7 +118,8 @@
       "add_section_title": "Section's name",
       "add_task": "Add task",
       "add_task_title": "Task's name",
-      "remove_section_question": "Are you sure want to delete this section?"
+      "remove_section_question": "Are you sure want to delete this section?",
+      "remove_task_question": "Are you sure want to delete this task?"
     },
     "validation": {
       "project_title_required": "Project's name is required.",

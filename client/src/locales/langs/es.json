@@ -117,7 +117,8 @@
       "add_section_title": "Nombre de la sección",
       "add_task": "Agregar tarea",
       "add_task_title": "Nombre de la tarea",
-      "remove_section_question": "¿Estas seguro que quieres eliminar esta sección?"
+      "remove_section_question": "¿Estas seguro que quieres eliminar esta sección?",
+      "remove_task_question": "¿Estas seguro que quieres eliminar esta tarea?"
     },
     "validation": {
       "project_title_required": "El nombre del proyecto es obligatorio.",
