@@ -29,10 +29,12 @@ const KanbanProjectForm = () => {
 
   const methods = useForm({ resolver: yupResolver(KanbanProjectSchema), defaultValues });
 
-  const { formState: { isSubmitting }, getValues, trigger } = methods;
+  const { formState: { isSubmitting }, trigger } = methods;
 
   const onClickAddKanbanProjectHandler = async () => {
     const result = await trigger();
+    console.log(result);
+    
   }
 
   return (

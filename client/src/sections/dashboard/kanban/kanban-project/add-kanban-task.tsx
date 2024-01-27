@@ -10,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import FormProvider from '@/components/hook-form/FormProvider';
 import { RHFTextField } from '@/components/hook-form';
-import KanbanSectionCard from './kanban-section-card';
 import { KanbanContext } from './context/kanban-context';
 import { SectionType } from './context/types';
 
