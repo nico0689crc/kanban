@@ -125,7 +125,9 @@
       "dialog_task_priority": "Prioridad",
       "dialog_task_date_created": "Fecha de Creación",
       "dialog_task_description": "Descripción de la tarea",
-      "dialog_task_features": "Caracteristicas"
+      "dialog_task_features": "Caracteristicas",
+      "dialog_task_no_features": "Tarea sin caracteristicas",
+      "dialog_task_no_description": "Tarea sin descripción"
     },
     "validation": {
       "project_title_required": "El nombre del proyecto es obligatorio.",

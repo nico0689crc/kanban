@@ -54,25 +54,10 @@ const KanbanTask = ({ task } : { task: TaskType }) => {
               <Iconify icon='uiw:delete' width={15}/>
             </IconButton>
           </Stack>
-          {task.description && (
-            <Typography 
-              variant='body2'
-              sx={{ 
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitLineClamp: '4',
-                WebkitBoxOrient: 'vertical',
-                fontStyle: 'italic'
-              }} 
-            >
-              {task.description}
-            </Typography>
-          )}
           <Box>
             <Chip 
               label={`${capitalize(task.priority)}`} 
-              variant='outlined' 
+              variant='filled' 
               {...(task.priority === 'low' && { color: 'info' }) }
               {...(task.priority === 'medium' && { color: 'warning' }) }
               {...(task.priority === 'hight' && { color: 'error' }) }

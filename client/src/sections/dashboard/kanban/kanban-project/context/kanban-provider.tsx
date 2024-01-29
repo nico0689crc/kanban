@@ -129,7 +129,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
             ...section,
             tasks: [ 
               ...section.tasks, 
-              { uuid: faker.string.uuid(), title: action.payload.title, order: ++section.tasks.length } 
+              { uuid: faker.string.uuid(), title: action.payload.title, order: ++section.tasks.length, priority: 'low' } 
             ]
         }) : ({ ...section }))
       ]

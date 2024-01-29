@@ -126,7 +126,9 @@
       "dialog_task_priority": "Priority",
       "dialog_task_date_created": "Date Created",
       "dialog_task_description": "Task's description",
-      "dialog_task_features": "Features"
+      "dialog_task_features": "Features",
+      "dialog_task_no_features": "Task without features",
+      "dialog_task_no_description": "Task without description"
     },
     "validation": {
       "project_title_required": "Project's name is required.",
