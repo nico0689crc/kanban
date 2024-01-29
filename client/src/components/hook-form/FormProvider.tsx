@@ -7,10 +7,12 @@ type Props = {
   alignItems?: string
 };
 
-export default function FormProvider({ children, onSubmit, methods }: Props) {
+const FormProvider = ({ children, onSubmit, methods }: Props) => {
   return (
     <Form {...methods}>
       <form style={{ width: '100%' }} onSubmit={onSubmit}>{children}</form>
     </Form>
   );
 }
+
+export default FormProvider;

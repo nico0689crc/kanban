@@ -1,19 +1,30 @@
-import React, { useContext } from 'react';
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import React, { MouseEvent, useContext } from 'react';
+import { Box, Button, Chip, IconButton, Stack, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { TaskType } from './context/types';
 import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/useBoolean';
 import { useLocales } from '@/locales';
 import { KanbanContext } from './context/kanban-context';
+import { capitalize } from 'lodash';
 
 const KanbanTask = ({ task } : { task: TaskType }) => {
   const { t } = useLocales();
-  const { removeTaskFromSection, dialogTaskOnToggle } = useContext(KanbanContext);
+  const { removeTaskFromSection, setTaskSelected, dialogTaskOnToggle } = useContext(KanbanContext);
   const deleteTaskToggle = useBoolean(false);
 
   const onRemoveTaskFromSectionHandler = () => {
-    removeTaskFromSection(task.uuid);
+    removeTaskFromSection(task.uuid!);
+  }
+
+  const onClickRemoveTaskFromSectionHandler = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    deleteTaskToggle.onToggle();
+  }
+
+  const onSelectTaskHandler = () => {
+    setTaskSelected(task);
+    dialogTaskOnToggle();
   }
 
   return (
@@ -30,7 +41,7 @@ const KanbanTask = ({ task } : { task: TaskType }) => {
       spacing={1}
     >
       {!deleteTaskToggle.value && (
-        <Box onClick={dialogTaskOnToggle}>
+        <Stack onClick={onSelectTaskHandler} spacing={2}>
           <Stack direction='row' spacing={2}>
             <Typography 
               variant='subtitle1'
@@ -39,7 +50,7 @@ const KanbanTask = ({ task } : { task: TaskType }) => {
             >
               { task.title }
             </Typography>
-            <IconButton color='error' aria-label="delete" size='small' onClick={deleteTaskToggle.onToggle}>
+            <IconButton color='error' aria-label="delete" size='small' onClick={onClickRemoveTaskFromSectionHandler}>
               <Iconify icon='uiw:delete' width={15}/>
             </IconButton>
           </Stack>
@@ -52,14 +63,23 @@ const KanbanTask = ({ task } : { task: TaskType }) => {
                 display: '-webkit-box',
                 WebkitLineClamp: '4',
                 WebkitBoxOrient: 'vertical',
-                fontStyle: 'italic',
-                px: 0.5
+                fontStyle: 'italic'
               }} 
             >
               {task.description}
             </Typography>
           )}
-        </Box>
+          <Box>
+            <Chip 
+              label={`${capitalize(task.priority)}`} 
+              variant='outlined' 
+              {...(task.priority === 'low' && { color: 'info' }) }
+              {...(task.priority === 'medium' && { color: 'warning' }) }
+              {...(task.priority === 'hight' && { color: 'error' }) }
+              size='small' 
+            />
+          </Box>
+        </Stack>
       )}
 
       {deleteTaskToggle.value && (

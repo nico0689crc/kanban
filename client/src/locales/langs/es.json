@@ -5,7 +5,9 @@
       "cancel": "Cancelar",
       "add": "Agregar",
       "remove": "Eliminar",
-      "edit": "Editar"
+      "edit": "Editar",
+      "close": "Cerrar",
+      "update": "Actualizar"
     }
   },
   "login_view": {
@@ -117,13 +119,19 @@
       "add_section_title": "Nombre de la sección",
       "add_task": "Agregar tarea",
       "add_task_title": "Nombre de la tarea",
+      "add_task_description": "Descripcion de la tarea",
       "remove_section_question": "¿Estas seguro que quieres eliminar esta sección?",
-      "remove_task_question": "¿Estas seguro que quieres eliminar esta tarea?"
+      "remove_task_question": "¿Estas seguro que quieres eliminar esta tarea?",
+      "dialog_task_priority": "Prioridad",
+      "dialog_task_date_created": "Fecha de Creación",
+      "dialog_task_description": "Descripción de la tarea",
+      "dialog_task_features": "Caracteristicas"
     },
     "validation": {
       "project_title_required": "El nombre del proyecto es obligatorio.",
       "section_title_required": "El nombre de la sección es obligatoria.",
-      "task_title_required": "El nombre de la tarea es obligatoria."
+      "task_title_required": "El nombre de la tarea es obligatoria.",
+      "task_decription_required": "La descripción de la tarea es obligatoria."
     } 
   },
   "profile_view": {

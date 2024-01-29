@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 export type TaskType = {
   title: string,
-  uuid: string,
+  uuid?: string,
   description?: string,
   status?: 'active' | 'inactive',
-  priority?: 'low' | 'medium' | 'hight',
-  labels?: string,
-  order: number,
-  created_at?: string,
-  updated_at?: string
+  priority?: string,
+  labels?: string[],
+  order?: number,
+  createdAt?: string,
+  updatedAt?: string
 }
 
 export type SectionType = {
@@ -16,7 +16,8 @@ export type SectionType = {
   uuid: string,
   status?: 'active' | 'inactive',
   order: number,
-  tasks: TaskType[]
+  tasks: TaskType[],
+  createdAt: string
 }
 
 export type ProjectStateType = {
@@ -37,7 +38,8 @@ export enum Types {
   REMOVE_SECTION = 'REMOVE_SECTION',
   EDIT_SECTION = 'EDIT_SECTION',
   ADD_TASK_TO_SECTION = 'ADD_TASK_TO_SECTION',
-  REMOVE_TASK_FROM_SECTION = 'REMOVE_TASK_FROM_SECTION'
+  REMOVE_TASK_FROM_SECTION = 'REMOVE_TASK_FROM_SECTION',
+  EDIT_TASK_FROM_SECTION = 'EDIT_TASK_FROM_SECTION',
 }
 
 
@@ -59,14 +61,20 @@ export type Payload = {
   [Types.REMOVE_TASK_FROM_SECTION]: {
     taskUUID: string;
   };
+  [Types.EDIT_TASK_FROM_SECTION]: {
+    task: TaskType;
+  };
 };
 
 export type ProjectContextType = ProjectStateType & {
   isDialogTaskOpen: boolean,
-  dialogTaskOnToggle: () => void;
+  taskSelected: TaskType | null,
+  dialogTaskOnToggle: () => void,
+  setTaskSelected: (task: TaskType) => void,
   addSection: (title: string) => void;
   removeSection: (sectionUUID: string) => void;
   editSection: (sectionUUID: string, title: string) => void;
   addTaskToSection: (sectionUUID: string, title: string) => void;
   removeTaskFromSection: (taskUUID: string) => void;
+  editTaskFromSection: (task: TaskType) => void;
 }
