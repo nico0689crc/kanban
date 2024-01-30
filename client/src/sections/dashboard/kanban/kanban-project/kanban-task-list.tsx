@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { TaskType } from './context/types';
-import { Stack } from '@mui/material';
+import { Stack, StackProps } from '@mui/material';
 import KanbanTask from './kanban-task';
 
+type ComponentProps = { 
+  tasks: TaskType[] 
+}
 
-const KanbanTaskList = ({ tasks } : { tasks: TaskType[] }) => {
+const KanbanTaskList = forwardRef<HTMLDivElement, StackProps & ComponentProps>(({ tasks } : ComponentProps, ref) => {
   return (
-    <Stack direction='column'>
-      {tasks.map((task) => <KanbanTask task={task} key={task.uuid}/>)}
+    <Stack ref={ref} direction='column'>
+      {tasks.map((task, index) => <KanbanTask index={index} task={task} key={task.uuid}/>)}
     </Stack>
   )
-}
+});
+
+KanbanTaskList.displayName = 'KanbanTaskList';
 
 export default KanbanTaskList
