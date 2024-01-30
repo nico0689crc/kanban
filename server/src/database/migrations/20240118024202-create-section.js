@@ -33,7 +33,9 @@ module.exports = {
           model: {
             tableName: 'projects'
           },
-          key: 'id'
+          key: 'id',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
         },
         allowNull: false
       },

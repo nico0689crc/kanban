@@ -35,6 +35,7 @@ const migrate = async () => {
   
       await umzug.up();
     } catch (error) {
+      console.log(error);
       throw new Error("***** Database migration not possible *****");
     }
   }

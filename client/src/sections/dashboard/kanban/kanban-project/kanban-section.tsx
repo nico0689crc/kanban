@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { Box, Button, IconButton, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Button, IconButton, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -138,7 +138,6 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
         </Stack>
       )}
     </Draggable>
-
   )
 }
 
