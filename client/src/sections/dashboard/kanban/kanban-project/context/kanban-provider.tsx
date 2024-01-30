@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { KanbanContext } from './kanban-context';
-import { Action, ProjectStateType, TaskType, Types } from './types';
+import { Action, ProjectStateType, SectionType, TaskType, Types } from './types';
 import { faker } from '@faker-js/faker';
 import { useBoolean } from '@/hooks/useBoolean';
 
@@ -119,7 +119,6 @@ const reducer = (state: ProjectStateType, action: Action) => {
     }
   }
 
-
   if (action.type === Types.ADD_TASK_TO_SECTION) {
     return {
       ...state,
@@ -160,6 +159,89 @@ const reducer = (state: ProjectStateType, action: Action) => {
         })) 
       ]
     }
+  }
+
+  if (action.type === Types.CHANGE_SECTION_POSITION) {
+    const sections: SectionType[] = [
+      ...state.sections.map(section => ({
+        ...section,
+        tasks: section.tasks.map(task => ({ ...task }))
+      }))
+    ];
+
+    const sectionIndexToMove = sections.findIndex(section => section.uuid === action.payload.sectionUUID);
+
+    const section: SectionType = {
+      ...sections[sectionIndexToMove],
+      tasks: [
+        ...sections[sectionIndexToMove].tasks.map(task => ({ ...task })) 
+      ]
+    }
+
+    sections.splice(sectionIndexToMove, 1);
+    sections.splice(action.payload.position, 0, section);
+
+    return {
+      ...state,
+      sections: sections.map((section, index) => ({
+        ...section,
+        order: ++index,
+        tasks: section.tasks.map(task => ({ ...task }))
+      }))
+    };
+  }
+
+  if (action.type === Types.CHANGE_TASK_POSITION) {
+    const sections: SectionType[] = [
+      ...state.sections.map(section => ({
+        ...section,
+        tasks: section.tasks.map(task => ({ ...task }))
+      }))
+    ];
+
+    const sectionFromIndex = sections.findIndex(section => section.uuid === action.payload.sectionFromUUID);
+    const sectionToIndex = sections.findIndex(section => section.uuid === action.payload.sectionToUUID);
+    const taskToMove = sections[sectionFromIndex].tasks.find(task => task.uuid === action.payload.taskUUID);
+
+    if(sectionFromIndex >= 0  && sectionToIndex >= 0 && taskToMove){
+      const sectionFrom: SectionType = {
+        ...sections[sectionFromIndex],
+        tasks: [
+          ...sections[sectionFromIndex].tasks.map(task => ({...task}))
+        ]
+      }
+
+      const sectionTo: SectionType = {
+        ...sections[sectionToIndex],
+        tasks: [
+          ...sections[sectionToIndex].tasks.filter(task => task.uuid !== taskToMove.uuid).map(task => ({...task}))
+        ]
+      }
+
+      sections.splice(sectionFromIndex, 1);
+      sections.splice(sectionFromIndex, 0, {
+        ...sectionFrom,
+        tasks: [...sectionFrom.tasks.filter(task => task.uuid !== taskToMove.uuid)]
+      });
+
+      sections.splice(sectionToIndex, 1);
+      sectionTo.tasks.splice(action.payload.position, 0, taskToMove);
+      sections.splice(sectionToIndex, 0, {
+        ...sectionTo,
+        tasks: [...sectionTo.tasks]
+      });
+
+      return {
+        ...state,
+        sections: sections.map((section, index) => ({
+          ...section,
+          order: ++index,
+          tasks: section.tasks.map(task => ({ ...task }))
+        }))
+      }
+    }
+
+    return state;
   }
 
   return state;
@@ -204,6 +286,14 @@ export const KanbanProvider =({ children } : { children: React.ReactNode }) => {
     _setTaskSelected(task);
   },[]);
 
+  const changeSectionPosition = useCallback((sectionUUID: string, position: number) => {
+    dispatch({ type: Types.CHANGE_SECTION_POSITION, payload: { sectionUUID, position } });
+  },[]);
+
+  const changeTaskPosition = useCallback((taskUUID: string, sectionFromUUID: string, sectionToUUID: string, position: number) => {
+    dispatch({ type: Types.CHANGE_TASK_POSITION, payload: { taskUUID, sectionFromUUID, sectionToUUID, position } });
+  },[]);
+
   const memoizedValue = useMemo(
     () => ({ 
       title: state.title,
@@ -219,9 +309,11 @@ export const KanbanProvider =({ children } : { children: React.ReactNode }) => {
       removeSection,
       editSection,
       removeTaskFromSection,
-      editTaskFromSection
+      editTaskFromSection,
+      changeSectionPosition,
+      changeTaskPosition
     }),
-    [state.title, state.uuid, state.status, state.sections, toggleDialogTask.value, toggleDialogTask.onToggle, taskSelected, setTaskSelected, addSection, addTaskToSection, removeSection, editSection, removeTaskFromSection, editTaskFromSection]
+    [state.title, state.uuid, state.status, state.sections, toggleDialogTask.value, toggleDialogTask.onToggle, taskSelected, setTaskSelected, addSection, addTaskToSection, removeSection, editSection, removeTaskFromSection, editTaskFromSection, changeSectionPosition, changeTaskPosition]
   );
 
   return <KanbanContext.Provider value={memoizedValue}>{children}</KanbanContext.Provider>

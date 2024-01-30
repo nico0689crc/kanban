@@ -9,7 +9,7 @@ type ComponentProps = {
 
 const KanbanTaskList = forwardRef<HTMLDivElement, StackProps & ComponentProps>(({ tasks } : ComponentProps, ref) => {
   return (
-    <Stack ref={ref} direction='column'>
+    <Stack ref={ref} direction='column' flexGrow={1}>
       {tasks.map((task, index) => <KanbanTask index={index} task={task} key={task.uuid}/>)}
     </Stack>
   )

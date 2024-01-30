@@ -30,6 +30,8 @@ const KanbanProjectForm = () => {
 
   const onClickAddKanbanProjectHandler = async () => {
     const result = await trigger();
+    console.log(result);
+    
   }
 
   return (

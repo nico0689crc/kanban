@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Box, Button, IconButton, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { alpha } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,16 +28,12 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
   const EditKanbanSectionSchema = Yup.object().shape({
     edit_section_title: Yup.string().required(t('kanban_project_view.validation.section_title_required')),
   });
-
-  const defaultValues = {
-    edit_section_title: '',
-  };
   
-  const methods = useForm({ resolver: yupResolver(EditKanbanSectionSchema), defaultValues });
+  const methods = useForm({ resolver: yupResolver(EditKanbanSectionSchema), defaultValues: { edit_section_title: '' } });
 
   const { trigger, reset, getValues } = methods;
 
-  const onEditSectionHandler = async () => {
+  const onEditSectionHandler = useCallback(async () => {
     const valid = await trigger();
 
     if(valid){
@@ -46,36 +41,36 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
       editSectionToggle.onToggle();
       reset();
     }
-  }
+  },[editSection, editSectionToggle, getValues, reset, section.uuid, trigger]);
 
-  const onCancelEditSectionHandler = () => {
+  const onCancelEditSectionHandler = useCallback(() => {
     editSectionToggle.onToggle();
     reset();
-  }
+  },[editSectionToggle, reset])
 
-  const deleteSectionToggleHandler = () => {
+  const deleteSectionToggleHandler = useCallback(() => {
     deleteSectionToggle.onToggle();
-  }
+  }, [deleteSectionToggle]);
   
-  const deleteSectionHandler = () => {
+  const deleteSectionHandler = useCallback(() => {
     removeSection(section.uuid);
-  }
+  },[removeSection, section.uuid]);
 
   return (
     <Draggable draggableId={section.uuid} index={index}>
       {(provided) => (
-        <Box
+        <Stack
+          direction={{xs: 'column', md: 'row'}}
           ref={provided.innerRef}
           {...provided.draggableProps}
           sx={{
-            display:'flex',
             ...(isUpToMd ? ({ px: 2 }) : ({ py: 2 })),
-            borderRadius: 2,
+            borderRadius: 2
           }}
         >
           <KanbanSectionCard {...provided.dragHandleProps}>
             {!deleteSectionToggle.value && !editSectionToggle.value && (
-              <Stack direction='column'>
+              <Stack direction='column' height='100%'>
                 <Stack direction='row' alignItems='center' spacing={3}>
                   <Typography
                     sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flexGrow: 1 }} 
@@ -101,11 +96,10 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
                         {...dropProvided.droppableProps}
                         />
                       {dropProvided.placeholder}
+                      <AddKabanTask section={section}/>
                     </>
                   )}
                 </Droppable>
-                
-                <AddKabanTask section={section}/>
               </Stack>
             )}
 
@@ -141,7 +135,7 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
               </FormProvider>
             )}
           </KanbanSectionCard>
-        </Box>
+        </Stack>
       )}
     </Draggable>
 

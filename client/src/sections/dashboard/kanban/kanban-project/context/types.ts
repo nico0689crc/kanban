@@ -40,6 +40,8 @@ export enum Types {
   ADD_TASK_TO_SECTION = 'ADD_TASK_TO_SECTION',
   REMOVE_TASK_FROM_SECTION = 'REMOVE_TASK_FROM_SECTION',
   EDIT_TASK_FROM_SECTION = 'EDIT_TASK_FROM_SECTION',
+  CHANGE_SECTION_POSITION = 'CHANGE_SECTION_POSITION',
+  CHANGE_TASK_POSITION = 'CHANGE_TASK_POSITION'
 }
 
 
@@ -64,6 +66,16 @@ export type Payload = {
   [Types.EDIT_TASK_FROM_SECTION]: {
     task: TaskType;
   };
+  [Types.CHANGE_SECTION_POSITION]: {
+    sectionUUID: string;
+    position: number;
+  };
+  [Types.CHANGE_TASK_POSITION]: {
+    taskUUID: string;
+    sectionFromUUID: string;
+    sectionToUUID: string;
+    position: number;
+  };
 };
 
 export type ProjectContextType = ProjectStateType & {
@@ -77,4 +89,6 @@ export type ProjectContextType = ProjectStateType & {
   addTaskToSection: (sectionUUID: string, title: string) => void;
   removeTaskFromSection: (taskUUID: string) => void;
   editTaskFromSection: (task: TaskType) => void;
+  changeSectionPosition: (sectionUUID: string, position: number) => void;
+  changeTaskPosition: (taskUUID: string, sectionFromUUID: string, sectionToUUID: string, position: number) => void;
 }

@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useCallback } from 'react';
 import NextLink from 'next/link';
 import dateFormat from 'dateformat';
 
@@ -16,10 +16,10 @@ type Props = {
 const KanbanList = ({ projects } : Props) => {
   const { t } = useLocales();
 
-  const onClickActionButtonHandler = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickActionButtonHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     nProgress.done();
-  }
+  },[])
 
   return (
     <Grid container spacing={3} alignItems="start" minHeight={{ md: '485px', lg: '330px' }}>
@@ -35,7 +35,7 @@ const KanbanList = ({ projects } : Props) => {
                 width: '100%', 
                 display: 'flex',
                 flexDirection: 'column',
-                borderRadius: 5,
+                borderRadius: 2,
                 p: 3,
                 boxShadow: theme => theme.customShadows.card,
                 border: (theme) => `1px solid ${theme.palette.primary.main}`,
@@ -57,15 +57,15 @@ const KanbanList = ({ projects } : Props) => {
                         {project.title}
                       </Typography>
                       <IconButton 
-                          sx={{ 
-                            transition: (theme) => theme.transitions.create(['background-color'], {
-                              duration: theme.transitions.duration.standard,
-                              easing: theme.transitions.easing.easeInOut,
-                            })
-                          }} 
-                          color='primary' 
-                          onClick={onClickActionButtonHandler}
-                        >
+                        sx={{ 
+                          transition: (theme) => theme.transitions.create(['background-color'], {
+                            duration: theme.transitions.duration.standard,
+                            easing: theme.transitions.easing.easeInOut,
+                          })
+                        }} 
+                        color='primary' 
+                        onClick={onClickActionButtonHandler}
+                      >
                         <Iconify icon='eva:more-vertical-fill' />
                       </IconButton>
                       </Stack>
