@@ -1,8 +1,9 @@
-const { Project, User, Section, Task }  = require('../models');
+const { Project, User, Section, Task } = require('../models');
 const { faker } = require("@faker-js/faker")
 const expressValidatorResult = require('../utils/expressValidatorResult');
 const ErrorHandler = require("../utils/errorHandler");
 const ResponseParser = require("../utils/responseParser");
+const section = require('../models/section');
 
 const getProjects = async (req, res, next) => {
   ErrorHandler(async () => {
@@ -84,7 +85,24 @@ const postProject = async (req, res, next) => {
     const project = await Project.create({ 
       title: req.body.title,
       uuid: faker.string.uuid(), 
-      userId: user.get().id
+      userId: user.get().id,
+      sections: req.body.sections.map(section => ({
+        ...section,
+        uuid: faker.string.uuid(),
+        tasks: section.tasks.map(task => ({
+          ...task,
+          labels: task.labels.join('|')
+        }))
+      }))
+    }, {
+      include: [{
+        model: Section,
+        as: 'sections',
+        include: [{
+          model: Task,
+          as: 'tasks',
+        }]
+      }]
     });
 
     const response = new ResponseParser({
@@ -98,8 +116,29 @@ const postProject = async (req, res, next) => {
   }, next);
 }
 
+const deleteProjectByUUID = async (req, res, next) => {
+  ErrorHandler(async () => {
+    const { project_uuid } = req.params;
+    const project = await Project.destroy({ where: { uuid: project_uuid }});
+
+    if(!project) {
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "Project not found.",
+          detail: "Project not found."
+        }
+      );
+    }
+
+    const response = new ResponseParser({});
+    response.sendResponseDeleteSuccess(res);
+  }, next);
+};
+
 module.exports = {
   getProjects,
   getProjectByUUID,
-  postProject
+  postProject,
+  deleteProjectByUUID
 };

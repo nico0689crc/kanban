@@ -7,6 +7,7 @@ const projectRoutes = express.Router();
 
 projectRoutes.get("/", projectServices.getProjects);
 projectRoutes.get("/:project_uuid", projectServices.getProjectByUUID);
+projectRoutes.delete("/:project_uuid", projectServices.deleteProjectByUUID);
 projectRoutes.post(
   "/",
   projectValidations(body, ["title"]), 

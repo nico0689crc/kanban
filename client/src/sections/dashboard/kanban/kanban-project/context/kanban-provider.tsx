@@ -9,33 +9,33 @@ import { useBoolean } from '@/hooks/useBoolean';
 const initialState: ProjectStateType = {
   title: 'Nostrud ea Lorem consequat officia amet eiusmod.',
   sections: [{
-    uuid: '1',
+    uuid: faker.string.uuid(),
     title: 'Ex enim excepteur anim eiusmod dolore cupidatat.',
     order: 1,
     createdAt: '2024-01-22T11:51:53.000Z',
     tasks: [
       {
-        uuid: '85uq82n3iprbx5q43qb9bcie5hv0tiwz61u9qtqwjn8tqgybdi',
+        uuid: faker.string.uuid(),
         title: 'Cillum voluptate aliqua id reprehenderit.',
-        description: 'Eiusmod id id cillum Lorem consectetur ipsum mollit enim deserunt aute enim. Aliqua consequat anim non incididunt nostrud occaecat culpa consequat velit. Velit sunt Lorem cupidatat ex laboris Lorem elit id velit ad nulla sit nostrud. Do excepteur anim nisi ad Lorem in. Ad deserunt duis ea sint laboris occaecat amet anim eu culpa cillum excepteur. Do laboris aliqua reprehenderit dolor nulla culpa consectetur eiusmod eu. Consectetur eiusmod proident aute nostrud exercitation reprehenderit id enim enim elit anim veniam.2 Eiusmod id id cillum Lorem consectetur ipsum mollit enim deserunt aute enim. Aliqua consequat anim non incididunt nostrud occaecat culpa consequat velit. Velit sunt Lorem cupidatat ex laboris Lorem elit id velit ad nulla sit nostrud. Do excepteur anim nisi ad Lorem in. Ad deserunt duis ea sint laboris occaecat amet anim eu culpa cillum excepteur. Do laboris aliqua reprehenderit dolor nulla culpa consectetur eiusmod eu. Consectetur eiusmod proident aute nostrud exercitation reprehenderit id enim enim elit anim veniam.2 Eiusmod id id cillum Lorem consectetur ipsum mollit enim deserunt aute enim. Aliqua consequat anim non incididunt nostrud occaecat culpa consequat velit. Velit sunt Lorem cupidatat ex laboris Lorem elit id velit ad nulla sit nostrud. Do excepteur anim nisi ad Lorem in. Ad deserunt duis ea sint laboris occaecat amet anim eu culpa cillum excepteur. Do laboris aliqua reprehenderit dolor nulla culpa consectetur eiusmod eu. Consectetur eiusmod proident aute nostrud exercitation reprehenderit id enim enim elit anim veniam.2',
+        description: 'Minim laborum officia qui aliqua amet commodo eiusmod commodo exercitation.',
         order: 1,
         priority: 'hight',
         createdAt: '2024-01-22T11:51:53.000Z',
         labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
       },
       {
-        uuid: 'aajiqkpaquruv8ybht2e6tyj84adgr47lqrlezcu9tphldbpsq',
+        uuid: faker.string.uuid(),
         title: 'Ex anim eiusmod proident labore proident quis aliqua elit enim.',
-        description: 'Cillum eu voluptate Lorem tempor sunt aute exercitation excepteur sint culpa laboris. Exercitation laboris incididunt nostrud qui officia irure veniam labore aliquip fugiat laboris cillum. Minim commodo aliqua deserunt dolor.',
+        description: 'Elit est sunt sit id adipisicing anim aliqua ex Lorem minim veniam dolor.',
         order: 2,
         priority: 'low',
         createdAt: '2024-01-22T11:51:53.000Z',
         labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
       },
       {
-        uuid: 'wtk99sc33j5l9bhzao58wgur94c0qccn5cs3wmvqmj0te53svr',
+        uuid: faker.string.uuid(),
         title: 'Ad cupidatat aute nulla nisi labore qui laborum ipsum quis.',
-        description: 'Ut excepteur voluptate ad laboris nulla ad dolor anim. Dolor aliqua qui nostrud labore irure laborum. Dolor tempor do ad aute consectetur minim mollit sunt sunt aliquip dolor. Do nisi cupidatat consequat labore cupidatat velit consequat consectetur. Irure cillum Lorem id minim in adipisicing ea proident aliqua cillum culpa qui ex.',
+        description: 'Enim sit ea laborum adipisicing nulla ea laboris in qui anim.',
         order: 3,
         priority: 'medium',
         createdAt: '2024-01-22T11:51:53.000Z',
@@ -43,32 +43,33 @@ const initialState: ProjectStateType = {
       },
     ]
   },{
-    uuid: '2',
+    uuid: faker.string.uuid(),
     title: 'Consectetur elit Lorem ea pariatur culpa.',
     order: 2,
     createdAt: '2024-01-22T11:51:53.000Z',
     tasks: [
       {
-        uuid: 'u5s1j94w9nx80ncgm587glaakxytemmdnz9sg9homnfuzbnu6n',
+        uuid: faker.string.uuid(),
         title: 'Tempor elit id do aute in.',
-        description: 'Quis consequat aliquip quis id sint est. Nisi adipisicing ipsum aliquip sint irure mollit occaecat laboris. Mollit laborum excepteur Lorem consectetur est eiusmod in. Quis consequat aliquip quis id sint est. Nisi adipisicing ipsum aliquip sint irure mollit occaecat laboris. Mollit laborum excepteur Lorem consectetur est eiusmod in. Quis consequat aliquip quis id sint est. Nisi adipisicing ipsum aliquip sint irure mollit occaecat laboris. Mollit laborum excepteur Lorem consectetur est eiusmod in.',
+        description: 'Anim exercitation ut elit nostrud aliquip nulla duis.',
         order: 1,
         priority: 'hight',
         createdAt: '2024-01-22T11:51:53.000Z',
         labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
       },
       {
-        uuid: 'l91u5qvy9a4ytj0uuwsdifn8s6a2o1bax0lsxx365jbhvyunl7',
+        uuid: faker.string.uuid(),
         title: 'Nostrud cupidatat in anim deserunt qui exercitation aute esse sit qui esse.',
-        description: 'Duis cillum tempor mollit occaecat proident qui nisi voluptate proident non pariatur. Nulla qui dolore nisi adipisicing eiusmod incididunt veniam cillum. Aute in amet excepteur tempor. Fugiat deserunt adipisicing velit eu non cillum consectetur fugiat adipisicing sunt reprehenderit incididunt. Culpa culpa voluptate nulla enim incididunt amet. Dolor aliqua laboris laboris exercitation magna velit. Cupidatat labore non adipisicing velit cupidatat ullamco dolor dolore quis velit id labore.',
+        description: 'Deserunt sit excepteur tempor minim non eu elit exercitation ex ipsum ea ea commodo.',
         order: 2,
         priority: 'hight',
         createdAt: '2024-01-22T11:51:53.000Z',
         labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
       },
       {
-        uuid: 'qz6ev9xu6m1su16xo8rx201ziw45zuvsnawv9al5dr28qvwx44',
+        uuid: faker.string.uuid(),
         title: 'Reprehenderit qui culpa aliqua tempor qui quis veniam pariatur adipisicing sunt eiusmod reprehenderit sint.',
+        description: 'Deserunt sit excepteur tempor minim non eu elit exercitation ex ipsum ea ea commodo.',
         order: 3,
         priority: 'medium',
         createdAt: '2024-01-22T11:51:53.000Z',
@@ -128,7 +129,14 @@ const reducer = (state: ProjectStateType, action: Action) => {
             ...section,
             tasks: [ 
               ...section.tasks, 
-              { uuid: faker.string.uuid(), title: action.payload.title, order: ++section.tasks.length, priority: 'low' } 
+              { 
+                uuid: faker.string.uuid(), 
+                title: action.payload.title,
+                description: '', 
+                order: ++section.tasks.length, 
+                priority: 'low',
+                labels: [] 
+              } 
             ]
         }) : ({ ...section }))
       ]

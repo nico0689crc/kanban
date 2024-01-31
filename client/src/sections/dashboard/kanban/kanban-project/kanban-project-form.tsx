@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Stack } from '@mui/material';
 import * as Yup from 'yup';
@@ -16,22 +16,32 @@ import Iconify from '@/components/iconify';
 import { RouterLink } from '@/routes/components';
 import CustomCardForm from './kanban-form-card';
 import KanbanSectionsList from './kanban-section-list';
+import axios, { endpoints } from '@/utils/axios';
+import { KanbanContext } from './context/kanban-context';
 
 const KanbanProjectForm = () => {
   const { t } = useLocales();
+  const { sections } = useContext(KanbanContext);
 
   const KanbanProjectSchema = Yup.object().shape({
     title: Yup.string().required(t('kanban_project_view.validation.project_title_required')),
   });
 
-  const methods = useForm({ resolver: yupResolver(KanbanProjectSchema), defaultValues: { title: '' } });
+  const methods = useForm({ resolver: yupResolver(KanbanProjectSchema), defaultValues: { title: 'Probando test 1' } });
 
-  const { formState: { isSubmitting }, trigger } = methods;
+  const { formState: { isSubmitting }, trigger, getValues } = methods;
 
   const onClickAddKanbanProjectHandler = async () => {
     const result = await trigger();
-    console.log(result);
-    
+
+    if (result) {
+      const response = await axios.post(endpoints.projects, {
+        title: getValues('title'),
+        sections
+      })
+
+      console.log(response);
+    }
   }
 
   return (

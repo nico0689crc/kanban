@@ -73,7 +73,7 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
               <Stack direction='column' height='100%'>
                 <Stack direction='row' alignItems='center' spacing={3}>
                   <Typography
-                    sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flexGrow: 1 }} 
+                    sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} 
                     variant='subtitle1'
                   >
                     {section.title}

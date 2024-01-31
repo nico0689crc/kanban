@@ -5,6 +5,7 @@
       "cancel": "Cancelar",
       "add": "Agregar",
       "remove": "Eliminar",
+      "removing": "Eliminando",
       "edit": "Editar",
       "close": "Cerrar",
       "update": "Actualizar"
@@ -103,7 +104,8 @@
     "labels": {
       "sections": "Secciones:",
       "tasks": "Tareas:",
-      "create_project_button": "Crear proyecto"
+      "create_project_button": "Crear proyecto",
+      "remove_project_question": "¿Estas seguro que quieres eliminar este proyecto?"
     },
     "validation": {
       "name_required": "Nombre obligatorio"

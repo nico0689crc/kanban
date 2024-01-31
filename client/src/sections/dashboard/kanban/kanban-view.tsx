@@ -1,25 +1,20 @@
 'use client';
 
 import { Stack, Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
 import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
-import { RootState } from '@/store';
-import { fetchProjectsActionCreator } from '@/store/project/projectActionCreator';
-import KanbanList from '@/sections/dashboard/kanban/kanban-list';
+import KanbanList from '@/sections/dashboard/kanban/kanban-list/kanban-list';
 import Iconify from '@/components/iconify';
 import { PageHead } from '@/components/page-head';
 import { LoadingData } from '@/components/loading-data';
 import EmptyContent from '@/components/empty-content/empty-content';
 import { RouterLink } from '@/routes/components';
+import { useGetKanbanProjects } from '@/hooks/useKanban';
 
 const KanbanView = () => {
   const { t } = useLocales();
-  const dispatch = useDispatch();
-  const { projects, isLoading, isEmpty } = useSelector((state: RootState) => state.projectStore);
+  const { isLoadingProjects, projects, isEmpty } = useGetKanbanProjects();
 
-  dispatch<any>(fetchProjectsActionCreator());
-  
   return (
     <Stack direction='column' gap={{ xs: 3, sm: 8 }} sx={{ width: '100%', height: '100%' }}>
       <PageHead 
@@ -40,9 +35,9 @@ const KanbanView = () => {
           </Button>
         }
       />
-      { isLoading && <LoadingData /> }
-      { !isLoading && isEmpty && <EmptyContent />}
-      { !isLoading && !!projects?.length && <KanbanList projects={projects}/> }
+      { isLoadingProjects && <LoadingData /> }
+      { !isLoadingProjects && isEmpty && <EmptyContent />}
+      { !isLoadingProjects && !!projects?.length && <KanbanList projects={projects}/> }
     </Stack>
   )
 };

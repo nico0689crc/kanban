@@ -13,8 +13,6 @@ const KanbanSectionList = () => {
 
   const onDragEnd = useCallback(async ({ destination, source, draggableId, type }: DropResult) => {
     try {
-      console.log({ destination, source, draggableId, type });
-
       if (!destination) {
         return;
       }

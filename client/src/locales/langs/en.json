@@ -5,6 +5,7 @@
       "cancel": "Cancel",
       "add": "Add",
       "remove": "Remove",
+      "removing": "Removing",
       "edit": "Edit",
       "close": "Close",
       "update": "Update"
@@ -103,7 +104,8 @@
     "labels": {
       "sections": "Sections:",
       "tasks": "Tasks:",
-      "create_project_button": "Create project"
+      "create_project_button": "Create project",
+      "remove_project_question": "Are you sure want to delete this project?"
     },
     "validation": {
       "name_required": "Name required"
