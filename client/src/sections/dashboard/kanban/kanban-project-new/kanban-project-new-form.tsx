@@ -17,13 +17,13 @@ import { paths } from '@/routes/paths';
 import LoadingButton from '@/components/loading-button/loading-button';
 import Iconify from '@/components/iconify';
 import { RouterLink } from '@/routes/components';
-import CustomCardForm from './kanban-form-card';
-import KanbanSectionsList from './kanban-section-list';
-import { KanbanContext } from './context/kanban-context';
+import CustomCardForm from '../kanban-project/kanban-form-card';
+import KanbanSectionsList from '../kanban-project/kanban-section-list';
+import { KanbanContext } from '../kanban-project/context/kanban-context';
 import { postProject } from '@/hooks/useKanban';
 import { useBoolean } from '@/hooks/useBoolean';
 
-const KanbanProjectForm = () => {
+const KanbanProjectNewForm = () => {
   const createProjectRequest = useBoolean(false);
   const { t } = useLocales();
   const theme = useTheme();
@@ -112,4 +112,4 @@ const KanbanProjectForm = () => {
   )
 }
 
-export default KanbanProjectForm
+export default KanbanProjectNewForm

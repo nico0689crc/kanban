@@ -41,7 +41,8 @@ export enum Types {
   REMOVE_TASK_FROM_SECTION = 'REMOVE_TASK_FROM_SECTION',
   EDIT_TASK_FROM_SECTION = 'EDIT_TASK_FROM_SECTION',
   CHANGE_SECTION_POSITION = 'CHANGE_SECTION_POSITION',
-  CHANGE_TASK_POSITION = 'CHANGE_TASK_POSITION'
+  CHANGE_TASK_POSITION = 'CHANGE_TASK_POSITION',
+  INITIALIZE_PROJECT = 'INITIALIZE_PROJECT'
 }
 
 
@@ -75,6 +76,9 @@ export type Payload = {
     sectionFromUUID: string;
     sectionToUUID: string;
     position: number;
+  };
+  [Types.INITIALIZE_PROJECT]: {
+    project: ProjectStateType;
   };
 };
 

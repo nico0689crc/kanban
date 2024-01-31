@@ -1,8 +1,9 @@
 import React from 'react'
+import KanbanProjectDetailsView from '@/sections/dashboard/kanban/kanban-project-details/kanban-project-details-view'
 
-const KanbanProjectPage = () => {
+const KanbanProjectPage = ({ params }: { params: { uuid: string } }) => {
   return (
-    <div>KanbanProjectPage</div>
+    <KanbanProjectDetailsView projectUUID={params.uuid}/>
   )
 }
 

@@ -1,8 +1,8 @@
-import KanbanProjectView from '@/sections/dashboard/kanban/kanban-project/kanban-project-view'
+import KanbanProjectNewView from '@/sections/dashboard/kanban/kanban-project-new/kanban-project-new-view'
 
 const NewProjectPage = () => {
   return (
-    <KanbanProjectView />
+    <KanbanProjectNewView />
   )
 }
 

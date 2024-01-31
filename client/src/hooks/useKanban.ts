@@ -11,6 +11,12 @@ type swrResponseType = {
   isValidating: boolean 
 }
 
+const options = {
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+};
+
 export function useGetKanbanProjects() {
   const { data, isLoading, error, isValidating } : swrResponseType = useSWR(endpoints.projects, fetcher); 
 
@@ -34,4 +40,29 @@ export async function deleteProjectByUUID(projectUUID: string) {
 
 export async function postProject(data : ProjectStateType) {
   return await axiosInstance.post(endpoints.projects, data);
+}
+
+export function useGetKanbanProjectByUUID(projectUUID: string) {
+  const { data, isLoading, error, isValidating } = useSWR(`${endpoints.projects}/${projectUUID}`, fetcher, options);
+  const project: ProjectStateType = data?.data?.attributes;
+
+  const memoizedValue = useMemo(
+    () => ({
+      project: {
+        ...project,
+        sections: project?.sections?.map(section => ({
+          ...section,
+          tasks: section.tasks.map(task => ({ 
+            ...task 
+          }))
+        }))
+      },
+      isLoadingProject: isLoading,
+      error: error,
+      projectValidating: isValidating
+    }),
+    [error, isLoading, isValidating, project]
+  );
+
+  return memoizedValue;
 }

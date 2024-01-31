@@ -183,15 +183,35 @@ const reducer = (state: ProjectStateType, action: Action) => {
     return state;
   }
 
+  if (action.type === Types.INITIALIZE_PROJECT) {
+    return {
+      ...action?.payload?.project,
+      sections: [
+        ...action?.payload?.project?.sections?.map(
+          section => ({ 
+            ...section, 
+            tasks: [ 
+              ...section.tasks 
+            ] 
+          })
+        ),
+      ]
+    }
+  }
+
   return state;
 }
 
-export const KanbanProvider =({ children } : { children: React.ReactNode }) => {
+export const KanbanProvider =({ children, project } : { children: React.ReactNode, project?: ProjectStateType }) => {
+  const toggleDialogTask = useBoolean(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [taskSelected, _setTaskSelected] = useState(null);
-  const toggleDialogTask = useBoolean(false);
 
-  const initialize = useCallback(async () => {}, []);
+  const initialize = useCallback(async () => {
+    if(project) {
+      dispatch({ type: Types.INITIALIZE_PROJECT, payload: { project } });
+    }
+  }, [project]);
 
   useEffect(() => {
     initialize();
