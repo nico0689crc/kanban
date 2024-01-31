@@ -100,11 +100,11 @@
     "title_header": "Home"
   },
   "kanban_projects_view": {
-    "title_header": "Kanban's projects",
+    "title_header": "Projects",
     "labels": {
       "sections": "Sections:",
       "tasks": "Tasks:",
-      "create_project_button": "Create project",
+      "create_project_button": "New Project",
       "remove_project_question": "Are you sure want to delete this project?",
       "project_removed_successfully": "The project was deleted successfully.",
       "project_removed_error": "The project couldn't removed."
@@ -114,10 +114,10 @@
     }
   },
   "kanban_project_view": {
-    "title_header": "New kanban project",
+    "title_header": "New Project",
     "labels": {
       "project_name": "Project's name",
-      "create_project_button": "Create project",
+      "create_project_button": "Create Project",
       "cancel_create_project_button": "Create project",
       "create_project_button_loading": "Creating project",
       "add_section": "Add section",
@@ -132,7 +132,9 @@
       "dialog_task_description": "Task's description",
       "dialog_task_features": "Features",
       "dialog_task_no_features": "Task without features",
-      "dialog_task_no_description": "Task without description"
+      "dialog_task_no_description": "Task without description",
+      "project_created_successfully": "The project was created successfully.",
+      "project_created_error": "The project was not able to be created."
     },
     "validation": {
       "project_title_required": "Project's name is required.",

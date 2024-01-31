@@ -51,6 +51,7 @@ const Navbar = () => {
         >
           <NavbarItem href={paths.dashboard.root} label={t('home_view.title_header')} icon='iconoir:home' />
           <NavbarItem href={paths.dashboard.kanbanProjects} label={t('kanban_projects_view.title_header')} icon='iconoir:kanban-board' />
+          <NavbarItem href={paths.dashboard.newProject} label={t('kanban_project_view.title_header')} icon='tdesign:task-add' />
           <NavbarItem href={paths.dashboard.userProfile} label={t('profile_view.title_header')} icon='iconoir:user' />
         </Stack>
       </Stack>

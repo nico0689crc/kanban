@@ -1,12 +1,12 @@
-import { KanbanView } from '@/sections/dashboard/kanban';
+import { KanbanListView } from '@/sections/dashboard/kanban/kanban-project-list';
 
 export const metadata = {
-  title: 'Kanban Projects',
+  title: 'Projects',
 };
 
 const KanbanProjectsPage = () => {
   return (
-    <KanbanView />
+    <KanbanListView />
   )
 }
 

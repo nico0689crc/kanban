@@ -7,76 +7,8 @@ import { faker } from '@faker-js/faker';
 import { useBoolean } from '@/hooks/useBoolean';
 
 const initialState: ProjectStateType = {
-  title: 'Nostrud ea Lorem consequat officia amet eiusmod.',
-  sections: [{
-    uuid: faker.string.uuid(),
-    title: 'Ex enim excepteur anim eiusmod dolore cupidatat.',
-    order: 1,
-    createdAt: '2024-01-22T11:51:53.000Z',
-    tasks: [
-      {
-        uuid: faker.string.uuid(),
-        title: 'Cillum voluptate aliqua id reprehenderit.',
-        description: 'Minim laborum officia qui aliqua amet commodo eiusmod commodo exercitation.',
-        order: 1,
-        priority: 'hight',
-        createdAt: '2024-01-22T11:51:53.000Z',
-        labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
-      },
-      {
-        uuid: faker.string.uuid(),
-        title: 'Ex anim eiusmod proident labore proident quis aliqua elit enim.',
-        description: 'Elit est sunt sit id adipisicing anim aliqua ex Lorem minim veniam dolor.',
-        order: 2,
-        priority: 'low',
-        createdAt: '2024-01-22T11:51:53.000Z',
-        labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
-      },
-      {
-        uuid: faker.string.uuid(),
-        title: 'Ad cupidatat aute nulla nisi labore qui laborum ipsum quis.',
-        description: 'Enim sit ea laborum adipisicing nulla ea laboris in qui anim.',
-        order: 3,
-        priority: 'medium',
-        createdAt: '2024-01-22T11:51:53.000Z',
-        labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
-      },
-    ]
-  },{
-    uuid: faker.string.uuid(),
-    title: 'Consectetur elit Lorem ea pariatur culpa.',
-    order: 2,
-    createdAt: '2024-01-22T11:51:53.000Z',
-    tasks: [
-      {
-        uuid: faker.string.uuid(),
-        title: 'Tempor elit id do aute in.',
-        description: 'Anim exercitation ut elit nostrud aliquip nulla duis.',
-        order: 1,
-        priority: 'hight',
-        createdAt: '2024-01-22T11:51:53.000Z',
-        labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
-      },
-      {
-        uuid: faker.string.uuid(),
-        title: 'Nostrud cupidatat in anim deserunt qui exercitation aute esse sit qui esse.',
-        description: 'Deserunt sit excepteur tempor minim non eu elit exercitation ex ipsum ea ea commodo.',
-        order: 2,
-        priority: 'hight',
-        createdAt: '2024-01-22T11:51:53.000Z',
-        labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
-      },
-      {
-        uuid: faker.string.uuid(),
-        title: 'Reprehenderit qui culpa aliqua tempor qui quis veniam pariatur adipisicing sunt eiusmod reprehenderit sint.',
-        description: 'Deserunt sit excepteur tempor minim non eu elit exercitation ex ipsum ea ea commodo.',
-        order: 3,
-        priority: 'medium',
-        createdAt: '2024-01-22T11:51:53.000Z',
-        labels: ['casa', 'automovil', 'ReactJs', 'Javascript']
-      },
-    ]
-  }]
+  title: '',
+  sections: []
 };
 
 const reducer = (state: ProjectStateType, action: Action) => {
@@ -89,8 +21,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
           uuid: faker.string.uuid(),
           title: action.payload.title, 
           order: ++state.sections.length, 
-          tasks: [],
-          createdAt: '2024-01-22T11:51:53.000Z'
+          tasks: []
         }
       ]
     }

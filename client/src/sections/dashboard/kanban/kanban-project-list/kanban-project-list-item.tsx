@@ -11,7 +11,7 @@ import nProgress from 'nprogress';
 import { KanbanProjectType } from '@/types';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import KanbanListItemWrapper from './kanban-list-item-wrapper';
+import KanbanListItemWrapper from './kanban-project-list-item-wrapper';
 import { useLocales } from '@/locales';
 import { useBoolean } from '@/hooks/useBoolean';
 import LoadingButton from '@/components/loading-button/loading-button';
@@ -28,13 +28,9 @@ const KanbanListItem = ({ project } : { project: KanbanProjectType }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const onToggleDeleteHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    try {
-      event.preventDefault();
-      nProgress.done();
-      deleteProjectViewToggle.onToggle();
-    } catch (error) {
-      console.log(error);
-    }
+    event.preventDefault();
+    nProgress.done();
+    deleteProjectViewToggle.onToggle();
   },[deleteProjectViewToggle]);
 
   const onDeleteProjectHandler = useCallback(async () => {

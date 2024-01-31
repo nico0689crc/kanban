@@ -3,7 +3,7 @@
 import { Stack, Button } from '@mui/material';
 import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
-import KanbanList from '@/sections/dashboard/kanban/kanban-list/kanban-list';
+import KanbanList from '@/sections/dashboard/kanban/kanban-project-list/kanban-project-list';
 
 import Iconify from '@/components/iconify';
 import { PageHead } from '@/components/page-head';
@@ -13,7 +13,7 @@ import EmptyContent from '@/components/empty-content/empty-content';
 import { RouterLink } from '@/routes/components';
 import { useGetKanbanProjects } from '@/hooks/useKanban';
 
-const KanbanView = () => {
+const KanbanListView = () => {
   const { t } = useLocales();
   const { isLoadingProjects, projects, isEmpty } = useGetKanbanProjects();
 
@@ -44,4 +44,4 @@ const KanbanView = () => {
   )
 };
 
-export default KanbanView;
+export default KanbanListView;

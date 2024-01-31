@@ -100,11 +100,11 @@
     "title_header": "Inicio"
   },
   "kanban_projects_view": {
-    "title_header": "Proyectos kanban",
+    "title_header": "Proyectos",
     "labels": {
       "sections": "Secciones:",
       "tasks": "Tareas:",
-      "create_project_button": "Crear proyecto",
+      "create_project_button": "Nuevo Proyecto",
       "remove_project_question": "¿Estas seguro que quieres eliminar este proyecto?",
       "project_removed_successfully": "El proyecto fue eliminado correctamente.",
       "project_removed_error": "No se pudo eliminar el proyecto."
@@ -114,10 +114,10 @@
     }
   },
   "kanban_project_view": {
-    "title_header": "Nuevo projecto kanban",
+    "title_header": "Nuevo Proyecto",
     "labels": {
       "project_name": "Nombre del proyecto",
-      "create_project_button": "Crear proyecto",
+      "create_project_button": "Crear Proyecto",
       "create_project_button_loading": "Creando proyecto",
       "add_section": "Agregar sección",
       "add_section_title": "Nombre de la sección",
@@ -131,7 +131,9 @@
       "dialog_task_description": "Descripción de la tarea",
       "dialog_task_features": "Caracteristicas",
       "dialog_task_no_features": "Tarea sin caracteristicas",
-      "dialog_task_no_description": "Tarea sin descripción"
+      "dialog_task_no_description": "Tarea sin descripción",
+      "project_created_successfully": "El proyecto se ha creado correctamente.",
+      "project_created_error": "El proyecto no se pudo crear."
     },
     "validation": {
       "project_title_required": "El nombre del proyecto es obligatorio.",

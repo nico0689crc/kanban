@@ -17,7 +17,7 @@ export type SectionType = {
   status?: 'active' | 'inactive',
   order: number,
   tasks: TaskType[],
-  createdAt: string
+  createdAt?: string
 }
 
 export type ProjectStateType = {

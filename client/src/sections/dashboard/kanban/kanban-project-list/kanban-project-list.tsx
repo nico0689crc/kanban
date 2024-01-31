@@ -1,6 +1,6 @@
 import {  Grid } from '@mui/material';
 import { KanbanProjectType } from '@/types';
-import KanbanListItem from './kanban-list-item';
+import KanbanListItem from './kanban-project-list-item';
 
 type Props = {
   projects: KanbanProjectType[]

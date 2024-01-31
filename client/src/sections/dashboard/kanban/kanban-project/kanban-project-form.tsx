@@ -2,45 +2,68 @@
 
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Stack } from '@mui/material';
+import { useRouter } from 'next/navigation'
+import { Button, Stack, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { useSnackbar } from '@/components/snackbar';
 import { RHFTextField } from '@/components/hook-form';
 import FormProvider from '@/components/hook-form/FormProvider';
 import { PageHead } from '@/components/page-head'
 import { useLocales } from '@/locales';
 import { paths } from '@/routes/paths';
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from '@/components/loading-button/loading-button';
 import Iconify from '@/components/iconify';
 import { RouterLink } from '@/routes/components';
 import CustomCardForm from './kanban-form-card';
 import KanbanSectionsList from './kanban-section-list';
-import axios, { endpoints } from '@/utils/axios';
 import { KanbanContext } from './context/kanban-context';
+import { postProject } from '@/hooks/useKanban';
+import { useBoolean } from '@/hooks/useBoolean';
 
 const KanbanProjectForm = () => {
+  const createProjectRequest = useBoolean(false);
   const { t } = useLocales();
+  const theme = useTheme();
+  const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
   const { sections } = useContext(KanbanContext);
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const KanbanProjectSchema = Yup.object().shape({
     title: Yup.string().required(t('kanban_project_view.validation.project_title_required')),
   });
 
-  const methods = useForm({ resolver: yupResolver(KanbanProjectSchema), defaultValues: { title: 'Probando test 1' } });
-
-  const { formState: { isSubmitting }, trigger, getValues } = methods;
+  const methods = useForm({ resolver: yupResolver(KanbanProjectSchema), defaultValues: { title: '' } });
+  const { trigger, getValues } = methods;
 
   const onClickAddKanbanProjectHandler = async () => {
-    const result = await trigger();
+    try {
+      const result = await trigger();
 
-    if (result) {
-      const response = await axios.post(endpoints.projects, {
-        title: getValues('title'),
-        sections
-      })
+      if (result) {
+        createProjectRequest.onTrue();
+        const { data: data } = await postProject({
+          title: getValues('title'),
+          sections
+        });
 
-      console.log(response);
+        enqueueSnackbar(t('kanban_project_view.labels.project_created_successfully'), {
+          variant: 'success',
+          anchorOrigin: isUpMd ? { horizontal: 'right', vertical: 'bottom' } : { horizontal: 'center', vertical: 'top' }
+        });
+
+        router.push(`${paths.dashboard.kanbanProjects}/${data?.data?.uuid}`);
+      }
+    } catch (error) {
+      createProjectRequest.onFalse();
+
+      enqueueSnackbar(t('kanban_project_view.labels.project_created_error'), {
+        variant: 'error',
+        anchorOrigin: isUpMd ? { horizontal: 'right', vertical: 'bottom' } : { horizontal: 'center', vertical: 'top' }
+      });
     }
   }
 
@@ -66,6 +89,7 @@ const KanbanProjectForm = () => {
         <Stack direction="row" columnGap={2} alignItems='center'>
           <Button
             variant='outlined'
+            disabled={createProjectRequest.value}
             color='primary'
             startIcon={<Iconify icon='bx:arrow-back'/>}
             component={RouterLink}
@@ -73,15 +97,15 @@ const KanbanProjectForm = () => {
           >
             {t('common.labels.cancel')}
           </Button>
-          <LoadingButton
-            color='primary'
-            loading={isSubmitting}
-            onClick={onClickAddKanbanProjectHandler}
+          <LoadingButton 
+            disabled={createProjectRequest.value} 
+            variant='contained' 
             startIcon={<Iconify icon='iconoir:plus-square'/>}
-            loadingIndicator={ t('login_view.labels.create_project_button_loading') }
-          >
-            { t('kanban_project_view.labels.create_project_button') }
-          </LoadingButton>
+            onClick={onClickAddKanbanProjectHandler} 
+            color='primary'
+            label={t('kanban_project_view.labels.create_project_button')}
+            loadingLabel={t('kanban_project_view.labels.create_project_button_loading')} 
+          />
         </Stack>
       </Stack>
     </Stack>
