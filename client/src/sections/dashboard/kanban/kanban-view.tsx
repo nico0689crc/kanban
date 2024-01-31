@@ -4,10 +4,12 @@ import { Stack, Button } from '@mui/material';
 import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
 import KanbanList from '@/sections/dashboard/kanban/kanban-list/kanban-list';
+
 import Iconify from '@/components/iconify';
 import { PageHead } from '@/components/page-head';
 import { LoadingData } from '@/components/loading-data';
 import EmptyContent from '@/components/empty-content/empty-content';
+
 import { RouterLink } from '@/routes/components';
 import { useGetKanbanProjects } from '@/hooks/useKanban';
 

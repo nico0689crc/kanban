@@ -1,27 +1,31 @@
+'use client';
+
 import { MouseEvent, useCallback } from 'react';
 import { mutate } from 'swr';
 import NextLink from 'next/link';
 import dateFormat from 'dateformat';
-import { Grid, Stack, Typography, Link, IconButton, Button } from '@mui/material';
+import { Grid, Stack, Typography, Link, IconButton, Button, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import nProgress from 'nprogress';
 
 import { KanbanProjectType } from '@/types';
-
 import { paths } from '@/routes/paths';
-
 import Iconify from '@/components/iconify';
 import KanbanListItemWrapper from './kanban-list-item-wrapper';
-
 import { useLocales } from '@/locales';
 import { useBoolean } from '@/hooks/useBoolean';
 import LoadingButton from '@/components/loading-button/loading-button';
+import { useSnackbar } from '@/components/snackbar';
 import { deleteProjectByUUID } from '@/hooks/useKanban';
 import { endpoints } from '@/utils/axios';
 
 const KanbanListItem = ({ project } : { project: KanbanProjectType }) => {
   const { t } = useLocales();
+  const theme = useTheme();
+  const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
   const deleteProjectViewToggle = useBoolean(false);
   const deleteProjectRequest = useBoolean(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const onToggleDeleteHandler = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     try {
@@ -37,11 +41,20 @@ const KanbanListItem = ({ project } : { project: KanbanProjectType }) => {
     try {
       deleteProjectRequest.onTrue();
       await deleteProjectByUUID(project.uuid);
+      enqueueSnackbar(t('kanban_projects_view.labels.project_removed_successfully'), {
+        variant: 'success',
+        anchorOrigin: isUpMd ? { horizontal: 'right', vertical: 'bottom' } : { horizontal: 'center', vertical: 'top' }
+      });
       mutate(endpoints.projects);
     } catch (error) {
+      enqueueSnackbar(t('kanban_projects_view.labels.project_removed_error'), {
+        variant: 'error',
+        anchorOrigin: isUpMd ? { horizontal: 'right', vertical: 'bottom' } : { horizontal: 'center', vertical: 'top' }
+      });
+      deleteProjectViewToggle.onToggle();
       deleteProjectRequest.onFalse();
     }
-  }, [deleteProjectRequest, project.uuid]);
+  }, [deleteProjectRequest, deleteProjectViewToggle, enqueueSnackbar, isUpMd, project.uuid, t]);
 
   return (
     <Grid item xs={12} md={6} lg={4} xl={3} sx={{ display: 'flex' }}>

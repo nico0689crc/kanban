@@ -105,7 +105,9 @@
       "sections": "Secciones:",
       "tasks": "Tareas:",
       "create_project_button": "Crear proyecto",
-      "remove_project_question": "¿Estas seguro que quieres eliminar este proyecto?"
+      "remove_project_question": "¿Estas seguro que quieres eliminar este proyecto?",
+      "project_removed_successfully": "El proyecto fue eliminado correctamente.",
+      "project_removed_error": "No se pudo eliminar el proyecto."
     },
     "validation": {
       "name_required": "Nombre obligatorio"

@@ -105,7 +105,9 @@
       "sections": "Sections:",
       "tasks": "Tasks:",
       "create_project_button": "Create project",
-      "remove_project_question": "Are you sure want to delete this project?"
+      "remove_project_question": "Are you sure want to delete this project?",
+      "project_removed_successfully": "The project was deleted successfully.",
+      "project_removed_error": "The project couldn't removed."
     },
     "validation": {
       "name_required": "Name required"

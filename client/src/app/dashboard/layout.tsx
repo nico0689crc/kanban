@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthGuard } from '@/auth/guard';
+import { SnackbarProvider } from '@/components/snackbar';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 
@@ -11,7 +12,9 @@ type Props = {
 const Layout = ({ children } : Props) => {
   return (
     <AuthGuard>
-      <DashboardLayout>{children}</DashboardLayout>
+      <SnackbarProvider>
+        <DashboardLayout>{children}</DashboardLayout>
+      </SnackbarProvider>
     </AuthGuard>
   );
 }

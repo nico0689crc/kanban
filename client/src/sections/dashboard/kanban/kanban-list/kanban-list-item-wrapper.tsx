@@ -8,7 +8,7 @@ const KanbanListItemWrapper = ({ children }: { children: React.ReactNode }) => {
         width: '100%', 
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 2,
+        borderRadius: 1,
         p: 3,
         boxShadow: theme => theme.customShadows.card,
         border: (theme) => `1px solid ${theme.palette.primary.main}`,

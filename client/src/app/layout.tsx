@@ -1,18 +1,9 @@
-// React
 import type { Metadata } from 'next';
-
-// Localization
 import 'src/locales/i18n';
 import LocalizationProvider from '@/locales/localization-provider'
-
-// Settings
 import { SettingsProvider } from '@/components/settings'
-
-// Theme 
 import ThemeProvider from '@/theme';
 import { primaryFont } from '@/theme/typography';
-
-// Authorization
 import { AuthProvider } from '@/auth/context/AuthProvider';
 import { AuthConsumer } from '@/auth/context/AuthConsumer';
 import ProgressBar from '@/components/progress-bar';
