@@ -16,11 +16,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { KanbanContext } from './context/kanban-context';
 import { SectionType } from './context/types';
 import { postTask } from '@/hooks/useKanban';
+import { faker } from '@faker-js/faker';
 
 const AddKabanTask = ({ section } : { section: SectionType }) => {
   const { enqueueSnackbar } = useSnackbar();
   const addTaskRequest = useBoolean(false);
-  const { addTaskToSection } = useContext(KanbanContext);
+  const { addTaskToSection, isExistingProject } = useContext(KanbanContext);
   const { t } = useLocales();
   const toggleForm = useBoolean();
 
@@ -42,9 +43,13 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
 
       if(result) {
         addTaskRequest.onTrue();
-        const response = await postTask(section.uuid, getValues('new_task_title'));
+
+        let response;
+        if(isExistingProject){
+          response = await postTask(section.uuid, getValues('new_task_title'));
+        }
      
-        addTaskToSection(response.data.data.uuid, section.uuid, getValues('new_task_title'));
+        addTaskToSection(response?.data?.data?.uuid ?? faker.string.uuid(), section.uuid, getValues('new_task_title'));
         toggleForm.onToggle();
         addTaskRequest.onFalse();
         reset();

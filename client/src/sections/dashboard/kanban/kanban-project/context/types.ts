@@ -24,6 +24,7 @@ export type ProjectStateType = {
   title: string | null,
   uuid?: string,
   status?: 'active' | 'inactive',
+  isExistingProject: boolean,
   sections: SectionType[],
 }
 

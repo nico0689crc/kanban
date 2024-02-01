@@ -30,7 +30,7 @@ const KanbanTaskEdit = ({ onClickCloseHandler, editTaskToggleActive} : Props) =>
   const theme = useTheme();
   const isDownToSm = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { editTaskFromSection, setTaskSelected, taskSelected, sections } = useContext(KanbanContext);
+  const { editTaskFromSection, setTaskSelected, taskSelected, sections, isExistingProject } = useContext(KanbanContext);
   const { enqueueSnackbar } = useSnackbar();
 
   const KanbanTaskEditSchema = Yup.object().shape({
@@ -72,7 +72,7 @@ const KanbanTaskEdit = ({ onClickCloseHandler, editTaskToggleActive} : Props) =>
           priority: getValues('priority_task_edit')
         }
 
-        await patchTaskByUUID(taskToUpdate.uuid!, taskToUpdate);
+        isExistingProject && await patchTaskByUUID(taskToUpdate.uuid!, taskToUpdate);
 
         setTaskSelected(taskToUpdate);
         editTaskFromSection(taskToUpdate);

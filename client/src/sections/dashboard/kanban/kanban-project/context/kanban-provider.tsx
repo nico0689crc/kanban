@@ -8,6 +8,7 @@ import { useBoolean } from '@/hooks/useBoolean';
 
 const initialState: ProjectStateType = {
   title: '',
+  isExistingProject: false,
   sections: []
 };
 
@@ -192,6 +193,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
   if (action.type === Types.INITIALIZE_PROJECT) {
     return {
       ...action?.payload?.project,
+      isExistingProject: true,
       sections: [
         ...action?.payload?.project?.sections?.map(
           section => ({ 
@@ -265,6 +267,7 @@ export const KanbanProvider =({ children, project } : { children: React.ReactNod
       uuid: state.uuid,
       status: state.status,
       sections: state.sections,
+      isExistingProject: state.isExistingProject,
       isDialogTaskOpen: toggleDialogTask.value,
       taskSelected: taskSelected,
       dialogTaskOnToggle: toggleDialogTask.onToggle,
@@ -278,7 +281,7 @@ export const KanbanProvider =({ children, project } : { children: React.ReactNod
       changeSectionPosition,
       changeTaskPosition
     }),
-    [state.title, state.uuid, state.status, state.sections, toggleDialogTask.value, toggleDialogTask.onToggle, taskSelected, setTaskSelected, addSection, addTaskToSection, removeSection, editSection, removeTaskFromSection, editTaskFromSection, changeSectionPosition, changeTaskPosition]
+    [state.title, state.uuid, state.status, state.sections, state.isExistingProject, toggleDialogTask.value, toggleDialogTask.onToggle, taskSelected, setTaskSelected, addSection, addTaskToSection, removeSection, editSection, removeTaskFromSection, editTaskFromSection, changeSectionPosition, changeTaskPosition]
   );
 
   return <KanbanContext.Provider value={memoizedValue}>{children}</KanbanContext.Provider>

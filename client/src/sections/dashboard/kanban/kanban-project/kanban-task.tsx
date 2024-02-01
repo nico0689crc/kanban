@@ -17,7 +17,7 @@ import { deleteTaskByUUID } from '@/hooks/useKanban';
 const KanbanTask = ({ task, index } : { task: TaskType, index: number }) => {
   const { t } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-  const { removeTaskFromSection, setTaskSelected, dialogTaskOnToggle } = useContext(KanbanContext);
+  const { removeTaskFromSection, setTaskSelected, dialogTaskOnToggle, isExistingProject } = useContext(KanbanContext);
   const deleteTaskToggle = useBoolean(false);
   const deleteTaskRequest = useBoolean(false);
 
@@ -25,7 +25,7 @@ const KanbanTask = ({ task, index } : { task: TaskType, index: number }) => {
     try {
       deleteTaskRequest.onTrue();
   
-      await deleteTaskByUUID(task.uuid!);
+      isExistingProject && await deleteTaskByUUID(task.uuid!);
       removeTaskFromSection(task.uuid!);
       enqueueSnackbar(t('kanban_project_view.labels.delete_task_message'), { variant: 'success' });
 
