@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import useSWR from 'swr';
 import axiosInstance, { fetcher, endpoints } from '@/utils/axios';
 import { KanbanProjectType, KanbanProjectsResponseCollectionType } from '@/types';
-import { ProjectStateType, TaskType } from '@/sections/dashboard/kanban/kanban-project/context/types';
+import { ProjectStateType, SectionType, TaskType } from '@/sections/dashboard/kanban/kanban-project/context/types';
 
 type swrResponseType = { 
   data: KanbanProjectsResponseCollectionType, 
@@ -50,7 +50,7 @@ export async function deleteProjectByUUID(projectUUID: string) {
   return await axiosInstance.delete(`${endpoints.projects}/${projectUUID}`);
 }
 
-export async function postProject(data : ProjectStateType) {
+export async function postProject(data : {title: string, sections: SectionType[]}) {
   return await axiosInstance.post(endpoints.projects, data);
 }
 
