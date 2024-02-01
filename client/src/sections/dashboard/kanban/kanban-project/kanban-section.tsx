@@ -71,7 +71,7 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
           <KanbanSectionCard {...provided.dragHandleProps}>
             {!deleteSectionToggle.value && !editSectionToggle.value && (
               <Stack direction='column' height='100%'>
-                <Stack direction='row' alignItems='center' spacing={3}>
+                <Stack direction='row' alignItems='center' justifyContent='space-between' spacing={3}>
                   <Typography
                     sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} 
                     variant='subtitle1'

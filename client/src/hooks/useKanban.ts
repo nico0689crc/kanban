@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import axiosInstance, { fetcher, endpoints } from '@/utils/axios';
-import { KanbanProjectType, KanbanProjectsResponseCollectionType } from '@/types';
+import { KanbanProjectType, KanbanProjectsResponseCollectionType, KanbanProjectsResponseIndividualType } from '@/types';
 import { ProjectStateType } from '@/sections/dashboard/kanban/kanban-project/context/types';
 
 type swrResponseType = { 
@@ -43,17 +43,18 @@ export async function postProject(data : ProjectStateType) {
 }
 
 export function useGetKanbanProjectByUUID(projectUUID: string) {
-  const { data, isLoading, error, isValidating } = useSWR(`${endpoints.projects}/${projectUUID}`, fetcher, options);
+  const { data, isLoading, error, isValidating }  = useSWR(`${endpoints.projects}/${projectUUID}`, fetcher, options);
   const project: ProjectStateType = data?.data?.attributes;
 
   const memoizedValue = useMemo(
     () => ({
       project: {
         ...project,
-        sections: project?.sections?.map(section => ({
+        sections: project?.sections?.map((section:any) => ({
           ...section,
-          tasks: section.tasks.map(task => ({ 
-            ...task 
+          tasks: section.tasks.map((task: any) => ({ 
+            ...task,
+            labels: Object.values(JSON.parse(task.labels)) 
           }))
         }))
       },

@@ -31,7 +31,7 @@ const DashboardLayout = ({children}: Props) => {
           <LogoutButton />
         </Stack>
         <Container maxWidth='xl' sx={{ flexGrow: 1 }}>
-          <Box pt={5} pb={{ xs: 15, md: 8 }}>
+          <Box pt={5} pb={{ xs: 15, md: 8 }} height='100%'>
             {children}
           </Box>
         </Container>

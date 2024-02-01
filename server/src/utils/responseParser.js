@@ -13,7 +13,7 @@ class ResponseParser {
     this.pageSize = request?.query?.page?.size ?? null;
     this.response = {};
   }
-
+  
   getSelectedAttributes = document => {
     const attributes = {};
 

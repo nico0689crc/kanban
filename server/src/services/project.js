@@ -3,7 +3,6 @@ const { faker } = require("@faker-js/faker")
 const expressValidatorResult = require('../utils/expressValidatorResult');
 const ErrorHandler = require("../utils/errorHandler");
 const ResponseParser = require("../utils/responseParser");
-const section = require('../models/section');
 
 const getProjects = async (req, res, next) => {
   ErrorHandler(async () => {
@@ -91,16 +90,18 @@ const postProject = async (req, res, next) => {
         uuid: faker.string.uuid(),
         tasks: section.tasks.map(task => ({
           ...task,
-          labels: task.labels.join('|')
+          labels: JSON.stringify(Object.assign({}, task.labels))
         }))
       }))
     }, {
       include: [{
         model: Section,
         as: 'sections',
+        attributes: Section.getFieldsToSelect(),
         include: [{
           model: Task,
           as: 'tasks',
+          attributes: Task.getFieldsToSelect()
         }]
       }]
     });
