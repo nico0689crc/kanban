@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { capitalize } from 'lodash';
 import { Controller, useForm } from 'react-hook-form';
 
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocales } from '@/locales';
 import { KanbanContext } from './context/kanban-context';
@@ -14,7 +15,6 @@ import { ReturnType, useBoolean } from '@/hooks/useBoolean';
 import { RHFTextField } from '@/components/hook-form';
 import FormProvider from '@/components/hook-form/FormProvider';
 import RHFAutocomplete from '@/components/hook-form/rhf-autocomplete';
-import { useSnackbar } from 'notistack';
 import { patchTaskByUUID } from '@/hooks/useKanban';
 import LoadingButton from '@/components/loading-button/loading-button';
 

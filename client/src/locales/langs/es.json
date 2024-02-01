@@ -4,6 +4,7 @@
     "labels": {
       "cancel": "Cancelar",
       "add": "Agregar",
+      "adding": "Agregando",
       "remove": "Eliminar",
       "removing": "Eliminando",
       "edit": "Editar",
@@ -135,6 +136,8 @@
       "dialog_task_no_features": "Tarea sin caracteristicas",
       "dialog_task_no_description": "Tarea sin descripción",
       "update_task_message": "Tarea actualizada correctamente.",
+      "delete_task_message": "Tarea eliminada correctamente.",
+      "create_task_message": "Tarea agregada correctamente.",
       "project_created_successfully": "El proyecto se ha creado correctamente.",
       "project_created_error": "El proyecto no se pudo crear."
     },

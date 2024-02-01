@@ -4,16 +4,22 @@ import * as Yup from 'yup';
 import { Button, Stack } from '@mui/material';
 
 import Iconify from '@/components/iconify';
+import FormProvider from '@/components/hook-form/FormProvider';
+import { RHFTextField } from '@/components/hook-form';
+import { useSnackbar } from '@/components/snackbar';
+import LoadingButton from '@/components/loading-button/loading-button';
+
 import { useBoolean } from '@/hooks/useBoolean';
 import { useLocales } from '@/locales';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import FormProvider from '@/components/hook-form/FormProvider';
-import { RHFTextField } from '@/components/hook-form';
 import { KanbanContext } from './context/kanban-context';
 import { SectionType } from './context/types';
+import { postTask } from '@/hooks/useKanban';
 
 const AddKabanTask = ({ section } : { section: SectionType }) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const addTaskRequest = useBoolean(false);
   const { addTaskToSection } = useContext(KanbanContext);
   const { t } = useLocales();
   const toggleForm = useBoolean();
@@ -31,12 +37,27 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
   const { trigger, reset, getValues } = methods;
 
   const onAddSectionHandler = async () => {
-    const valid = await trigger();
+    try {
+      const result = await trigger();
 
-    if(valid){
-      valid && addTaskToSection(section.uuid, getValues('new_task_title'))
-      toggleForm.onToggle();
-      reset();
+      if(result) {
+        addTaskRequest.onTrue();
+        const response = await postTask(section.uuid, getValues('new_task_title'));
+     
+        addTaskToSection(response.data.data.uuid, section.uuid, getValues('new_task_title'));
+        toggleForm.onToggle();
+        addTaskRequest.onFalse();
+        reset();
+        enqueueSnackbar(t('kanban_project_view.labels.create_task_message'), { variant: 'success' });
+      }
+    } catch (error: any) {
+      if(error?.errors?.detail){
+        enqueueSnackbar(error?.errors?.detail, { variant: 'error' });
+      } else {
+        enqueueSnackbar(t('common.labels.something_went_wrong'), { variant: 'error' });
+      }
+
+      addTaskRequest.onFalse();
     }
   }
 
@@ -66,9 +87,15 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
               <Button size='small' variant='outlined' color='primary' onClick={onCancelSectionHandler}>
                 {t('common.labels.cancel')}
               </Button>
-              <Button size='small' variant='contained' onClick={onAddSectionHandler} color='primary'>
-                {t('common.labels.add')}
-              </Button>
+              <LoadingButton 
+                disabled={addTaskRequest.value} 
+                size='small'
+                variant='contained'
+                onClick={onAddSectionHandler} 
+                color='primary'
+                label={t('common.labels.add')}
+                loadingLabel={t('common.labels.adding')}
+              />
             </Stack>
           </Stack>
         </FormProvider>

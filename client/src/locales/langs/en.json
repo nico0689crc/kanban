@@ -4,6 +4,7 @@
     "labels": {
       "cancel": "Cancel",
       "add": "Add",
+      "adding": "Adding",
       "remove": "Remove",
       "removing": "Removing",
       "edit": "Edit",
@@ -136,6 +137,8 @@
       "dialog_task_no_features": "Task without features",
       "dialog_task_no_description": "Task without description",
       "update_task_message": "Task updated successfully.",
+      "delete_task_message": "Task deleted successfully.",
+      "create_task_message": "Task added successfully.",
       "project_created_successfully": "The project was created successfully.",
       "project_created_error": "The project was not able to be created."
     },

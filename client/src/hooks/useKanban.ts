@@ -35,11 +35,19 @@ export function useGetKanbanProjects() {
 }
 
 export async function patchTaskByUUID(taskUUID: string, data: TaskType) {
-  await axiosInstance.patch(`${endpoints.tasks.root}/${taskUUID}`, data);
+  return await axiosInstance.patch(`${endpoints.tasks.root}/${taskUUID}`, data);
+}
+
+export async function deleteTaskByUUID(taskUUID: string) {
+  return await axiosInstance.delete(`${endpoints.tasks.root}/${taskUUID}`);
+}
+
+export async function postTask(sectionUUID: string, title: string) {
+  return await axiosInstance.post(endpoints.tasks.root, { title, section_uuid: sectionUUID });
 }
 
 export async function deleteProjectByUUID(projectUUID: string) {
-  await axiosInstance.delete(`${endpoints.projects}/${projectUUID}`);
+  return await axiosInstance.delete(`${endpoints.projects}/${projectUUID}`);
 }
 
 export async function postProject(data : ProjectStateType) {
@@ -58,7 +66,7 @@ export function useGetKanbanProjectByUUID(projectUUID: string) {
           ...section,
           tasks: section.tasks.map((task: any) => ({ 
             ...task,
-            labels: Object.values(JSON.parse(task.labels)) 
+            labels: task.labels ? Object.values(JSON.parse(task.labels)) : []
           }))
         }))
       },

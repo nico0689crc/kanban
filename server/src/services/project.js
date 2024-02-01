@@ -1,5 +1,5 @@
 const { Project, User, Section, Task } = require('../models');
-const { faker } = require("@faker-js/faker")
+const { faker } = require("@faker-js/faker");
 const expressValidatorResult = require('../utils/expressValidatorResult');
 const ErrorHandler = require("../utils/errorHandler");
 const ResponseParser = require("../utils/responseParser");

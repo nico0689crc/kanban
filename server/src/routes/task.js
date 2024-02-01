@@ -11,4 +11,11 @@ taskRoutes.patch(
   taskServices.updateTaskByUUID
 );
 
+taskRoutes.delete("/:task_uuid", taskServices.deleteTaskByUUID);
+taskRoutes.post(
+  "/",
+  taskValidations(body, ["title", "section_uuid"]),  
+  taskServices.postTask
+);
+
 module.exports = taskRoutes;

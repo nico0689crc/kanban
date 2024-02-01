@@ -26,5 +26,13 @@ module.exports = (body, fieldsToValidate = []) => {
     );
   }
 
+  if(fieldsToValidate.includes('section_uuid')) {
+    fieldValidated.push(
+      body("section_uuid")
+        .trim().notEmpty()
+        .withMessage(() => "Please enter task's section.")
+    );
+  }
+
   return fieldValidated;
 }

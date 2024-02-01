@@ -1,21 +1,44 @@
 import React, { MouseEvent, useContext } from 'react';
 import { Box, Button, Chip, IconButton, Stack, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { TaskType } from './context/types';
+import { Draggable } from '@hello-pangea/dnd';
+import { capitalize } from 'lodash';
+
+import LoadingButton from '@/components/loading-button/loading-button';
 import Iconify from '@/components/iconify';
+import { useSnackbar } from '@/components/snackbar';
+
+import { TaskType } from './context/types';
 import { useBoolean } from '@/hooks/useBoolean';
 import { useLocales } from '@/locales';
 import { KanbanContext } from './context/kanban-context';
-import { capitalize } from 'lodash';
-import { Draggable } from '@hello-pangea/dnd';
+import { deleteTaskByUUID } from '@/hooks/useKanban';
 
 const KanbanTask = ({ task, index } : { task: TaskType, index: number }) => {
   const { t } = useLocales();
+  const { enqueueSnackbar } = useSnackbar();
   const { removeTaskFromSection, setTaskSelected, dialogTaskOnToggle } = useContext(KanbanContext);
   const deleteTaskToggle = useBoolean(false);
+  const deleteTaskRequest = useBoolean(false);
 
-  const onRemoveTaskFromSectionHandler = () => {
-    removeTaskFromSection(task.uuid!);
+  const onRemoveTaskFromSectionHandler = async () => {
+    try {
+      deleteTaskRequest.onTrue();
+  
+      await deleteTaskByUUID(task.uuid!);
+      removeTaskFromSection(task.uuid!);
+      enqueueSnackbar(t('kanban_project_view.labels.delete_task_message'), { variant: 'success' });
+
+      deleteTaskRequest.onFalse();
+    } catch (error:any) {
+      if(error?.errors?.detail){
+        enqueueSnackbar(error?.errors?.detail, { variant: 'error' });
+      } else {
+        enqueueSnackbar(t('common.labels.something_went_wrong'), { variant: 'error' });
+      }
+      
+      deleteTaskRequest.onFalse();
+    }
   }
 
   const onClickRemoveTaskFromSectionHandler = (event: MouseEvent<HTMLButtonElement>) => {
@@ -82,12 +105,17 @@ const KanbanTask = ({ task, index } : { task: TaskType, index: number }) => {
                 {t('kanban_project_view.labels.remove_task_question')}
               </Typography>
               <Stack direction="row" justifyContent="center" spacing={2}>
-                <Button size='small' variant='outlined' color='error' onClick={deleteTaskToggle.onToggle}>
+                <Button disabled={deleteTaskRequest.value} size='small' variant='outlined' color='error' onClick={deleteTaskToggle.onToggle}>
                   {t('common.labels.cancel')}
                 </Button>
-                <Button size='small' variant='contained' onClick={onRemoveTaskFromSectionHandler} color='error'>
-                  {t('common.labels.remove')}
-                </Button>
+                <LoadingButton 
+                  disabled={deleteTaskRequest.value} 
+                  variant='contained'
+                  onClick={onRemoveTaskFromSectionHandler} 
+                  color='error'
+                  label={t('common.labels.remove')}
+                  loadingLabel={t('common.labels.removing')} 
+                />
               </Stack>
             </Stack>
           )}

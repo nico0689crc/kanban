@@ -58,6 +58,7 @@ export type Payload = {
     sectionUUID: string;
   };
   [Types.ADD_TASK_TO_SECTION]: {
+    taskUUID: string;
     title: string;
     sectionUUID: string;
   };
@@ -90,7 +91,7 @@ export type ProjectContextType = ProjectStateType & {
   addSection: (title: string) => void;
   removeSection: (sectionUUID: string) => void;
   editSection: (sectionUUID: string, title: string) => void;
-  addTaskToSection: (sectionUUID: string, title: string) => void;
+  addTaskToSection: (taskUUID: string, sectionUUID: string, title: string) => void;
   removeTaskFromSection: (taskUUID: string) => void;
   editTaskFromSection: (task: TaskType) => void;
   changeSectionPosition: (sectionUUID: string, position: number) => void;

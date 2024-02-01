@@ -61,7 +61,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
             tasks: [ 
               ...section.tasks.map(task => ({ ...task })), 
               { 
-                uuid: faker.string.uuid(), 
+                uuid: action.payload.taskUUID, 
                 title: action.payload.title,
                 description: '', 
                 order: ++section.tasks.length, 
@@ -235,8 +235,8 @@ export const KanbanProvider =({ children, project } : { children: React.ReactNod
     dispatch({ type: Types.EDIT_SECTION, payload: { sectionUUID, title } });
   },[]);
 
-  const addTaskToSection = useCallback((sectionUUID: string, title: string) => {
-    dispatch({ type: Types.ADD_TASK_TO_SECTION, payload: { title, sectionUUID } });
+  const addTaskToSection = useCallback((taskUUID: string, sectionUUID:string, title: string) => {
+    dispatch({ type: Types.ADD_TASK_TO_SECTION, payload: {taskUUID, title, sectionUUID } });
   },[]);
 
   const removeTaskFromSection = useCallback((taskUUID: string) => {
