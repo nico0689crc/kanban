@@ -8,7 +8,9 @@
       "removing": "Eliminando",
       "edit": "Editar",
       "close": "Cerrar",
-      "update": "Actualizar"
+      "update": "Actualizar",
+      "updating": "Actualizando",
+      "something_went_wrong": "Something went wrong."
     }
   },
   "login_view": {
@@ -132,6 +134,7 @@
       "dialog_task_features": "Caracteristicas",
       "dialog_task_no_features": "Tarea sin caracteristicas",
       "dialog_task_no_description": "Tarea sin descripción",
+      "update_task_message": "Tarea actualizada correctamente.",
       "project_created_successfully": "El proyecto se ha creado correctamente.",
       "project_created_error": "El proyecto no se pudo crear."
     },

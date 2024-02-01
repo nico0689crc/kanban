@@ -8,7 +8,9 @@
       "removing": "Removing",
       "edit": "Edit",
       "close": "Close",
-      "update": "Update"
+      "update": "Update",
+      "updating": "Updating",
+      "something_went_wrong": "Something went wrong."
     }
   },
   "login_view": {
@@ -133,6 +135,7 @@
       "dialog_task_features": "Features",
       "dialog_task_no_features": "Task without features",
       "dialog_task_no_description": "Task without description",
+      "update_task_message": "Task updated successfully.",
       "project_created_successfully": "The project was created successfully.",
       "project_created_error": "The project was not able to be created."
     },

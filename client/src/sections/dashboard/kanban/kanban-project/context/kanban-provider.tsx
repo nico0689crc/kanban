@@ -45,7 +45,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
         ...state.sections?.map(section => ({ 
           ...section,
           title: action.payload.sectionUUID === section.uuid ? action.payload.title : section.title, 
-          tasks: [...section.tasks] 
+          tasks: section.tasks.map(task => ({ ...task }))
         })),
       ]
     }
@@ -59,7 +59,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
           section => section.uuid === action.payload.sectionUUID ? ({
             ...section,
             tasks: [ 
-              ...section.tasks, 
+              ...section.tasks.map(task => ({ ...task })), 
               { 
                 uuid: faker.string.uuid(), 
                 title: action.payload.title,
@@ -82,7 +82,10 @@ const reducer = (state: ProjectStateType, action: Action) => {
           ...section,
           tasks: section.tasks
                   .filter(task => task.uuid !== action.payload.taskUUID)
-                  .map((task, index) => ({ ...task, order: ++index })) 
+                  .map((task, index) => ({ 
+                    ...task, 
+                    order: ++index 
+                  })) 
         })) 
       ]
     }
@@ -94,7 +97,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
       sections: [
         ...state.sections.map(section => ({ 
           ...section,
-          tasks: section.tasks.map(task => task.uuid === action.payload.task.uuid ? { ...action.payload.task } : {... task })
+          tasks: section.tasks.map(task => task.uuid === action.payload.task.uuid ? { ...action.payload.task } : { ...task })
         })) 
       ]
     }
@@ -175,7 +178,10 @@ const reducer = (state: ProjectStateType, action: Action) => {
         sections: sections.map((section, index) => ({
           ...section,
           order: ++index,
-          tasks: section.tasks.map(task => ({ ...task }))
+          tasks: section.tasks.map((task, index) => ({ 
+            ...task,
+            order: ++index 
+          }))
         }))
       }
     }

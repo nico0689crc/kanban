@@ -2,7 +2,8 @@
 
 import { useRef } from 'react';
 import { SnackbarProvider as NotistackProvider, closeSnackbar } from 'notistack';
-import IconButton from '@mui/material/IconButton';
+import {IconButton, useMediaQuery} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import Iconify from '@/components/iconify';
 import { StyledIcon, StyledNotistack } from './styles';
 
@@ -11,9 +12,10 @@ type Props = {
 };
 
 export default function SnackbarProvider({ children }: Props) {
-
   const notistackRef = useRef<any>(null);
-
+  const theme = useTheme();
+  const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  
   return (
     <NotistackProvider
       ref={notistackRef}
@@ -21,7 +23,7 @@ export default function SnackbarProvider({ children }: Props) {
       preventDuplicate
       autoHideDuration={3000}
       variant="success"
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={isUpMd ? { horizontal: 'right', vertical: 'bottom' } : { horizontal: 'center', vertical: 'top' }}
       iconVariant={{
         info: (
           <StyledIcon color="info">

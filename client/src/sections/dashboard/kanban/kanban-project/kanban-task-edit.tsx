@@ -2,18 +2,21 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Chip, DialogActions, DialogContent,  DialogTitle, useMediaQuery, Stack, FormControl, RadioGroup, FormControlLabel, Radio, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import * as Yup from 'yup';
 import { capitalize } from 'lodash';
 import { Controller, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocales } from '@/locales';
-import { useTheme } from '@mui/material/styles';
 import { KanbanContext } from './context/kanban-context';
-import { ReturnType } from '@/hooks/useBoolean';
+import { ReturnType, useBoolean } from '@/hooks/useBoolean';
 import { RHFTextField } from '@/components/hook-form';
 import FormProvider from '@/components/hook-form/FormProvider';
 import RHFAutocomplete from '@/components/hook-form/rhf-autocomplete';
+import { useSnackbar } from 'notistack';
+import { patchTaskByUUID } from '@/hooks/useKanban';
+import LoadingButton from '@/components/loading-button/loading-button';
 
 type Props = {
   onClickCloseHandler: () => void, 
@@ -22,11 +25,13 @@ type Props = {
 
 const KanbanTaskEdit = ({ onClickCloseHandler, editTaskToggleActive} : Props) => {
   const [labels, setLabels] = useState<string[]>();
+  const editTaskRequest = useBoolean(false);
   const { t } = useLocales();
   const theme = useTheme();
-  const { editTaskFromSection, setTaskSelected, taskSelected, sections } = useContext(KanbanContext);
-
   const isDownToSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const { editTaskFromSection, setTaskSelected, taskSelected, sections } = useContext(KanbanContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const KanbanTaskEditSchema = Yup.object().shape({
     title_task_edit: Yup.string().required(t('kanban_project_view.validation.task_title_required')),
@@ -54,19 +59,29 @@ const KanbanTaskEdit = ({ onClickCloseHandler, editTaskToggleActive} : Props) =>
   },[reset, setValue, taskSelected]);
 
   const onClickUpdateTaskHandler = async () => {
-    const result = await trigger();
+    try {
+      const result = await trigger();
 
-    if(result) {
-      const taskToUpdate = {
-        ...taskSelected,
-        labels: labels,
-        title: getValues('title_task_edit'),
-        description: getValues('description_task_edit'),
-        priority: getValues('priority_task_edit')
+      if(result) {
+        editTaskRequest.onTrue();
+        const taskToUpdate = {
+          ...taskSelected,
+          labels: labels,
+          title: getValues('title_task_edit'),
+          description: getValues('description_task_edit'),
+          priority: getValues('priority_task_edit')
+        }
+
+        await patchTaskByUUID(taskToUpdate.uuid!, taskToUpdate);
+
+        setTaskSelected(taskToUpdate);
+        editTaskFromSection(taskToUpdate);
+        editTaskToggleActive.onToggle();
+        enqueueSnackbar(t('kanban_project_view.labels.update_task_message'), { variant: 'success' });
+        editTaskRequest.onFalse();
       }
-      setTaskSelected(taskToUpdate);
-      editTaskFromSection(taskToUpdate);
-      editTaskToggleActive.onToggle();
+    } catch (error:any) {
+      enqueueSnackbar(t('common.labels.something_went_wrong'), { variant: 'error' });
     }
   }
 
@@ -185,7 +200,14 @@ const KanbanTaskEdit = ({ onClickCloseHandler, editTaskToggleActive} : Props) =>
       <DialogActions sx={{ p: 3}}>
         <Stack direction='row' spacing={2}>
           <Button color='warning' variant='outlined' onClick={onClickCancelTaskHandler}>{t('common.labels.cancel')}</Button>
-          <Button color='warning' variant='contained' onClick={onClickUpdateTaskHandler}>{t('common.labels.update')}</Button>
+          <LoadingButton 
+            disabled={editTaskRequest.value} 
+            variant='contained'
+            onClick={onClickUpdateTaskHandler} 
+            color='warning'
+            label={t('common.labels.update')}
+            loadingLabel={t('common.labels.updating')} 
+          />
           <Button color='primary' variant='contained' onClick={onClickCloseHandler}>{t('common.labels.close')}</Button>
         </Stack>
       </DialogActions>

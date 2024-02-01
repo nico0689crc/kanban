@@ -33,5 +33,8 @@ export const endpoints = {
     request_reset_password: '/users/request-reset-password',
     reset_password: '/users/reset-password',
   },
-  projects: '/projects'
+  projects: '/projects',
+  tasks: {
+    root: 'tasks'
+  }
 };

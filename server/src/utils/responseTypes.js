@@ -56,7 +56,7 @@ const ResponsesTypes = {
         httpStatusCode: 201,
       },
       success_resource_updated_success: {
-        httpStatusCode: 200,
+        httpStatusCode: 204,
       },
       success_resource_deleted_success: {
         httpStatusCode: 204,
