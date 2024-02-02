@@ -12,7 +12,10 @@
       "close": "Cerrar",
       "update": "Actualizar",
       "updating": "Actualizando",
-      "something_went_wrong": "Something went wrong."
+      "something_went_wrong": "Something went wrong.",
+      "not_found_title": "Lo sentimos, ¡Página no encontrada!",
+      "not_found_subtitle": "Lo siento, no pudimos encontrar la página que estás buscando. ¿Quizás escribiste mal la URL? Asegúrate de revisar la ortografía.",
+      "not_found_cabutton": "Ir a Inicio"
     }
   },
   "login_view": {
