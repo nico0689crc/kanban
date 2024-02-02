@@ -140,7 +140,10 @@
       "delete_task_message": "Task deleted successfully.",
       "create_task_message": "Task added successfully.",
       "project_created_successfully": "The project was created successfully.",
-      "project_created_error": "The project was not able to be created."
+      "project_created_error": "The project was not able to be created.",
+      "project_not_found_title": "Sorry, Project Not Found!",
+      "project_not_found_subtitle": "Sorry, we couldn’t find the project you’re looking for. Perhaps you’ve mistyped the URL? Be sure to check your spelling.",
+      "project_not_found_cabutton": "Go to Projects"
     },
     "validation": {
       "project_title_required": "Project's name is required.",

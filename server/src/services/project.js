@@ -66,6 +66,16 @@ const getProjectByUUID = async (req, res, next) => {
       where: { uuid: project_uuid },
     });
 
+    if(!project) {
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "Project not found.",
+          detail: "Project not found."
+        }
+      );
+    }
+
     const response = new ResponseParser({
       model: Project,
       documents: project.get(),

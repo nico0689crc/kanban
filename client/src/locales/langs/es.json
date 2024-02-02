@@ -139,7 +139,10 @@
       "delete_task_message": "Tarea eliminada correctamente.",
       "create_task_message": "Tarea agregada correctamente.",
       "project_created_successfully": "El proyecto se ha creado correctamente.",
-      "project_created_error": "El proyecto no se pudo crear."
+      "project_created_error": "El proyecto no se pudo crear.",
+      "project_not_found_title": "¡Lo siento, Proyecto no Encontrado!",
+      "project_not_found_subtitle": "Lo siento, no pudimos encontrar el proyecto que estás buscando. ¿Quizás has escrito mal la URL? Asegúrate de revisar la ortografía.",
+      "project_not_found_cabutton": "Ir a Proyectos"
     },
     "validation": {
       "project_title_required": "El nombre del proyecto es obligatorio.",

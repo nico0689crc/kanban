@@ -21,7 +21,6 @@ const postTask = async (req, res, next) => {
         }
       );
     }
-    console.log(section.get().id);
 
     const task = await Task.create({ 
       title: req.body.title,
