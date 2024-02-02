@@ -56,14 +56,19 @@ const getProjectByUUID = async (req, res, next) => {
       include: [
         { model: User, as: 'user', where: { email: req.user.email }, attributes: User.getFieldsToSelect() },
         { 
-          model: Section,  as: 'sections', attributes: Section.getFieldsToSelect(),  
+          model: Section,  as: 'sections', attributes: Section.getFieldsToSelect(), 
           include: [{ 
             model: Task, as: 'tasks', attributes: Task.getFieldsToSelect() 
-          }] 
+          }],
+          
         }
       ],
       attributes: ['uuid', 'title', 'status'],
       where: { uuid: project_uuid },
+      order: [
+        [ { model: Section,  as: 'sections'}, 'order', 'ASC' ],
+        [ { model: Section,  as: 'sections'}, { model: Task,  as: 'tasks'}, 'order', 'ASC' ],
+      ]
     });
 
     if(!project) {

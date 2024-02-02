@@ -46,6 +46,17 @@ export async function postTask(sectionUUID: string, title: string) {
   return await axiosInstance.post(endpoints.tasks.root, { title, section_uuid: sectionUUID });
 }
 
+export async function patchChangeTaskPosition(taskUUID: string, originSectionUUID: string, destinationSectionUUID: string, position: number) {
+  return await axiosInstance.patch(
+    `${endpoints.tasks.root}/${taskUUID}${endpoints.tasks.change_task_position}`, 
+    { 
+      origin_section_uuid: originSectionUUID, 
+      destination_section_uuid: destinationSectionUUID, 
+      position 
+    }
+  );
+}
+
 export async function deleteProjectByUUID(projectUUID: string) {
   return await axiosInstance.delete(`${endpoints.projects}/${projectUUID}`);
 }

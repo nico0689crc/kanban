@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Section, Task } = require('../models');
 const { faker } = require("@faker-js/faker");
 const expressValidatorResult = require('../utils/expressValidatorResult');
@@ -5,6 +6,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const ResponseParser = require("../utils/responseParser");
 const ResponseParserError = require("../utils/responseParserError");
 const ResponsesTypes = require('../utils/responseTypes');
+
 
 const postTask = async (req, res, next) => {
   ErrorHandler(async () => { 
@@ -21,13 +23,14 @@ const postTask = async (req, res, next) => {
         }
       );
     }
+    const taskAmount = await section.getTasks();
 
     const task = await Task.create({ 
       title: req.body.title,
       uuid: faker.string.uuid(),
       priority: 'low',
       description: '',
-      order: 1,
+      order: ++taskAmount.length,
       sectionId: section.get().id
     });
 
@@ -41,6 +44,87 @@ const postTask = async (req, res, next) => {
     response.sendResponseCreateSuccess(res);
   }, next);
 }
+
+const updateTaskPositionByUUID = async (req, res, next) => {
+  ErrorHandler(async () => {
+    await expressValidatorResult(req);
+
+    const { task_uuid } = req.params;
+    const { origin_section_uuid, destination_section_uuid, position } = req.body;
+
+    const task = await Task.findOne({ where: { uuid: task_uuid } });
+
+    if(!task) {
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "Task not found.",
+          detail: "Task not found."
+        }
+      );
+    }
+
+    const origin_section = await Section.findOne({ 
+      where: { uuid: origin_section_uuid },
+      attributes: ['id', ...Section.getFieldsToSelect()]
+    });
+
+    const destination_section = await Section.findOne({ 
+      where: { uuid: destination_section_uuid },
+      attributes: ['id', ...Section.getFieldsToSelect()]
+    });
+
+    if(!origin_section_uuid) {
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "Section origin not found.",
+          detail: "Section origin not found."
+        }
+      );
+    }
+
+    if(!destination_section) {
+      throw new ResponseParserError(
+        ResponsesTypes.errors.errors_400.error_resource_not_found,
+        {
+          title: "Section destination not found.",
+          detail: "Section destination not found."
+        }
+      );
+    }
+
+ 
+    await task.update({ sectionId: destination_section.get().id, order: +position+1 }, { where: { uuid: task_uuid } } );
+
+    const promises = []
+
+    if(origin_section_uuid !== destination_section){
+      const originTasks = await origin_section
+                                  .getTasks()
+                                  .then(tasks => tasks.map(task => ({ id: task.id, order: task.order }))
+                                                      .sort((a, b) => a.order - b.order)
+                                                      .map(({ id }, index) => Task.update({ order: ++index }, { where: { id } }))
+                                  );
+      promises.push(...originTasks);
+    }
+
+
+    const destinationTasks = await destination_section
+                                    .getTasks({ where: { id: { [Op.ne]: task.get().id  }}})
+                                    .then(tasks => tasks
+                                                    .map(task => ({ id: task.id, order: task.order}))
+                                                    .sort((a, b) => a.order - b.order)
+                                                    .map(({ id }, index) => Task.update({ order: index < +position ? ++index : index+2 }, { where: { id } }))
+                                    );
+    promises.push(...destinationTasks);
+
+    await Promise.all(promises);
+
+    const response = new ResponseParser({});
+    response.sendResponseUpdateSuccess(res);
+  }, next);
+};
 
 const updateTaskByUUID = async (req, res, next) => {
   ErrorHandler(async () => {
@@ -65,9 +149,7 @@ const updateTaskByUUID = async (req, res, next) => {
       ...attributes,
       labels: JSON.stringify(attributes.labels)
     }, { 
-      where: { uuid: task_uuid }, fields: ['title', 'description', 'priority', 'labels'],
-      returning: true,
-      plain: true 
+      where: { uuid: task_uuid }, fields: ['title', 'description', 'priority', 'labels']
     });
     
     const response = new ResponseParser({});
@@ -97,6 +179,7 @@ const deleteTaskByUUID = async (req, res, next) => {
 
 module.exports = {
   updateTaskByUUID,
+  updateTaskPositionByUUID,
   deleteTaskByUUID,
   postTask
 };

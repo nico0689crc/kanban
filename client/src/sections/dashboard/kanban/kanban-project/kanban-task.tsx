@@ -8,11 +8,13 @@ import LoadingButton from '@/components/loading-button/loading-button';
 import Iconify from '@/components/iconify';
 import { useSnackbar } from '@/components/snackbar';
 
-import { TaskType } from './context/types';
 import { useBoolean } from '@/hooks/useBoolean';
-import { useLocales } from '@/locales';
-import { KanbanContext } from './context/kanban-context';
 import { deleteTaskByUUID } from '@/hooks/useKanban';
+
+import { useLocales } from '@/locales';
+
+import { TaskType } from './context/types';
+import { KanbanContext } from './context/kanban-context';
 
 const KanbanTask = ({ task, index } : { task: TaskType, index: number }) => {
   const { t } = useLocales();
@@ -26,7 +28,9 @@ const KanbanTask = ({ task, index } : { task: TaskType, index: number }) => {
       deleteTaskRequest.onTrue();
   
       isExistingProject && await deleteTaskByUUID(task.uuid!);
+
       removeTaskFromSection(task.uuid!);
+      
       enqueueSnackbar(t('kanban_project_view.labels.delete_task_message'), { variant: 'success' });
 
       deleteTaskRequest.onFalse();

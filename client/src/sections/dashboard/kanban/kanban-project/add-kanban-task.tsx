@@ -45,15 +45,20 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
         addTaskRequest.onTrue();
 
         let response;
+
         if(isExistingProject){
           response = await postTask(section.uuid, getValues('new_task_title'));
         }
-     
+        
         addTaskToSection(response?.data?.data?.uuid ?? faker.string.uuid(), section.uuid, getValues('new_task_title'));
+
         toggleForm.onToggle();
-        addTaskRequest.onFalse();
+
         reset();
+        
         enqueueSnackbar(t('kanban_project_view.labels.create_task_message'), { variant: 'success' });
+
+        addTaskRequest.onFalse();
       }
     } catch (error: any) {
       if(error?.errors?.detail){

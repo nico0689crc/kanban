@@ -157,7 +157,10 @@ const reducer = (state: ProjectStateType, action: Action) => {
       const sectionTo: SectionType = {
         ...sections[sectionToIndex],
         tasks: [
-          ...sections[sectionToIndex].tasks.filter(task => task.uuid !== taskToMove.uuid).map(task => ({...task}))
+          ...sections[sectionToIndex]
+              .tasks
+              .filter(task => task.uuid !== taskToMove.uuid)
+              .map((task, index) => ({...task, order: ++index}))
         ]
       }
 

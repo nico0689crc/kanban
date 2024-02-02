@@ -1,5 +1,5 @@
 const app = require("./src/app");
-const initDatabase = require("./src/database/database");
+const { initDatabase } = require("./src/database/database");
 
 initDatabase()
   .then(() => {

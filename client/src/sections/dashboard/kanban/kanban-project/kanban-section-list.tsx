@@ -1,42 +1,56 @@
 import React, { useCallback, useContext } from 'react'
-import { Box, Stack, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/';
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd';
+
+import { Box, Stack, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import { KanbanContext } from './context/kanban-context';
 import KanbanSection from './kanban-section';
 import AddKabanSection from './add-kanban-section';
 
+import { useSnackbar } from '@/components/snackbar';
+
+import { patchChangeTaskPosition } from '@/hooks/useKanban';
+import { useLocales } from '@/locales';
+
 const KanbanSectionList = () => {
-  const { sections, changeSectionPosition, changeTaskPosition } = useContext(KanbanContext);
+  const { sections, isExistingProject, changeSectionPosition, changeTaskPosition } = useContext(KanbanContext);
   const theme = useTheme();
   const isUpToMd = useMediaQuery(theme.breakpoints.up('md'));
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
-  const onDragEnd = useCallback(async ({ destination, source, draggableId, type }: DropResult) => {
+  const onDragEnd = useCallback(async ({ destination: position, source: origin, draggableId: taskUUID, type }: DropResult) => {
     try {
-      if (!destination) {
+      if (!position) {
         return;
       }
 
-      if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      if (position.droppableId === origin.droppableId && position.index === origin.index) {
         return;
       }
-      
-      const sourceColumn = sections.find((section => section.uuid === source.droppableId));
-      const destinationColumn = sections.find((section => section.uuid === destination.droppableId));
       
       // Moving column
       if (type === 'COLUMN') {
-        changeSectionPosition(sections[source.index].uuid ,destination.index);
+        changeSectionPosition(sections[origin.index].uuid ,position.index);
         return;
       }
-      // Moving task to same or different section
-      changeTaskPosition(draggableId, sourceColumn?.uuid!, destinationColumn?.uuid!, destination?.index)
-      return;
 
+      const originSection = sections.find((section => section.uuid === origin.droppableId));
+
+      const destinationSection = sections.find((section => section.uuid === position.droppableId));
+      
+      // Moving task to same or different section
+      if(originSection?.uuid && destinationSection?.uuid) {
+        changeTaskPosition(taskUUID, originSection?.uuid, destinationSection?.uuid, position?.index);
+        isExistingProject && await patchChangeTaskPosition(taskUUID, originSection?.uuid, destinationSection?.uuid, position?.index);
+      }
+
+      return;
     } catch (error) {
-     console.log(error);
+      enqueueSnackbar(t('common.labels.something_went_wrong'), { variant: 'error' });
     }
-  }, [changeSectionPosition, changeTaskPosition, sections]);
+  }, [changeSectionPosition, changeTaskPosition, enqueueSnackbar, isExistingProject, sections, t]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

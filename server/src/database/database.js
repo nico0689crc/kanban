@@ -6,7 +6,6 @@ const databaseConfig = require('../config/database');
 let sequelize;
 
 const connect = () => {
-
   try {
     sequelize = new Sequelize(
       databaseConfig[process.env.NODE_ENV].database, 
@@ -35,7 +34,6 @@ const migrate = async () => {
   
       await umzug.up();
     } catch (error) {
-      console.log(error);
       throw new Error("***** Database migration not possible *****");
     }
   }
@@ -70,4 +68,7 @@ const initDatabase = async () => {
   }
 }
 
-module.exports = initDatabase;
+module.exports = {
+  initDatabase,
+  sequelize
+};

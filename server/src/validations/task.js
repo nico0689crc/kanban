@@ -34,5 +34,29 @@ module.exports = (body, fieldsToValidate = []) => {
     );
   }
 
+  if(fieldsToValidate.includes('origin_section_uuid')) {
+    fieldValidated.push(
+      body("origin_section_uuid")
+        .trim().notEmpty()
+        .withMessage(() => "Section origin of the task is required.")
+    );
+  }
+
+  if(fieldsToValidate.includes('destination_section_uuid')) {
+    fieldValidated.push(
+      body("destination_section_uuid")
+        .trim().notEmpty()
+        .withMessage(() => "Section destination of the task is required.")
+    );
+  }
+
+  if(fieldsToValidate.includes('position')) {
+    fieldValidated.push(
+      body("position")
+        .trim().notEmpty()
+        .withMessage(() => "Task's position is required.")
+    );
+  }
+
   return fieldValidated;
 }
