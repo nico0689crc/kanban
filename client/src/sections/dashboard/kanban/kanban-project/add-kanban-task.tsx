@@ -37,7 +37,7 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
 
   const { trigger, reset, getValues } = methods;
 
-  const onAddSectionHandler = async () => {
+  const onAddTaskHandler = async () => {
     try {
       const result = await trigger();
 
@@ -101,7 +101,7 @@ const AddKabanTask = ({ section } : { section: SectionType }) => {
                 disabled={addTaskRequest.value} 
                 size='small'
                 variant='contained'
-                onClick={onAddSectionHandler} 
+                onClick={onAddTaskHandler} 
                 color='primary'
                 label={t('common.labels.add')}
                 loadingLabel={t('common.labels.adding')}

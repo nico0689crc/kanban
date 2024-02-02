@@ -37,5 +37,9 @@ export const endpoints = {
   tasks: {
     root: '/tasks',
     change_task_position: '/change-task-position'
+  },
+  sections: {
+    root: '/sections',
+    change_section_position: '/change-section-position'
   }
 };

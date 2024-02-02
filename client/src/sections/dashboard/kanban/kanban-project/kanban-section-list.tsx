@@ -10,7 +10,7 @@ import AddKabanSection from './add-kanban-section';
 
 import { useSnackbar } from '@/components/snackbar';
 
-import { patchChangeTaskPosition } from '@/hooks/useKanban';
+import { patchChangeSectionPosition, patchChangeTaskPosition } from '@/hooks/useKanban';
 import { useLocales } from '@/locales';
 
 const KanbanSectionList = () => {
@@ -33,6 +33,7 @@ const KanbanSectionList = () => {
       // Moving column
       if (type === 'COLUMN') {
         changeSectionPosition(sections[origin.index].uuid ,position.index);
+        isExistingProject && await patchChangeSectionPosition(sections[origin.index].uuid, position?.index);
         return;
       }
 

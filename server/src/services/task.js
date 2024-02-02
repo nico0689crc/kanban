@@ -7,7 +7,6 @@ const ResponseParser = require("../utils/responseParser");
 const ResponseParserError = require("../utils/responseParserError");
 const ResponsesTypes = require('../utils/responseTypes');
 
-
 const postTask = async (req, res, next) => {
   ErrorHandler(async () => { 
     await expressValidatorResult(req);
@@ -95,7 +94,7 @@ const updateTaskPositionByUUID = async (req, res, next) => {
     }
 
  
-    await task.update({ sectionId: destination_section.get().id, order: +position+1 }, { where: { uuid: task_uuid } } );
+    await task.update({ sectionId: destination_section.get().id, order: +position+1 } );
 
     const promises = []
 
@@ -111,7 +110,7 @@ const updateTaskPositionByUUID = async (req, res, next) => {
 
 
     const destinationTasks = await destination_section
-                                    .getTasks({ where: { id: { [Op.ne]: task.get().id  }}})
+                                    .getTasks({ where: { id: { [Op.ne]: task.get().id }}})
                                     .then(tasks => tasks
                                                     .map(task => ({ id: task.id, order: task.order}))
                                                     .sort((a, b) => a.order - b.order)

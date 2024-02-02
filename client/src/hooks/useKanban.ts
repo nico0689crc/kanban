@@ -57,6 +57,25 @@ export async function patchChangeTaskPosition(taskUUID: string, originSectionUUI
   );
 }
 
+export async function patchSectionByUUID(sectionUUID: string, title: string) {
+  return await axiosInstance.patch(`${endpoints.sections.root}/${sectionUUID}`, { title });
+}
+
+export async function deleteSectionByUUID(sectionUUID: string) {
+  return await axiosInstance.delete(`${endpoints.sections.root}/${sectionUUID}`);
+}
+
+export async function postSection(projectUUID: string, title: string) {
+  return await axiosInstance.post(endpoints.sections.root, { title, project_uuid: projectUUID });
+}
+
+export async function patchChangeSectionPosition(sectionUUID: string, position: number) {
+  return await axiosInstance.patch(
+    `${endpoints.sections.root}/${sectionUUID}${endpoints.sections.change_section_position}`, { position 
+    }
+  );
+}
+
 export async function deleteProjectByUUID(projectUUID: string) {
   return await axiosInstance.delete(`${endpoints.projects}/${projectUUID}`);
 }
