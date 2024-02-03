@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Container, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import Navbar from './Navbar';
 import LanguageSwitcher from '../common/LanguageSwitcher';
@@ -20,21 +20,19 @@ const DashboardLayout = ({children}: Props) => {
         <Stack 
           direction='row' 
           justifyContent='flex-end'
-          gap={{ xs: 1, md: 3 }} 
+          spacing={2} 
           sx={{ 
-            position: 'sticky', top: 0, zIndex: 1, py: 2, px: { xs: 1, md: 5 },
-            borderBottom: (theme) => `1px solid ${theme.palette.primary.main}`, 
-            backgroundColor: (theme) => theme.palette.background.paper }}
+            position: 'sticky', top: 0, zIndex: 1, py: 3, px: { xs: 2, md: 4 },
+            backgroundColor: (theme) => theme.palette.background.paper 
+          }}
         >
           <LanguageSwitcher />
           <ThemeModeButton />
           <LogoutButton />
         </Stack>
-        <Container maxWidth='xl' sx={{ flexGrow: 1 }}>
-          <Box pt={5} pb={{ xs: 15, md: 8 }} height='100%'>
-            {children}
-          </Box>
-        </Container>
+        <Box px={5} sx={{ backgroundColor: theme => theme.palette.background.paper }} height='100%'>
+          {children}
+        </Box>
       </Stack>
     </Stack>
   )

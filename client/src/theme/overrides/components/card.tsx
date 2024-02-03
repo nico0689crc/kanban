@@ -8,6 +8,7 @@ export function card(theme: Theme) {
           position: 'relative',
           boxShadow: theme.customShadows.card,
           borderRadius: theme.shape.borderRadius * 2,
+          backgroundColor: theme.palette.background.default,
           zIndex: 0
         },
       },

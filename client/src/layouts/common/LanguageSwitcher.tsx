@@ -15,7 +15,7 @@ const LanguageSwitcher = () => {
   return (
     <>
       <IconButton color='primary' onClick={handleClick}>
-        <Iconify icon={currentLang.icon} sx={{ borderRadius: 0.65, width: 25 }} />
+        <Iconify icon={currentLang.icon} />
       </IconButton>
       <Popover
         open={Boolean(open)}
@@ -28,7 +28,6 @@ const LanguageSwitcher = () => {
             sx: {
               width: 'auto',
               overflow: 'inherit',
-              ml: -1
             },
           },
         }}

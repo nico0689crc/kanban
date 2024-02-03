@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { KanbanContext } from './kanban-context';
 import { Action, ProjectStateType, SectionType, TaskType, Types } from './types';
-import { faker } from '@faker-js/faker';
 import { useBoolean } from '@/hooks/useBoolean';
 
 const initialState: ProjectStateType = {
@@ -19,7 +18,7 @@ const reducer = (state: ProjectStateType, action: Action) => {
       sections: [
         ...state.sections?.map(section => ({ ...section, tasks: [ ...section.tasks ] })),
         { 
-          uuid: faker.string.uuid(),
+          uuid: action.payload.sectionUUID,
           title: action.payload.title, 
           order: ++state.sections.length, 
           tasks: []
@@ -228,8 +227,8 @@ export const KanbanProvider =({ children, project } : { children: React.ReactNod
     initialize();
   }, [initialize]);
 
-  const addSection = useCallback((title: string) => {
-    dispatch({ type: Types.ADD_SECTION, payload: { title } });
+  const addSection = useCallback((sectionUUID: string, title: string) => {
+    dispatch({ type: Types.ADD_SECTION, payload: { title, sectionUUID } });
   },[]);
 
   const removeSection = useCallback((sectionUUID: string) => {
@@ -241,7 +240,7 @@ export const KanbanProvider =({ children, project } : { children: React.ReactNod
   },[]);
 
   const addTaskToSection = useCallback((taskUUID: string, sectionUUID:string, title: string) => {
-    dispatch({ type: Types.ADD_TASK_TO_SECTION, payload: {taskUUID, title, sectionUUID } });
+    dispatch({ type: Types.ADD_TASK_TO_SECTION, payload: { taskUUID, title, sectionUUID } });
   },[]);
 
   const removeTaskFromSection = useCallback((taskUUID: string) => {

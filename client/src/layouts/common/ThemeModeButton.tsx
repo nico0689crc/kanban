@@ -12,7 +12,7 @@ const ThemeModeButton = () => {
   };
 
   return (
-    <IconButton color='primary' onClick={onChangeThemeMode}>
+    <IconButton sx={{ mt: 0 }} color='primary' onClick={onChangeThemeMode}>
       <Iconify icon={icon} width={25} />
     </IconButton>
   )

@@ -102,7 +102,7 @@ export function button(theme: Theme) {
     };
 
     const size = {
-      borderRadius: theme.shape.borderRadius * 2,
+      borderRadius: theme.shape.borderRadius,
       ...(smallSize && {
         height: 30,
         fontSize: 13,

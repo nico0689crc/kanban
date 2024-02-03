@@ -30,12 +30,10 @@ const Navbar = () => {
           backgroundColor: theme.palette.background.paper, 
           boxShadow: theme.customShadows.card, 
           ...( isUpToMd && { 
-            borderRight: `1px solid ${theme.palette.primary.main}`,
             py: 3,
             px: 1
           }),
           ...( !isUpToMd && {
-            borderTop: `1px solid ${theme.palette.primary.main}`,
             py: 0.5
           }) 
         }}

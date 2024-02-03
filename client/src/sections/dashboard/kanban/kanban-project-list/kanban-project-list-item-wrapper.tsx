@@ -10,8 +10,6 @@ const KanbanListItemWrapper = ({ children }: { children: React.ReactNode }) => {
         flexDirection: 'column',
         borderRadius: 1,
         p: 3,
-        boxShadow: theme => theme.customShadows.card,
-        border: (theme) => `1px solid ${theme.palette.primary.main}`,
         transition: (theme) => theme.transitions.create(['box-shadow'], {
           duration: theme.transitions.duration.shorter,
           easing: theme.transitions.easing.easeInOut,

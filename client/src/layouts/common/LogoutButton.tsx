@@ -7,11 +7,8 @@ const LogoutButton = () => {
   const { logout } = useAuthContext();
 
   const onLogoutHandler = useCallback(
-    async () => {
-      await logout();
-    }, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    async () => await logout(), 
+    [logout]
   );
 
   return (

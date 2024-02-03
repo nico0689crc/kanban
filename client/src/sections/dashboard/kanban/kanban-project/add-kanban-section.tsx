@@ -15,6 +15,7 @@ import { KanbanContext } from './context/kanban-context';
 import LoadingButton from '@/components/loading-button/loading-button';
 import { useSnackbar } from '@/components/snackbar';
 import { postSection } from '@/hooks/useKanban';
+import { faker } from '@faker-js/faker';
 
 const AddKabanSection = () => {
   const { addSection, isExistingProject, uuid } = useContext(KanbanContext);
@@ -42,9 +43,14 @@ const AddKabanSection = () => {
       if(result) {
         addSectionRequest.onTrue();
 
-        isExistingProject && uuid && await postSection(uuid, getValues('new_section_title'));
+        let response;
 
-        addSection(getValues('new_section_title'));
+        if(isExistingProject && uuid){
+          response = await postSection(uuid, getValues('new_section_title'));
+          console.log(response?.data?.data?.uuid);
+        }
+        
+        addSection(response?.data?.data?.uuid ?? faker.string.uuid(), getValues('new_section_title'));
 
         toggleForm.onToggle();
 

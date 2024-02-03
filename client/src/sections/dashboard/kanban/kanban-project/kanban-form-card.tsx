@@ -4,10 +4,10 @@ const CustomCardForm = ({ children }: { children: React.ReactNode }) => {
   return (
     <Card
       sx={{
-        borderRadius: 2,
-        p: { xs: 2, md: 3 },
+        borderRadius: 1,
+        p: 3,
+        pt: 5,
         boxShadow: theme => theme.customShadows.card,
-        border: (theme) => `1px solid ${theme.palette.primary.main}`,
         width: '100%'
       }}
     >

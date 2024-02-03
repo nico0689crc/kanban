@@ -50,6 +50,7 @@ export enum Types {
 export type Payload = {
   [Types.ADD_SECTION]: {
     title: string;
+    sectionUUID: string;
   };
   [Types.REMOVE_SECTION]: {
     sectionUUID: string;
@@ -89,7 +90,7 @@ export type ProjectContextType = ProjectStateType & {
   taskSelected: TaskType | null,
   dialogTaskOnToggle: () => void,
   setTaskSelected: (task: TaskType) => void,
-  addSection: (title: string) => void;
+  addSection: (sectionUUID: string, title: string) => void;
   removeSection: (sectionUUID: string) => void;
   editSection: (sectionUUID: string, title: string) => void;
   addTaskToSection: (taskUUID: string, sectionUUID: string, title: string) => void;

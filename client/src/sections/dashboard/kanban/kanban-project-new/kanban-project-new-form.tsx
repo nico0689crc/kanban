@@ -99,8 +99,7 @@ const KanbanProjectNewForm = () => {
           </Button>
           <LoadingButton 
             disabled={createProjectRequest.value} 
-            variant='contained' 
-            startIcon={<Iconify icon='iconoir:plus-square'/>}
+            variant='contained'
             onClick={onClickAddKanbanProjectHandler} 
             color='primary'
             label={t('kanban_project_view.labels.create_project_button')}

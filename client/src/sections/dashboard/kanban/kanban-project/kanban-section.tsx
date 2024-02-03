@@ -106,7 +106,7 @@ const KanbanSection = ({ section, index } : { section : SectionType, index: numb
           ref={provided.innerRef}
           {...provided.draggableProps}
           sx={{
-            ...(isUpToMd ? ({ px: 2 }) : ({ py: 2 })),
+            ...(isUpToMd && ({ px: 2 })),
             borderRadius: 2
           }}
         >

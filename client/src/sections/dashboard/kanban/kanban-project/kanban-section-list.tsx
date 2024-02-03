@@ -57,9 +57,10 @@ const KanbanSectionList = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="kanban-board" type="COLUMN" direction={isUpToMd ? 'horizontal' : 'vertical'}>
        {(provided) => (
-        <Box sx={{ overflow: 'auto', pb: 3 }}>
+        <Box sx={{ overflow: 'auto', pb: 2 }}>
           <Stack 
             direction={{ xs: 'column', sm: 'row' }}
+            spacing={2}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
