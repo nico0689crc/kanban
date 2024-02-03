@@ -1,12 +1,12 @@
+import HomeView from '@/sections/dashboard/home/home-view';
+
 export const metadata = {
   title: 'Dashboard',
 };
 
 const DashboardPage = () => {
   return (
-    <>
-      <div>Home Page</div>
-    </>
+    <HomeView />
   )
 }
 

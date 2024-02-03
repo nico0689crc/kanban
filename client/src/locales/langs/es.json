@@ -13,9 +13,11 @@
       "update": "Actualizar",
       "updating": "Actualizando",
       "something_went_wrong": "Something went wrong.",
+      "something_went_wrong_2": "Lo sentimos, parece que ha ocurrido un error al cargar el título y el subtítulo del sitio web. Por favor, inténtelo de nuevo más tarde o póngase en contacto con el soporte técnico si el problema persiste.",
       "not_found_title": "Lo sentimos, ¡Página no encontrada!",
       "not_found_subtitle": "Lo siento, no pudimos encontrar la página que estás buscando. ¿Quizás escribiste mal la URL? Asegúrate de revisar la ortografía.",
-      "not_found_cabutton": "Ir a Inicio"
+      "not_found_cabutton_authenticated": "Ir a Inicio",
+      "not_found_cabutton_unauthenticated": "Ir a Iniciar Sesión"
     }
   },
   "login_view": {
@@ -25,7 +27,7 @@
       "password_required": "Contraseña obligatoria."
     }, 
     "labels": {
-      "title": "Iniciar sesión en Kanban MVP",
+      "title": "Iniciar sesión",
       "new_user": "¿Usuario nuevo?",
       "create_account": "Crea una cuenta",
       "email": "Correo electrónico",
@@ -104,7 +106,16 @@
     }
   },
   "home_view": {
-    "title_header": "Inicio"
+    "title_header": "Inicio",
+    "texts": {
+      "text_title": "¡Bienvenido a Nuestra Plataforma Kanban!",
+      "text_1": "Nos emociona tenerte aquí. Ya seas un entusiasta individual, un líder de equipo o parte de una gran organización, nuestra plataforma Kanban está diseñada para optimizar tu flujo de trabajo, aumentar la productividad y fomentar la colaboración como nunca antes.",
+      "text_2": "Con tableros intuitivos, flujos de trabajo personalizables y herramientas de colaboración poderosas, podrás visualizar tu trabajo, rastrear el progreso sin esfuerzo y alcanzar tus objetivos con mayor eficiencia.",
+      "text_3": "Explora nuestras características, sumérgete en nuestros recursos y emprende un viaje de productividad y éxito con Kanban. Estamos aquí para apoyarte en cada paso del camino."
+    },
+    "labels": {
+      "button_get_start": "¡Comencemos a usar Kanban!"
+    }
   },
   "kanban_projects_view": {
     "title_header": "Proyectos",
@@ -114,7 +125,10 @@
       "create_project_button": "Nuevo Proyecto",
       "remove_project_question": "¿Estas seguro que quieres eliminar este proyecto?",
       "project_removed_successfully": "El proyecto fue eliminado correctamente.",
-      "project_removed_error": "No se pudo eliminar el proyecto."
+      "project_removed_error": "No se pudo eliminar el proyecto.",
+      "no_project_title": "No hay proyectos disponibles",
+      "no_project_subtitle": "Aún no ha creado ningún proyecto en Kanban. ¡Es hora de empezar a planificar y organizar sus tareas!"
+    
     },
     "validation": {
       "name_required": "Nombre obligatorio"
@@ -159,6 +173,8 @@
     } 
   },
   "profile_view": {
-    "title_header": "Perfil"
+    "title_header": "Perfil",
+    "work_progress_title": "Trabajo en Progreso",
+    "work_progress_subtitle": "Esta página aún está en construcción. Por favor, vuelva más tarde."
   }
 }

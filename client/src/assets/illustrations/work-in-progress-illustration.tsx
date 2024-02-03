@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 
-function PageNotFoundIllustration({ ...other }: BoxProps) {
+function WorkInProgressIllustration({ ...other }: BoxProps) {
   return (
     <Box
       component="svg"
@@ -11,9 +11,9 @@ function PageNotFoundIllustration({ ...other }: BoxProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...other}
     >
-      <image href="/assets/illustrations/404.svg" height="300"/>
+      <image href="/assets/illustrations/wip.svg" height="300"/>
     </Box>
   );
 }
 
-export default memo(PageNotFoundIllustration);
+export default memo(WorkInProgressIllustration);

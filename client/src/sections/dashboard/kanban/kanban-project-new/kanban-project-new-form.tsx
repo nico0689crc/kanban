@@ -68,7 +68,7 @@ const KanbanProjectNewForm = () => {
   }
 
   return (
-    <Stack direction='column' rowGap={{ xs: 2, md: 6 }} sx={{ width: '100%', height: '100%' }}>
+    <Stack direction='column' spacing={2} sx={{ width: '100%', height: '100%' }}>
       <PageHead 
         pageTitle={t('kanban_project_view.title_header')}
         links={[
@@ -77,7 +77,7 @@ const KanbanProjectNewForm = () => {
           {name: t('kanban_project_view.title_header')},
         ]}
       />
-      <Stack rowGap={{ xs: 2, md: 7 }} alignItems='center'>
+      <Stack spacing={3} alignItems='center'>
         <CustomCardForm>
           <FormProvider methods={methods}>
             <RHFTextField fullWidth name='title' label={ t('kanban_project_view.labels.project_name') } />

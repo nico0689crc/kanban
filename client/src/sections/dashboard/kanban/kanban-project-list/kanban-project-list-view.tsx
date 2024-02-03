@@ -8,24 +8,24 @@ import KanbanList from '@/sections/dashboard/kanban/kanban-project-list/kanban-p
 import Iconify from '@/components/iconify';
 import { PageHead } from '@/components/page-head';
 import { LoadingData } from '@/components/loading-data';
-import EmptyContent from '@/components/empty-content/empty-content';
 
 import { RouterLink } from '@/routes/components';
 import { useGetKanbanProjects } from '@/hooks/useKanban';
+import KanbanListEmpty from './kanban-list-empty';
 
 const KanbanListView = () => {
   const { t } = useLocales();
   const { isLoadingProjects, projects, isEmpty } = useGetKanbanProjects();
 
   return (
-    <Stack direction='column' gap={{ xs: 3, sm: 8 }} sx={{ width: '100%', height: '100%' }}>
+    <Stack direction='column' spacing={2} sx={{ width: '100%', height: '100%' }}>
       <PageHead 
         pageTitle={t('kanban_projects_view.title_header')}
         links={[
           {name: t('home_view.title_header'), href: paths.dashboard.root},
           {name: t('kanban_projects_view.title_header')},
         ]}
-        action={
+        action={!isEmpty && (
           <Button
             variant='contained'
             color='primary'
@@ -35,10 +35,10 @@ const KanbanListView = () => {
           >
             {t('kanban_projects_view.labels.create_project_button')}
           </Button>
-        }
+        )}
       />
       { isLoadingProjects && <LoadingData /> }
-      { !isLoadingProjects && isEmpty && <EmptyContent />}
+      { !isLoadingProjects && isEmpty && <KanbanListEmpty />}
       { !isLoadingProjects && !!projects?.length && <KanbanList projects={projects}/> }
     </Stack>
   )

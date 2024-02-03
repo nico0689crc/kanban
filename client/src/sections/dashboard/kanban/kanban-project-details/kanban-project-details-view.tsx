@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Button } from '@mui/material';
 
 import { KanbanProvider } from '../kanban-project/context/kanban-provider';
@@ -13,8 +12,9 @@ import { useLocales } from '@/locales';
 
 import { RouterLink } from '@/routes/components';
 import { LoadingData } from '@/components/loading-data';
-import NotFoundView from '@/sections/error/not-found-view';
 import { paths } from '@/routes/paths';
+import { PageNotFoundIllustration } from '@/assets/illustrations';
+import Illustration from '@/components/illustrations';
 
 const KanbanProjectDetailsView = ({ projectUUID } : { projectUUID: string }) => {
   const { t } = useLocales();
@@ -24,14 +24,15 @@ const KanbanProjectDetailsView = ({ projectUUID } : { projectUUID: string }) => 
     <>
       {isLoadingProject && <LoadingData />}
       {!isLoadingProject && error && (
-        <NotFoundView
-          title={t('kanban_project_view.labels.project_not_found_title')}
-          subTitle={t('kanban_project_view.labels.project_not_found_subtitle')}
-          caButton={(
-            <Button component={RouterLink} href={paths.dashboard.kanbanProjects} size="large" color='primary' variant="contained">
-              {t('kanban_project_view.labels.project_not_found_cabutton')}
+        <Illustration 
+          illustration={<PageNotFoundIllustration />}
+          title={t('common.labels.not_found_title')}
+          subTitle={t('common.labels.not_found_subtitle')}
+          caButton={( 
+            <Button component={RouterLink} href={paths.dashboard.root} size="large" color='primary' variant="contained">
+              {t('common.labels.not_found_cabutton')}
             </Button>
-          )} 
+          )}
         />
       )}
       {!isLoadingProject && !error && project?.sections && (

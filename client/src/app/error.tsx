@@ -4,13 +4,13 @@ import { Box, Button, Stack } from '@mui/material';
 import { RouterLink } from '@/routes/components';
 import { paths } from '@/routes/paths';
 import { useLocales } from '@/locales';
-import PageNotFoundIllustration from '@/assets/illustrations/page-not-found-illustration';
 import Illustration from '@/components/illustrations';
 import { useContext } from 'react';
 import { AuthContext } from '@/auth/context/AuthContext';
+import { PageErrorIllustration } from '@/assets/illustrations';
 
 export const metadata = {
-  title: '404 Page Not Found!',
+  title: '505 Internal Error!',
 };
 
 const NotFoundPage = () => {
@@ -19,11 +19,11 @@ const NotFoundPage = () => {
 
   return (
     <Box sx={{height: '100vh', width: '100vw'}}>
-      <Stack height='100%' alignItems='center' justifyContent='center'>
+      <Stack height='100%' justifyContent='center'>
         <Illustration 
-          illustration={<PageNotFoundIllustration />}
-          title={t('common.labels.not_found_title')}
-          subTitle={t('common.labels.not_found_subtitle')}
+          illustration={<PageErrorIllustration />}
+          title={t('common.labels.something_went_wrong')}
+          subTitle={t('common.labels.something_went_wrong_2')}
           caButton={(
             authenticated ? (
               <Button component={RouterLink} href={paths.dashboard.root} size="large" color='primary' variant="contained">
