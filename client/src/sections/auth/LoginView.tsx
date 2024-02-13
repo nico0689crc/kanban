@@ -71,6 +71,8 @@ const LoginView = () => {
           </Stack>
           {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
+          <Alert severity='info'>Testing email : user@demo.com / password : Userdemo2024!@</Alert>
+
           <RHFTextField name='email' label={ t('login_view.labels.email') } />
 
           <RHFTextField

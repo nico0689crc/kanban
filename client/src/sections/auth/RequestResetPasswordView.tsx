@@ -56,7 +56,7 @@ const RequestResetPasswordView = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await requestResetPassword(data.email);
-      setSuccessMsg(t('request_reset_password_view.messages.success'));
+      setSuccessMsg(t(''));
     } catch (error: any) {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
