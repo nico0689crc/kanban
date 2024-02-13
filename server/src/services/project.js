@@ -6,6 +6,62 @@ const ResponseParser = require("../utils/responseParser");
 const ResponseParserError = require("../utils/responseParserError");
 const ResponsesTypes = require('../utils/responseTypes');
 
+const { projects } = require('./mock/projects');
+
+const getSeedProjects = async (req, res, next) => {
+  ErrorHandler(async () => {
+
+    const userAdmin = await User.findOne({ where: { email: req.user.email } });
+
+    if(userAdmin.get().email !== process.env.EMAIL_FROM_ADMINISTRATOR){
+      throw new Error('Unauthorized');
+    }
+
+    const user = await User.findOne({ where: { email: process.env.EMAIL_FROM_DEMO } });
+
+    const promises = projects.map(project => {
+      return Project.create({
+        uuid: faker.string.uuid(),
+        title: project.title,
+        user_id: user.get().id,
+        sections: project.sections.map((section, index) => ({
+          uuid: faker.string.uuid(),
+          title: section.title,
+          order: ++index,
+          status: 'active',
+          tasks: section.tasks.map((task, index)=> ({
+            uuid: faker.string.uuid(),
+            title: task.title,
+            description: task.description,
+            labels: JSON.stringify(task.tags),
+            status: faker.helpers.enumValue({
+              active: 'active', 
+              inactive: 'inactive'
+            }),
+            priority: task.priority,
+            order: ++index,
+          }))
+        }))
+      }, {
+        include: [{
+          model: Section,
+          as: 'sections',
+          attributes: Section.getFieldsToSelect(),
+          include: [{
+            model: Task,
+            as: 'tasks',
+            attributes: Task.getFieldsToSelect()
+          }]
+        }]
+      })
+    })
+
+    await Promise.all(promises);
+
+    return res.status(200).json({message: 'OK'});
+  }, next);
+};
+
 const getProjects = async (req, res, next) => {
   ErrorHandler(async () => {
 
@@ -158,5 +214,6 @@ module.exports = {
   getProjects,
   getProjectByUUID,
   postProject,
-  deleteProjectByUUID
+  deleteProjectByUUID,
+  getSeedProjects
 };

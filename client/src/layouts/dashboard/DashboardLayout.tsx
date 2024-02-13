@@ -30,7 +30,15 @@ const DashboardLayout = ({children}: Props) => {
           <ThemeModeButton />
           <LogoutButton />
         </Stack>
-        <Box px={{ xs: 2, md: 6 }} sx={{ backgroundColor: theme => theme.palette.background.paper }} pb={5} height='100%'>
+        <Box 
+          px={{ xs: 2, md: 6 }} 
+          sx={{ 
+            backgroundColor: theme => theme.palette.background.paper,
+            display: 'flex',
+            flexGrow: 1
+          }} 
+          pb={5}
+        >
           {children}
         </Box>
       </Stack>

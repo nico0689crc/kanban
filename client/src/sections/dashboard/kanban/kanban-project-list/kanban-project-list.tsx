@@ -8,7 +8,7 @@ type Props = {
 
 const KanbanList = ({ projects } : Props) => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} width='100%'>
       {projects?.map(project => <KanbanListItem key={project.uuid} project={project} /> )}
     </Grid>
   )

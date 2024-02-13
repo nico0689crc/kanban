@@ -30,7 +30,7 @@ const KanbanProjectDetailsView = ({ projectUUID } : { projectUUID: string }) => 
           subTitle={t('common.labels.not_found_subtitle')}
           caButton={( 
             <Button component={RouterLink} href={paths.dashboard.root} size="large" color='primary' variant="contained">
-              {t('common.labels.not_found_cabutton')}
+              {t('common.labels.not_found_cabutton_authenticated')}
             </Button>
           )}
         />
