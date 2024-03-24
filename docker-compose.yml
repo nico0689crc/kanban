@@ -1,71 +1,83 @@
 version: '3.8'
 services:
-
-#########################################
-#   Setup MYSQL container
-#########################################
-  mysqldb:
-    image: mysql:5.7
-    restart: unless-stopped
-    env_file: ./.env
+  #########################################
+  #   Setup Database container
+  #########################################
+  database:
+    container_name: kanban-database-dev
+    image: mysql:8.3.0
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      - "${MYSQL_HOST_PORT}:${MYSQL_CONTAINER_PORT}"
     volumes:
-      - db:/var/lib/mysql
+      - kanban-dev-db:/var/lib/mysql
     networks:
-      - backend
-
-#########################################
-#   Setup server container
-#########################################
-  server:
-    depends_on:
-      - mysqldb     
-    build: ./server
-    env_file: ./.env
-    ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
-    environment:
-      - DB_HOST=$MYSQLDB_HOST
-      - DB_USER=$MYSQLDB_USER
-      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - DB_NAME=$MYSQLDB_DATABASE
-      - DB_PORT=$MYSQLDB_DOCKER_PORT
-      - NODE_ENV=$NODE_ENV
-      - JWT_KEY=$JWT_KEY
-      - JWT_EXPIRATION_TIME=$JWT_EXPIRATION_TIME
-      - NEXT_PUBLIC_SERVER_API_BASE_URL=$NEXT_PUBLIC_SERVER_API_BASE_URL
-      - NEXT_PUBLIC_SERVER_BASE_URL=$NEXT_PUBLIC_SERVER_BASE_URL
-      - CLIENT_BASE_URL=$CLIENT_BASE_URL
-      - SENDGRID_API_KEY=$SENDGRID_API_KEY
-      - SENDGRID_VERIFIED_EMAIL=$SENDGRID_VERIFIED_EMAIL
-    networks:
-      - backend
-      - frontend
-    stdin_open: true
-    tty: true
-
-#########################################
-#   Setup client container
-#########################################
-  client:
-    depends_on:
-      - server
-    build:
-      context: ./client
-    ports:
-      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
-    environment:
-      - NEXT_PUBLIC_SERVER_API_BASE_URL=$NEXT_PUBLIC_SERVER_API_BASE_URL
-      - NEXT_PUBLIC_SERVER_BASE_URL=$NEXT_PUBLIC_SERVER_BASE_URL
-    networks:
-      - frontend  
-
-volumes: 
-  db:
-networks:
+      - kanban-server-dev
+  #########################################
+  #   Setup Backend container
+  #########################################
   backend:
-  frontend:
+    depends_on:
+      - database
+    container_name: kanban-backend-dev
+    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_BACKEND_IMAGE}:dev
+    build:
+      context: ./backend
+      target: development
+    environment:
+      - BACKEND_CONTAINER_PORT=${BACKEND_CONTAINER_PORT}
+      - FRONTEND_HOST_DOMAIN=${FRONTEND_HOST_DOMAIN}
+      - BACKEND_HOST_DOMAIN=${BACKEND_HOST_DOMAIN}
+      - DB_HOST=${MYSQL_HOST}
+      - DB_PORT=${MYSQL_CONTAINER_PORT}
+      - DB_NAME=${MYSQL_DATABASE}
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - JWT_KEY=${JWT_KEY}
+      - JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - SENDGRID_VERIFIED_EMAIL=${SENDGRID_VERIFIED_EMAIL}
+      - EMAIL_FROM_ADMINISTRATOR=${EMAIL_FROM_ADMINISTRATOR}
+      - USER_DEMO=${USER_DEMO}
+      - PASSWORD_DEMO=${PASSWORD_DEMO}
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /app
+      - /app/node_modules
+    command: npm run start
+    networks:
+      - kanban-server-dev
+  #########################################
+  #   Setup Frontend container
+  #########################################
+  # frontend:
+  #   depends_on:
+  #     - backend
+  #   container_name: frontend-dev
+  #   image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_FRONTEND_IMAGE}:dev
+  #   build:
+  #     context: ./frontend
+  #     target: development
+  #   environment:
+  #     - NEXT_PUBLIC_BACKEND_HOST_DOMAIN=${BACKEND_HOST_DOMAIN}
+  #     - NEXT_PUBLIC_FRONTEND_HOST_DOMAIN=${FRONTEND_HOST_DOMAIN}
+  #     - NEXT_PUBLIC_USER=${USER_DEMO}
+  #     - NEXT_PUBLIC_PASSWORD=${PASSWORD_DEMO}
+  #   ports:
+  #     - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
+  #   volumes:
+  #     - type: bind
+  #       source: ./frontend
+  #       target: /app
+  #   command: npm run dev
+volumes:
+  kanban-dev-db:
+networks:
+  kanban-server-dev:

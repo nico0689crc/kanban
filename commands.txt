@@ -1,0 +1,9 @@
+#########################################
+#   DEVELOPMENT COMMANDS
+########################################
+docker compose up -d --build 
+
+#########################################
+#   PRODUCTION COMMANDS
+########################################
+docker compose -f docker-compose-production.yml --env-file .env.production up -d --build 
