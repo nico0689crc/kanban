@@ -1,6 +1,6 @@
 import { paths } from '@/routes/paths';
 
-export const HOST_API = process.env.NEXT_PUBLIC_SERVER_API_BASE_URL;
+export const HOST_API = `${process.env.NEXT_PUBLIC_BACKEND_HOST_DOMAIN}/api`;
 
 export const PATH_AFTER_LOGIN = paths.dashboard.root;
 export const PATH_LOGIN = paths.auth.login;

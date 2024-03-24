@@ -4,7 +4,7 @@ services:
   #   Setup Database container
   #########################################
   database:
-    container_name: kanban-database-dev
+    container_name: kanban-database-prod
     image: mysql:8.3.0
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -14,17 +14,17 @@ services:
     ports:
       - "${MYSQL_HOST_PORT}:${MYSQL_CONTAINER_PORT}"
     volumes:
-      - kanban-dev-db:/var/lib/mysql
+      - kanban-prod-db:/var/lib/mysql
     networks:
-      - kanban-server-dev
+      - kanban-server-prod
   #########################################
   #   Setup Backend container
   #########################################
   backend:
     depends_on:
       - database
-    container_name: kanban-backend-dev
-    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_BACKEND_IMAGE}:dev
+    container_name: kanban-backend-prod
+    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_BACKEND_IMAGE}:prod
     build:
       context: ./backend
       target: development
@@ -46,38 +46,25 @@ services:
       - PASSWORD_DEMO=${PASSWORD_DEMO}
     ports:
       - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
-    volumes:
-      - type: bind
-        source: ./backend
-        target: /app
-      - /app/node_modules
     command: npm run start
     networks:
-      - kanban-server-dev
+      - kanban-server-prod
   #########################################
   #   Setup Frontend container
   #########################################
   frontend:
     depends_on:
       - backend
-    container_name: kanban-frontend-dev
-    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_FRONTEND_IMAGE}:dev
+    container_name: kanban-frontend-prod
+    image: ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_FRONTEND_IMAGE}:prod
     build:
       context: ./frontend
-      target: development
-    environment:
-      - NEXT_PUBLIC_BACKEND_HOST_DOMAIN=${BACKEND_HOST_DOMAIN}
-      - NEXT_PUBLIC_USER=${USER_DEMO}
-      - NEXT_PUBLIC_PASSWORD=${PASSWORD_DEMO}
+      target: production
+      args:
+        - NEXT_PUBLIC_BACKEND_HOST_DOMAIN=${BACKEND_HOST_DOMAIN}
     ports:
       - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
-    volumes:
-      - type: bind
-        source: ./frontend
-        target: /app
-      - /app/node_modules
-    command: npm run dev
 volumes:
-  kanban-dev-db:
+  kanban-prod-db:
 networks:
-  kanban-server-dev:
+  kanban-server-prod:

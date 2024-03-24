@@ -2,6 +2,7 @@
 
 const nextConfig = {
   trailingSlash: true,
+  output: 'standalone',
   modularizeImports: {
     '@mui/material': {
       transform: '@mui/material/{{member}}',

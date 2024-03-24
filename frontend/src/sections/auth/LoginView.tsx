@@ -37,7 +37,7 @@ const LoginView = () => {
 
   const defaultValues = {
     email: process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_USER! : '',
-    password: process.env.NODE_ENV === 'development' ?  process.env.NEXT_PUBLIC_PASSWORD! : ''
+    password: process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_PASSWORD! : ''
   };
 
   const methods = useForm({ resolver: yupResolver(LoginSchema), defaultValues });
@@ -49,8 +49,8 @@ const LoginView = () => {
       await login(data.email, data.password);
       router.push(paths.dashboard.root);
       NProgress.start();
-    } catch ( error: any) {
-      if(Array.isArray(error?.errors)) {
+    } catch (error: any) {
+      if (Array.isArray(error?.errors)) {
         error?.errors?.forEach((error: any) => setError(error.source.path, { message: error.detail }))
       } else {
         setErrorMsg(error?.errors?.title);
@@ -62,22 +62,22 @@ const LoginView = () => {
     <FormWrapper>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Stack rowGap={3}>
-          <Typography variant='h4'>{ t('login_view.labels.title') }</Typography>
+          <Typography variant='h4'>{t('login_view.labels.title')}</Typography>
           <Stack direction='row' spacing={0.5}>
-            <Typography variant='body2'>{ t('login_view.labels.new_user') }</Typography>
+            <Typography variant='body2'>{t('login_view.labels.new_user')}</Typography>
             <Link component={RouterLink} href={paths.auth.register} variant='subtitle2'>
-              { t('login_view.labels.create_account') }
+              {t('login_view.labels.create_account')}
             </Link>
           </Stack>
           {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
-          <Alert severity='info'>Testing email : user@demo.com / password : Userdemo2024!@</Alert>
+          <Alert severity='info'>Testing email : user@demo.com / password : USerdemo2024!@</Alert>
 
-          <RHFTextField name='email' label={ t('login_view.labels.email') } />
+          <RHFTextField name='email' label={t('login_view.labels.email')} />
 
           <RHFTextField
             name='password'
-            label={ t('login_view.labels.password') }
+            label={t('login_view.labels.password')}
             type={password.value ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -98,7 +98,7 @@ const LoginView = () => {
             underline='always'
             sx={{ alignSelf: 'flex-end' }}
           >
-            { t('login_view.labels.forgot_password') }
+            {t('login_view.labels.forgot_password')}
           </Link>
 
           <LoadingButton
@@ -106,9 +106,9 @@ const LoginView = () => {
             color='primary'
             type='submit'
             loading={isSubmitting}
-            loadingIndicator={ t('login_view.labels.login_loading') }
+            loadingIndicator={t('login_view.labels.login_loading')}
           >
-            { t('login_view.labels.login') }
+            {t('login_view.labels.login')}
           </LoadingButton>
         </Stack>
       </FormProvider>
