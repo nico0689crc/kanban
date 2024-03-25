@@ -41,7 +41,7 @@ jobs:
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker rm kanban-frontend-main || true
       - name: Run Docker Container
         run: |
-          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run -d --restart \
+          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --restart -d \
             -p ${{secrets.FRONTEND_HOST_PORT_MAIN}}:${{secrets.FRONTEND_CONTAINER_PORT_MAIN}} \
             --name kanban-frontend-main \
             ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main
