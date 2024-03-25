@@ -1,0 +1,47 @@
+name: main_frontend_ci_cd_pipeline
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "frontend/**"
+  workflow_dispatch:
+jobs:
+  build-frontend-image-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Login Dockerhub
+        env:
+          DOCKER_HUB_USERNAME: ${{secrets.DOCKER_HUB_USERNAME}}
+          DOCKER_HUB_PASSWORD: ${{secrets.DOCKER_HUB_PASSWORD}}
+        run: docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+
+      - name: Build the Docker image
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main \
+            --build-arg NEXT_PUBLIC_BACKEND_HOST_DOMAIN=${{secrets.BACKEND_HOST_DOMAIN_MAIN}} \
+            ./frontend
+
+      - name: Push to Dockerhub
+        run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main
+
+  pull-frontend-image-and-run-container:
+    runs-on: self-hosted
+    needs: build-frontend-image-and-push
+    steps:
+      - name: Pull Docker image
+        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main
+      - name: Stop old docker container
+        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker stop kanban-frontend-main || true
+      - name: Remove old docker container
+        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker rm kanban-frontend-main || true
+      - name: Run Docker Container
+        run: |
+          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run -d --restart \
+            -p ${{secrets.FRONTEND_HOST_PORT_MAIN}}:${{secrets.FRONTEND_CONTAINER_PORT_MAIN}} \
+            --name kanban-frontend-main \
+            ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main
