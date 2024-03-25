@@ -37,11 +37,9 @@ jobs:
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main
       - name: Stop old docker container
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker stop kanban-frontend-main || true
-      - name: Remove old docker container
-        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker rm kanban-frontend-main || true
       - name: Run Docker Container
         run: |
-          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --restart -d \
+          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --rm -d \
             -p ${{secrets.FRONTEND_HOST_PORT_MAIN}}:${{secrets.FRONTEND_CONTAINER_PORT_MAIN}} \
             --name kanban-frontend-main \
             ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:frontend-main
