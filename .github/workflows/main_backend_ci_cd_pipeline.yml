@@ -57,11 +57,9 @@ jobs:
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:backend-main
       - name: Stop current running container
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker stop kanban-backend-main || true
-      - name: Remove current running container
-        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker rm kanban-backend-main || true
       - name: Run Docker Container
         run: |
-          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --restart -d \
+          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --rm -d \
             -p ${{secrets.BACKEND_HOST_PORT_MAIN}}:${{secrets.BACKEND_CONTAINER_PORT_MAIN}} \
             -e BACKEND_CONTAINER_PORT=${{secrets.BACKEND_CONTAINER_PORT_MAIN}} \
             -e BACKEND_HOST_DOMAIN=${{secrets.BACKEND_HOST_DOMAIN_MAIN}} \
