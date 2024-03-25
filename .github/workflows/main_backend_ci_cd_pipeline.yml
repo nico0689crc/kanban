@@ -42,7 +42,7 @@ jobs:
         run: docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
       - name: Build docker image
-        run: docker build -t ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:backend-main ./backend
+        run: docker build -t ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:backend-main --target development ./backend
 
       - name: Push docker image to Dockerhub
         run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:backend-main
