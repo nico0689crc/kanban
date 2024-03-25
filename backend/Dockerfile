@@ -17,6 +17,8 @@ COPY --chown=node:node . .
 
 USER node
 
+CMD ["npm", "run", "start"]
+
 
 #########################################
 #   BUILD STAGE
