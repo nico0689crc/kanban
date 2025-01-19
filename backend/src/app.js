@@ -14,14 +14,13 @@ app.use(bodyParser.json());
 
 // Public Routes
 app.use('/api/users', userRoutes);
+app.use('/api/seeds', seedRoutes);
 
 // Protected Routes
 app.use(authenticateUser);
-
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/sections', sectionRoutes);
-app.use('/api/seeds', seedRoutes);
 
 // Global Error Handler
 app.use(globalHandleError);
