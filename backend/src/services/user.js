@@ -146,7 +146,7 @@ const registerUser = (req, res, next) => {
 
       await sendEmail(
         user.dataValues.email,
-        `Welcome to Kanban ${user.dataValues.first_name}`,
+        `Welcome to Kanban ${user.dataValues.first_name} - ${confirmationCode}`,
         registrationEmailTemplate,
       );
 
@@ -169,7 +169,7 @@ const registerUserDemo = (req, res, next) => {
   ErrorHandler(async () => {
     const userAdmin = await User.findOne({ where: { email: req.user.email } });
 
-    if (userAdmin.get().email !== process.env.EMAIL_FROM_ADMINISTRATOR) {
+    if (userAdmin.get()?.email !== process.env.EMAIL_FROM_ADMINISTRATOR) {
       throw new Error('Unauthorized');
     }
 
