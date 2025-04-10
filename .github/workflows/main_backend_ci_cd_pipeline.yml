@@ -15,10 +15,11 @@ jobs:
       - name: Docker network creation
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker network create ${{secrets.DOCKER_NETWORK_NAME_MAIN}} || true
       - name: Stop current running container
-        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker stop ${{secrets.MYSQL_DATABASE_MAIN}} || true
+        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker rm -f ${{secrets.MYSQL_DATABASE_MAIN}} || true
       - name: Run Docker Container
         run: |
-          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --rm -d \
+          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run -d \
+            --restart unless-stopped \
             --name ${{secrets.MYSQL_DATABASE_MAIN}} \
             -v data-main-kanban:/var/lib/mysql \
             -e MYSQL_DATABASE=${{secrets.MYSQL_DATABASE_MAIN}} \
@@ -56,10 +57,11 @@ jobs:
       - name: Pull Docker image
         run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.DOCKER_HUB_APP_IMAGE}}:backend-main
       - name: Stop current running container
-        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker stop kanban-backend-main || true
+        run: echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker rm -f kanban-backend-main || true
       - name: Run Docker Container
         run: |
-          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run --rm -d \
+          echo ${{secrets.SHH_USER_PASSWORD}} | sudo -S docker run -d \
+            --restart unless-stopped \
             -p ${{secrets.BACKEND_HOST_PORT_MAIN}}:${{secrets.BACKEND_CONTAINER_PORT_MAIN}} \
             -e BACKEND_CONTAINER_PORT=${{secrets.BACKEND_CONTAINER_PORT_MAIN}} \
             -e BACKEND_HOST_DOMAIN=${{secrets.BACKEND_HOST_DOMAIN_MAIN}} \
